@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">work-frame-library</string>
+<!--权限-->
+    <string name="notifyTitle">警告</string>
+    <string name="notifyMsg">缺少权限</string>
+    <string name="setting">去设置</string>
+    <string name="cancel">取消</string>
+    <string name="sure">确定</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
+</resources>
