@@ -1,5 +1,4 @@
 package com.guoxd.work_frame_library.views;
-
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
@@ -13,17 +12,25 @@ import android.widget.FrameLayout;
 /**
  * 侧滑item layout
  * 用于列表页
+ * 默认情况下允许所有item划出，控制单个需要在adapter中控制
  */
 public class SwipeListLayout extends FrameLayout {
+	//隐藏部分
 	private View hiddenView;
+	//整个itemView
 	private View itemView;
+	//滑动部分的长度
 	private int hiddenViewWidth;
+	//用于处理侧滑（滑动）
 	private ViewDragHelper mDragHelper;
-	private int hiddenViewHeight;
+//	private int hiddenViewHeight;
 	private int itemWidth;
 	private int itemHeight;
+	//item侧滑改变listener
 	private OnSwipeStatusListener listener;
+	//item当前状态（开启/关闭）
 	private Status status = Status.Close;
+	//设置平滑动画
 	private boolean smooth = true;
 
 	public final String TAG = "SlipListLayout";
@@ -130,16 +137,16 @@ public class SwipeListLayout extends FrameLayout {
 			invalidate();
 		}
 
+		//
 		public void onViewReleased(View releasedChild, float xvel, float yvel) {
 			// 向右滑xvel为正 向左滑xvel为负
 			if (releasedChild == itemView) {
-				Log.i(TAG,"onViewReleased x:"+xvel+" y:"+yvel+" left:"+itemView.getLeft()+" hiddenViewWidth:"+hiddenViewWidth+" smooth:"+smooth);
-				if (xvel == 0
-						&& Math.abs(itemView.getLeft()) > hiddenViewWidth / 2.0f) {
+				Log.i(TAG,"onViewReleased x:"+xvel+" y:"+yvel+" left:"+itemView.getLeft()+" hiddenViewWidth:"+hiddenViewWidth);
+				if(Math.abs(itemView.getLeft()) > hiddenViewWidth / 3.0f){
+					Log.i(TAG,"onViewReleased open");
 					open(smooth);
-				} else if (xvel < 0) {
-					open(smooth);
-				} else {
+				}else{
+					Log.i(TAG,"onViewReleased close");
 					close(smooth);
 				}
 			}
@@ -157,7 +164,7 @@ public class SwipeListLayout extends FrameLayout {
 	private void close(boolean smooth) {
 		preStatus = status;
 		status = Status.Close;
-		Log.e("Adapter","close:"+smooth);
+		Log.i(TAG,"close smooth:"+smooth);
 		if (smooth) {
 			if (mDragHelper.smoothSlideViewTo(itemView, 0, 0)) {
 				if (listener != null) {
@@ -180,7 +187,7 @@ public class SwipeListLayout extends FrameLayout {
 	}
 
 	/**
-	 * 
+	 * 侧滑部份状态改变显示
 	 * @param status
 	 */
 	private void layout(Status status) {
@@ -205,6 +212,7 @@ public class SwipeListLayout extends FrameLayout {
 	private void open(boolean smooth) {
 		preStatus = status;
 		status = Status.Open;
+		Log.i(TAG,"open smooth:"+smooth);
 		if (smooth) {
 			if (mDragHelper.smoothSlideViewTo(itemView, -hiddenViewWidth, 0)) {
 				if (listener != null) {
@@ -212,22 +220,28 @@ public class SwipeListLayout extends FrameLayout {
 					listener.onStartOpenAnimation();
 				}
 				ViewCompat.postInvalidateOnAnimation(this);
+			}else{//开启宽度为0
+				Log.e(TAG, "no open");
 			}
 		} else {
+			Log.d(TAG, "before layout");
 			layout(status);
 		}
 		if (listener != null && preStatus == Status.Close) {
 			Log.i(TAG, "open");
 			listener.onStatusChanged(status);
+		}else{
+			Log.e(TAG, "no open change");
 		}
 	}
-
+	//用于实现fling动画效果
 	@Override
 	public void computeScroll() {
 		super.computeScroll();
-		// 开始执行动画
 		if (mDragHelper.continueSettling(true)) {
+			//会在下一个Frame开始的时候，发起一些invalidate操作,
 			ViewCompat.postInvalidateOnAnimation(this);
+//			postInvalidate();//一般用这个
 		}
 	}
 
@@ -238,11 +252,13 @@ public class SwipeListLayout extends FrameLayout {
 			mDragHelper.cancel();
 			return false;
 		}
+		//在onInterceptTouchEvent()方法里调用并返回ViewDragHelper的shouldInterceptTouchEvent()方法
 		return mDragHelper.shouldInterceptTouchEvent(ev);
 	}
 
 	// 让ViewDragHelper来处理触摸事件
 	public boolean onTouchEvent(MotionEvent event) {
+		//在onTouchEvent()方法里调用ViewDragHelper()的processTouchEvent()方法
 		mDragHelper.processTouchEvent(event);
 		return true;
 	};
@@ -261,7 +277,7 @@ public class SwipeListLayout extends FrameLayout {
 		itemWidth = itemView.getMeasuredWidth();
 		itemHeight = itemView.getMeasuredHeight();
 		hiddenViewWidth = hiddenView.getMeasuredWidth();
-		hiddenViewHeight = hiddenView.getMeasuredHeight();
+//		hiddenViewHeight = hiddenView.getMeasuredHeight();
 	}
 
 	@Override

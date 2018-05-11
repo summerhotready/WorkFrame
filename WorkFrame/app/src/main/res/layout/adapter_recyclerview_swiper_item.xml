@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--侧滑的item-->
-<com.elco.guizhouyidong.guang_jiao.SwipeListLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.guoxd.work_frame_library.views.SwipeListLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="60dp"
     android:id="@+id/swip_layout">
@@ -45,4 +45,4 @@
 
 
 
-</com.elco.guizhouyidong.guang_jiao.SwipeListLayout>
+</com.guoxd.work_frame_library.views.SwipeListLayout>

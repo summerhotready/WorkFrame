@@ -25,13 +25,13 @@ import com.guoxd.workframe.views.MyItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/**recyclerView侧滑
+ * item使用SwipeListLayout实现
  * AUTHOR: The_Android
  * DATE: 2018/4/24
  */
 public class SwiptListFragment extends BaseFragment {
 
-    private RecyclerRefreshLayout mRecyclerRefreshLayout;
     private RecyclerView mRecyclerView;
     private List<DeviceModle> mData;
     DeviceAdapter adapter;
@@ -52,7 +52,6 @@ public class SwiptListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.activity_base_recycler, container, false);
-        mRecyclerRefreshLayout = (RecyclerRefreshLayout) root.findViewById(R.id.refreshLayout);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         //分割线
@@ -68,12 +67,7 @@ public class SwiptListFragment extends BaseFragment {
 
 
     private void initListener() {
-        mRecyclerRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getData();
-            }
-        });
+
         adapter.setListener(new OnItemClickListener() {
             @Override
             public void onClick(DeviceModle device) {
@@ -87,92 +81,21 @@ public class SwiptListFragment extends BaseFragment {
 
             @Override
             public void onDelete(final DeviceModle device) {
-                deleteDialog(device);
+
             }
         });
 
     }
-    //删除确认
-    void deleteDialog(final DeviceModle device){
-       /* AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
-        dialog.setTitle("设备删除");
-        dialog.setMessage("是否删除编号为"+device.getBianHao()+"的设备");
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.sure), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                deleteDevice(device);
-            }
-        });
-        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();*/
-    }
-
 
 
     private void getData() {
-       /* OkHttpUtils
-                .get()
-                .url(ElcoConstant.SELECT_GUANGJIAO_DEVICELIST)
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        mRecyclerRefreshLayout.onComplete();
-                        ToastUtil.showTextToast("获取失败");
-                    }
+        for(int i=0;i<20;i++){
+            mData.add(new DeviceModle("056","0151","1111","","","","","","","","","","","",0));
+            mData.add(new DeviceModle("055","0152","1111","","","","","","","","","","","",0));
+        }
 
-                    @Override
-                    public void onResponse(String response, int id) {
-                        mRecyclerRefreshLayout.onComplete();
-                        try {
-                            ArrayList<DeviceModle> people = new Gson().fromJson(response, new TypeToken<ArrayList<DeviceModle>>() {
-                            }.getType());
-                            mData = people;
-                            adapter.notifyDataSetChanged();
-                            ToastUtil.showTextToast("获取条目：" + mData.size());
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });*/
-//       adapter.setWitch(mData.size()/2);
-        mData.add(new DeviceModle("056","0151","1111","","","","","","","","","","","",0));
-        mData.add(new DeviceModle("055","0152","1111","","","","","","","","","","","",0));
-        mRecyclerRefreshLayout.onComplete();
         adapter.notifyDataSetChanged();
     }
-
-    private void deleteDevice(final DeviceModle device) {
-        mData.remove(device);
-        adapter.notifyDataSetChanged();
-       /* OkHttpUtils
-                .get()
-                .url(String.format(ElcoConstant.GUANGJIAO_DELETE_DEVICE, device.id,device.getIMEI()))
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        ToastUtil.showTextToast("删除失败");
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {//{"res":1}
-                        CallBackModle modle = new Gson().fromJson(response, CallBackModle.class);
-                        if (modle.res >= 0) {
-                            mData.remove(device);
-                            adapter.notifyDataSetChanged();
-                            getData();
-                        }
-                    }
-                });*/
-    }
-
 
     interface OnItemClickListener {
         void onClick(DeviceModle device);
@@ -185,12 +108,12 @@ public class SwiptListFragment extends BaseFragment {
 
         public DeviceHolder(View itemView) {
             super(itemView);
-            /*item = itemView.findViewById(R.id.layout);
+           item = itemView.findViewById(R.id.layout);
             layout = itemView.findViewById(R.id.swip_layout);
             title = (TextView) itemView.findViewById(R.id.title);
             value = (TextView) itemView.findViewById(R.id.value);
             edit = (TextView) itemView.findViewById(R.id.edit);
-            delete = (TextView) itemView.findViewById(R.id.delete);*/
+            delete = (TextView) itemView.findViewById(R.id.delete);
         }
 
         TextView title, value,edit,delete;
@@ -255,12 +178,11 @@ public class SwiptListFragment extends BaseFragment {
                                 closeItem(isOpen);
                             }
                             isOpen = position;
-//                            Log.e("Adapter","open:"+position);
                         }
                     }
                     if(status == SwipeListLayout.Status.Close && isOpen == position){
                         isOpen = -1;
-//                        Log.e("Adapter","close:"+position);
+                        Log.e("Adapter","close:"+position);
                     }
                 }
 
