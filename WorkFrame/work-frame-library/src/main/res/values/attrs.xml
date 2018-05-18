@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CheckStart">
+        <attr name="Progress" format="integer"></attr>
+        <attr name="Max" format="integer"></attr>
+        <attr name="gravity" format="enum">
+            <enum name="left" value="1"></enum>
+            <enum name="right" value="2"></enum>
+            <enum name="center" value="0"></enum>
+        </attr>
+        <attr name="StartMargin" format="dimension"></attr>
+        <attr name="StartWidth" format="dimension"></attr>
+        <attr name="isChecked" format="boolean"></attr>
+    </declare-styleable>
+</resources>
