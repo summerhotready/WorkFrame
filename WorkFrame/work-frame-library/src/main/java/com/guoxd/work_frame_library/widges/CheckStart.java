@@ -157,7 +157,8 @@ public class CheckStart extends LinearLayout {
                 if(isAutoMargin){//set
                     mWidth = w1;
                     if( widthStart*mMax >w1){
-                        mMargin = context.getResources().getDimensionPixelSize(R.dimen.line);
+                        mMargin = 3*context.getResources().getDisplayMetrics().densityDpi;
+//                        mMargin = context.getResources().getDimensionPixelSize(R.dimen.line);
                         widthStart =( w1- mMargin*(mMax-1) )/mMax;
                     }else{
                         mMargin = w1/mMax -widthStart;
