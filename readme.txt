@@ -9,6 +9,6 @@ Views
 拖拽部分通过监听组件的onTouchEvent计算修改view的值
 效果如图
 列：defaultTableMode = COLUME
-![image](https://github.com/summerhotready/WorkFrame/blob/master/WorkFrame/images/slideblocks_%E5%88%97.gif)
+![img](https://github.com/summerhotready/WorkFrame/blob/master/WorkFrame/images/slideblocks_%E5%88%97.gif)
 排：defaultTableMode = ROW
-![image](https://github.com/summerhotready/WorkFrame/blob/master/WorkFrame/images/slideblocks_%E6%8E%92.gif)
+![img](https://github.com/summerhotready/WorkFrame/blob/master/WorkFrame/images/slideblocks_%E6%8E%92.gif)
