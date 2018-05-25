@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding_15">
-<com.guoxd.work_frame_library.widges.NoCopyPasteMenuEditText
-    android:id="@+id/noCopyEdit"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="@string/hint_nocopy"/>
+    <com.guoxd.work_frame_library.widges.NoCopyPasteMenuEditText
+        android:id="@+id/noCopyEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_nocopy"/>
+    <com.guoxd.work_frame_library.widges.CheckStart
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        app:title="@string/cancel"
+        android:background="@color/colorAccent"/>
 </LinearLayout>

@@ -56,14 +56,16 @@ public class SlideBlock extends LinearLayout {
     //设置默认table模式，即添加方向
     @ModeTable int defaultTableMode = ROW;
 
+
     public static final int MOVE_TOP=0;
     public static final int MOVE_BOTTOM=1;
     public static final int MOVE_LEFT=2;
     public static final int MOVE_RIGHT=3;
     @IntDef({MOVE_TOP,MOVE_BOTTOM,MOVE_LEFT,MOVE_RIGHT})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface MoveMotion{}
+    private @interface MoveMotion{}
     @MoveMotion int defaultMotion=0;
+
 
     public SlideBlock(Context context) {
         this(context,null);
@@ -86,12 +88,10 @@ public class SlideBlock extends LinearLayout {
             Log.i(TAG,"getSceneHeight:0");
         }else{//有宽高
             Log.i(TAG,"getSceneHeight:"+desiredHeight);
+            //初始化数据
+            initData();
             //清空子View
             removeAllViews();
-//            for(LinearLayout ll:linearLayouts){
-//                ll.removeAllViews();
-//            }
-//            linearLayouts.clear();
             //设置LinearLayout
             setBackgroundColor(backgroundColor);
 
@@ -104,7 +104,7 @@ public class SlideBlock extends LinearLayout {
                 childWidth = rowWidth;
                 childHeight = desiredHeight;//注意这里不能直接等于LayoutParams.MATCH_PARENT，否则会导致显示不出来
                 addChild(rowSize,columnSize);
-            }else{
+            }else{//排模式添加
                 setOrientation(VERTICAL);
                 //计算单元宽高
                 rowWidth = desiredWidth/columnSize;
@@ -132,6 +132,7 @@ public class SlideBlock extends LinearLayout {
 //            int marginVer = desiredHeight -(rowHeight*column);
 //            Log.i(TAG,"call w:"+rowWidth+" h:"+rowHeight+" marginHorizon:"+marginHorizon+" marginVer:"+marginVer);
 //            setPadding(marginHorizon/2,marginVer/2,(marginHorizon-marginHorizon/2),marginVer-marginVer/2);
+            invalidate();
         }
     }
 
@@ -670,212 +671,3 @@ public class SlideBlock extends LinearLayout {
         this.defaultTableMode = defaultTableMode;
     }
 }
-
-//                    if (rightTextView != null && leftTextView == null) {
-//                        if(rightTextView.getWidth()-moveSize > 0){
-//                            LayoutParams olp = (LayoutParams) rightTextView.getLayoutParams();
-//                            LayoutParams movelp = (LayoutParams) moveText.getLayoutParams();
-//                            rightTextView.setTranslationX(moveSize);
-//                            olp.width = olp.width - moveSize;
-//                            rightTextView.setLayoutParams(olp);
-//
-//                            movelp.width = Math.round(rightTextView.getX()-moveText.getX());//如此这般发现宽度没有变化
-//                            moveText.setLayoutParams(movelp);
-//                            Log.i(TAG,"move :"+moveText.getX()+" "+movelp.width+" moveWidth:"+moveText.getWidth()+" moveSize:"+moveSize);
-//                            Log.i(TAG,"right :"+rightTextView.getX()+" "+olp.width+" Width:"+rightTextView.getWidth()+" moveSize:"+moveSize);
-//
-//                            clickDownX = event.getX();
-//                        }else{
-//                            LayoutParams olp = (LayoutParams) rightTextView.getLayoutParams();
-//                            moveSize = rightTextView.getWidth();//等于当前宽度
-//                            Log.e(TAG,"reset :"+" moveSize:"+moveSize+" right:"+olp.width);
-//                            removeView(rightTextView);
-//                            nowList.remove(rightTextView);
-//                            resetLeftRight();
-//                            if(rightTextView !=null){
-//                                clickDownX = rightTextView.getX();
-//                                Log.i(TAG,"right :"+olp.width+" Width:"+rightTextView.getWidth()+" moveSize:"+moveSize);
-//                            }else{
-//                                clickDownX = desiredWidth;
-//                            }
-//                            Log.i(TAG,"clickDownX :"+clickDownX);
-//                            olp = (LayoutParams) moveText.getLayoutParams();
-//                            olp.width = olp.width+moveSize;
-//                            moveText.setLayoutParams(olp);
-//                            Log.i(TAG,"move :"+olp.width+" moveWidth:"+moveText.getWidth()+" moveSize:"+moveSize);
-//                        }
-
-
-
-//当前move增加宽度，右边move改变定位
-//                        LayoutParams olp = (LayoutParams) rightTextView.getLayoutParams();
-//                        LayoutParams movelp = (LayoutParams) moveText.getLayoutParams();
-//                        if (olp.width - moveSize > 0) {//判断右侧view减少之后是否还有width
-//                            Log.i(TAG,"point :"+number+" moveSize:"+moveSize);
-//                            Log.i(TAG, "before move :" +moveText.getWidth()+" right:"+rightTextView.getX()+" "+rightTextView.getWidth());
-//                            rightTextView.setTranslationX(moveSize);
-////                            rightTextView.setX(rightTextView.getX()+moveSize);//行不通
-//                            olp.width = olp.width - moveSize;
-//                            rightTextView.setLayoutParams(olp);
-//
-//                            Log.i(TAG, "set right :"+olp.width+" " +moveText.getWidth()+" right:"+rightTextView.getX()+" "+rightTextView.getWidth());
-//                            movelp.width = Math.round(rightTextView.getX()-moveText.getX());//如此这般发现宽度没有变化
-//                            moveText.setLayoutParams(movelp);
-//
-//                            clickDownX = clickDownX+moveSize;
-//                            Log.i(TAG, "finish :"+movelp.width +" "+moveText.getWidth()+" right:"+rightTextView.getX()+" "+rightTextView.getWidth());
-//                        } else {//超过当前组件宽度移除
-//                            Log.i(TAG,"remove point :"+number+" moveSize:"+moveSize+" olp.width:"+olp.width+" right:"+rightTextView.getX()+" "+rightTextView.getRight());
-//                            moveSize = olp.width;//等于当前宽度
-//                            clickDownX = rightTextView.getRight();
-//                            removeView(rightTextView);
-//                            nowList.remove(rightTextView);
-//                            resetLeftRight();
-//                            olp = (LayoutParams) moveText.getLayoutParams();
-//                            olp.width = olp.width+moveSize;
-//                            moveText.setLayoutParams(olp);
-//                        }
-                        /*if(rightTextView.getWidth()-moveSize > 0){
-                            if(isFirst){
-                                isFirst = false;
-                                Log.e(TAG,"first :"+rightTextView.getLeft()+" ,"+rightTextView.getRight()+" moveWidth:"+moveText.getLeft()+" ,"+moveText.getRight());
-                            }
-                            LayoutParams olp = (LayoutParams) rightTextView.getLayoutParams();
-                            LayoutParams movelp = (LayoutParams) moveText.getLayoutParams();
-                            rightTextView.setTranslationX(moveSize);
-                            olp.width = olp.width - moveSize;
-                            rightTextView.setLayoutParams(olp);
-                            rightTextView.setWidth(olp.width);
-
-                            movelp.width = Math.round(rightTextView.getX()-moveText.getX());//如此这般发现宽度没有变化
-                            moveText.setLayoutParams(movelp);
-                            moveText.setWidth(movelp.width);
-                            Log.i(TAG,"move :"+movelp.width+" moveWidth:"+moveText.getWidth()+" moveSize:"+moveSize);
-                            Log.i(TAG,"right :"+olp.width+" Width:"+rightTextView.getWidth()+" moveSize:"+moveSize);
-
-                            clickDownX = clickDownX+moveSize;
-                        }else{
-                            LayoutParams olp = (LayoutParams) rightTextView.getLayoutParams();
-                            moveSize = rightTextView.getWidth();//等于当前宽度
-                            Log.e(TAG,"reset :"+" moveSize:"+moveSize+" right:"+olp.width);
-                            removeView(rightTextView);
-                            nowList.remove(rightTextView);
-                            resetLeftRight();
-                            if(rightTextView !=null){
-                                clickDownX = Math.round(rightTextView.getX());
-                                Log.i(TAG,"right :"+olp.width+" Width:"+rightTextView.getWidth()+" moveSize:"+moveSize);
-                            }else{
-                                clickDownX = desiredWidth;
-                            }
-                            Log.i(TAG,"clickDownX :"+clickDownX);
-                            olp = (LayoutParams) moveText.getLayoutParams();
-                            olp.width = olp.width+moveSize;
-                            moveText.setLayoutParams(olp);
-                            Log.i(TAG,"move :"+olp.width+" moveWidth:"+moveText.getWidth()+" moveSize:"+moveSize);
-                            moveText.setWidth(olp.width);
-                            isFirst = true;
-                        }*/
-
-
-//clickDownY = event.getY();
-
-
-//                    else if(leftTextView!=null && rightTextView == null){
-//                        //当前move改变定位，左边move增加宽度
-//                        LayoutParams olp = (LayoutParams) moveText.getLayoutParams();
-//                        if(olp.width - Math.round(moveSize)>0) {//判断右侧view减少之后是否还有width
-//                            moveText .setTranslationX(Math.round(moveSize));
-//                            olp.width = olp.width - Math.round(moveSize);
-//                            moveText.setLayoutParams(olp);
-//
-//                            olp = (LayoutParams) leftTextView.getLayoutParams();
-//                            olp.width = olp.width + Math.round(moveSize);
-//                            leftTextView.setLayoutParams(olp);
-//                        }else{//移除
-//                            olp = (LayoutParams) leftTextView.getLayoutParams();
-//                            olp.width = moveText.getRight()- leftTextView.getLeft();
-//                            leftTextView.setLayoutParams(olp);
-//
-//                            removeView(moveText);
-//                            nowList.remove(moveText);
-//                            moveText = null;
-//                        }
-//                    }else if(rightTextView!=null && leftTextView!=null){
-//                        if(defaultMotion == MOVE_LEFT){//左View向右移动
-//                            LayoutParams olp = (LayoutParams) moveText.getLayoutParams();
-//                            if(olp.width - Math.round(moveSize)>0) {//判断右侧view减少之后是否还有width
-//                                moveText .setTranslationX(Math.round(moveSize));
-//                                olp.width = olp.width - Math.round(moveSize);
-//                                moveText.setLayoutParams(olp);
-//
-//                                olp = (LayoutParams) leftTextView.getLayoutParams();
-//                                olp.width = olp.width + Math.round(moveSize);
-//                                leftTextView.setLayoutParams(olp);
-//
-//                            }else{//移除
-//                                olp = (LayoutParams) leftTextView.getLayoutParams();
-//                                olp.width = moveText.getRight()-leftTextView.getLeft();
-//                                leftTextView.setLayoutParams(olp);
-//
-//                                removeView(moveText);
-//                                nowList.remove(moveText);
-//                                moveText = null;
-//                            }
-//
-//                        }else{//右View向左移动
-//                            //当前move增加宽度，右边move改变定位
-//                            LayoutParams olp = (LayoutParams) rightTextView.getLayoutParams();
-//                            if(olp.width - Math.round(moveSize)>0) {//判断右侧view减少之后是否还有width
-//                                rightTextView.setTranslationX(Math.round(moveSize));
-//                                olp.width = olp.width - Math.round(moveSize);
-//                                rightTextView.setLayoutParams(olp);
-//
-//                                olp = (LayoutParams) moveText.getLayoutParams();
-//                                olp.width = olp.width + Math.round(moveSize);
-//                                moveText.setLayoutParams(olp);
-//                            }else{//移除
-//                                olp = (LayoutParams) moveText.getLayoutParams();
-//                                olp.width = rightTextView.getRight()-moveText.getLeft();
-//                                moveText.setLayoutParams(olp);
-//
-//                                removeView(rightTextView);
-//                                nowList.remove(rightTextView);
-//                                resetLeftRight();
-//                            }
-//                        }
-//                        clickDownX = clickDownX+moveSize;
-//                        clickDownY = event.getY();
-//                    }else{
-//                        Log.i(TAG,"not move");
-//                    }
-//                }else{
-//
-//                }
-
-
-//                if(moveSize>=0 &&number<size-1){//right
-//                    TextView rightView = nowList.get(number+1);
-//                    //修改当前
-//                    LayoutParams olp=(LayoutParams) moveText.getLayoutParams();
-//                    olp.width = olp.width+Math.round(moveSize);
-//                    moveText.setLayoutParams(olp);
-//                    Log.i(TAG,"setTranslationX:"+rightView.getTranslationX()+" setTranslationY:"+rightView.getTranslationY());
-//                    rightView.setTranslationX(Math.round(moveSize));
-//                    rightView.setTranslationY(0);
-//                    olp=(LayoutParams) rightView.getLayoutParams();
-//                    olp.width = olp.width-Math.round(moveSize);
-//                    rightView.setLayoutParams(olp);
-////                    rightView.setLeft(rightView.getLeft()+Math.round(moveSize));
-////                    rightView.setGravity(Gravity.CENTER);
-//
-//                }else if(moveSize<0 && number>0){//left
-//                    TextView leftView = nowList.get(number-1);
-//                    Log.i(TAG,"left change this:"+(moveText.getLeft()+Math.round(moveSize)));
-//                    moveText.setLeft(moveText.getLeft()+Math.round(moveSize));
-//                    moveText.setGravity(Gravity.CENTER);
-//                    Log.i(TAG,"left change left:"+(leftView.getRight()+Math.round(moveSize)));
-//                    leftView.setRight(leftView.getRight()+Math.round(moveSize));
-//                    leftView.setGravity(Gravity.CENTER);
-//                }
-
-
