@@ -3,18 +3,26 @@
     <declare-styleable name="CheckStart">
         <attr name="Progress" format="integer"></attr>
         <attr name="Max" format="integer"></attr>
-        <attr name="gravity" format="enum">
+        <attr name="StartGravity" format="enum">
             <enum name="left" value="1"></enum>
             <enum name="right" value="2"></enum>
             <enum name="center" value="0"></enum>
+            <enum name="top" value="3"></enum>
+            <enum name="bottom" value="4"></enum>
         </attr>
-        <attr name="orientation" format="enum">
+        <attr name="StartOrientation" format="enum">
             <enum name="vertical" value="1"></enum>
             <enum name="horizontal" value="0"></enum>
         </attr>
-        <attr name="title" format="string"></attr>
+        <attr name="StartMode" format="enum">
+            <enum name="only" value="1"></enum>
+            <enum name="range" value="2"></enum>
+            <enum name="begin" value="0"></enum>
+        </attr>
         <attr name="StartMargin" format="dimension"></attr>
-        <attr name="StartWidth" format="dimension"></attr>
+        <attr name="StartSize" format="dimension"></attr>
         <attr name="isChecked" format="boolean"></attr>
+        <attr name="CheckedDrawable" format="reference"></attr>
+        <attr name="UncheckDrawable" format="reference"></attr>
     </declare-styleable>
 </resources>

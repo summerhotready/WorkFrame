@@ -1,54 +1,47 @@
 package com.guoxd.work_frame_library.widges;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.IntDef;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.guoxd.work_frame_library.R;
 import com.guoxd.work_frame_library.listeners.StartOnClickListener;
 import com.guoxd.work_frame_library.utils.PaintViewUtils;
-
+import com.guoxd.work_frame_library.utils.TextShowUtils;
+import com.guoxd.work_frame_library.views.SquareCheckView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by guoxd on 2016/8/19.
  * this view base on checkbox to build like ratting bar
- * this class has three mode:StartMode
- *
+ * this class has three mode:SELECT_START_BEGIN_CHECK,SELECT_START_ONLY_CHECK,SELECT_START_RANGE_CHECK
  * cause start image has width and height,when the start too much cann't show.
  */
 public class CheckStart extends LinearLayout {
     public final String TAG = "CheckStart";
     /**
      * when you check star, only star who is checked is turn on
-     * 单一选择
+     * 单一选择，选中的亮起
      */
     public static final int SELECT_START_ONLY_CHECK = 1;
     /**
      * when you check star, from star who is checked is turn on
-     * 范围选择
+     * 范围选择，从A到B亮起
      */
-    public static final int SELECT_START_BEGIN_CHECK = 0;
+    public static final int SELECT_START_RANGE_CHECK = 2;
     /**
      * when start check,when you checked the last one who is on,all turn off
-     * 仅显示模式，无点击效果
+     * 范围选择，从0-N亮起
      */
-    public static final int SELECT_START_NULL_CHECK = 2;
-    @IntDef ({SELECT_START_BEGIN_CHECK,SELECT_START_ONLY_CHECK,SELECT_START_NULL_CHECK})
+    public static final int SELECT_START_BEGIN_CHECK = 0;
+    @IntDef ({SELECT_START_BEGIN_CHECK,SELECT_START_ONLY_CHECK,SELECT_START_RANGE_CHECK})
     @Retention(RetentionPolicy.SOURCE)
     public  @interface StartMode{}
     @StartMode int CheckMode=0;
@@ -56,39 +49,53 @@ public class CheckStart extends LinearLayout {
     public static final int GRAVITY_CENTER = 0;
     public static final int GRAVITY_LEFT = 1;
     public static final int GRAVITY_RIGHT = 2;
-    @IntDef ({GRAVITY_CENTER,GRAVITY_LEFT,GRAVITY_RIGHT})
+    public static final int GRAVITY_TOP = 3;
+    public static final int GRAVITY_BOTTOM= 4;
+    @IntDef ({GRAVITY_CENTER,GRAVITY_LEFT,GRAVITY_RIGHT,GRAVITY_TOP,GRAVITY_BOTTOM})
     @Retention(RetentionPolicy.SOURCE)
     public @interface GravityMode{}
 
     //默认高度
-    private final int defaultStartSize = 35;
+    private int mDefaultSize_min;
+    private int mDefaultSize_max;
 
     //当前上下文
     Context mContext;
     //stars存放星星的容器,方便调整
     LinearLayout ll;
     //start
-    List<TextView> dotViewsList;
-    //start's width
-    int widthStart;
+    List<SquareCheckView> dotViewsList;
+
     //组件宽高
     int viewWidth=0;
     int viewHeight=0;
 
-    private int mMax=5;
-    private int mNumber=0;
+    //初始选中，范围默认从0-N，单选默认选中N
+    private int mNumber=-1;
+    //星星总数
+    private int mMax=-1;
     //内容居中
-    @GravityMode int mGravity=0;
+    @GravityMode int mGravity=GRAVITY_CENTER;
     //星星方向
-    private int mOrientation=0;
+    private int mOrientation=HORIZONTAL;
     //startView的margin，默认是5dp
-    private int mMargin=0;
-    //startSize
+    private int mMargin=-1;
+
+    //是否自动margin flag
+    private boolean isAutoMargin=false;
+    //startSize,range(1~ViewHeigh|ViewWidth)
     int startSize=0;
 
+    //是否可点击，默认为false
+    private boolean isChecked = false;
+    /**选中
+     * SELECT_START_BEGIN_CHECK模式
+     * SELECT_START_ONLY_CHECK模式用于记录当前选中项目，未选中为-1
+     * SELECT_START_RANGE_CHECK模式用于记录上一次选中项目，未选中和第二次选中   */
+    int checkFrom = -1;
 
-    private boolean isChecked;
-
+    int checkedId=0,uncheckId=0;
+    Drawable checkedDrawable,uncheckDrawable;
 
     public CheckStart(Context context){
         this(context,null);
@@ -99,111 +106,110 @@ public class CheckStart extends LinearLayout {
     public CheckStart(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.mContext = context;
-        mMargin = Math.round(mContext.getResources().getDisplayMetrics().density*5);
         TypedArray type = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CheckStart,0,0);
         try{
             mNumber = type.getInteger(R.styleable.CheckStart_Progress,mNumber);
             mMax = type.getInteger(R.styleable.CheckStart_Max,mMax);
-            mGravity = type.getInteger(R.styleable.CheckStart_gravity,mGravity);
-            mOrientation = type.getInteger(R.styleable.CheckStart_orientation,LinearLayout.HORIZONTAL);
-            mMargin = type.getDimensionPixelOffset(R.styleable.CheckStart_StartMargin,0);
-            widthStart = type.getDimensionPixelOffset(R.styleable.CheckStart_StartWidth,0);
+            mGravity = type.getInteger(R.styleable.CheckStart_StartGravity,mGravity);
+            mOrientation = type.getInteger(R.styleable.CheckStart_StartOrientation,mOrientation);
+            mMargin = type.getDimensionPixelOffset(R.styleable.CheckStart_StartMargin,mMargin);
+            startSize = type.getDimensionPixelOffset(R.styleable.CheckStart_StartSize,startSize);
+            CheckMode = type.getInteger(R.styleable.CheckStart_StartMode,SELECT_START_BEGIN_CHECK);
             //默认不可点击
-            isChecked = type.getBoolean(R.styleable.CheckStart_isChecked,false);
-
+            isChecked = type.getBoolean(R.styleable.CheckStart_isChecked,isChecked);
+            checkedId = type.getResourceId(R.styleable.CheckStart_CheckedDrawable,0);
+            uncheckId = type.getResourceId(R.styleable.CheckStart_UncheckDrawable,0);
         }catch (Exception e){
         }finally {
             type.recycle();
         }
-        setMode(isChecked? SELECT_START_ONLY_CHECK : SELECT_START_NULL_CHECK);
-        //获取星星尺寸
-        //注意使用此方法不能获得svg的宽高
-//        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.start_chedked);
-//        minWidthStart = bitmap.getWidth();
-//        Log.i(TAG,"bitmap:"+minWidthStart);
-
-        //设置容器
-        dotViewsList = new ArrayList<>();
+        initData();
     }
 
+    private final void initData() {
 
+        // 设置wrap_content的默认宽 / 高值
+        // 默认宽/高的设定并无固定依据,根据需要灵活设置
+        // 类似TextView,ImageView等针对wrap_content均在onMeasure()对设置默认宽 / 高值有特殊处理,具体读者可以自行查看
+        mDefaultSize_min= PaintViewUtils.getSizePX(mContext,30);
+        mDefaultSize_max= PaintViewUtils.getSizePX(mContext,150);
 
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.d(TAG, "onMeasure width:"+MeasureSpec.getSize(widthMeasureSpec)+" height:"+MeasureSpec.getSize(heightMeasureSpec));
-        Log.d(TAG, "onMeasure padding:"+getPaddingLeft()+", "+getPaddingRight()+", "+getPaddingTop()+", "+getPaddingBottom());
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        Log.d(TAG, "onSizeChanged width:"+w+" height:"+h);
-        Log.d(TAG, "onSizeChanged padding:"+getPaddingLeft()+", "+getPaddingRight()+", "+getPaddingTop()+", "+getPaddingBottom());
-
-        viewWidth = w-getPaddingLeft()-getPaddingRight();
-        viewHeight = h-getPaddingTop()-getPaddingBottom();
-        setView();
-    }
-
-
-    private StartOnClickListener startClickListener = new StartOnClickListener() {
-        @Override
-        public void onClick(boolean b, String tag) {
-            Log.i(TAG,"tag is"+tag);
-            if (CheckMode == SELECT_START_BEGIN_CHECK) {
-                //从点1-2
-
-            }else if (CheckMode == SELECT_START_NULL_CHECK) {
-                //只修改点击处
-
-            }
+        if(checkedId !=0){
+            checkedDrawable = PaintViewUtils.getDrawable(mContext,checkedId);
         }
-    };
+        if(checkedDrawable == null){
+            checkedDrawable = PaintViewUtils.getDrawable(mContext,R.drawable.start_chedked);
+        }
 
+        if(uncheckId !=0){
+            uncheckDrawable = PaintViewUtils.getDrawable(mContext,uncheckId);
+        }
+        if(uncheckDrawable == null){
+            uncheckDrawable = PaintViewUtils.getDrawable(mContext,R.drawable.start_uncheck);
+        }
+    }
+
+    //初始绘制View
+    @SuppressLint("WrongConstant")
     private void setView() {
-        Log.i(TAG,"setView");
+        //初始化View
         removeAllViews();
-
         ll = new LinearLayout(mContext);
-        ll.setBackgroundColor(Color.WHITE);
-        int otherMargin =0;
-        //设置星星方向
-        if(mOrientation == HORIZONTAL){
-            ll.setOrientation(HORIZONTAL);
-            //viewWidth/mMax-mMargin;
-            startSize = Math.min(viewWidth/mMax,viewHeight);
-            if( startSize*mMax+mMargin*(mMax-1) > viewWidth){
-                startSize = viewWidth-(mMargin*(mMax-1))/mMax;
-                otherMargin = viewWidth-(startSize*mMax);
-            }
-        }else{
-            ll.setOrientation(VERTICAL);
-            startSize = Math.min(viewWidth,viewHeight/mMax);
-            if( startSize*mMax+mMargin*(mMax-1) > viewHeight){
-                startSize = viewHeight-(mMargin*(mMax-1))/mMax;
-                otherMargin = viewHeight-(startSize*mMax);
-            }
-        }
-        addView(ll,new LayoutParams(viewWidth,viewHeight));
-    Log.i(TAG,"item:"+startSize+" margin:"+mMargin+" other:"+otherMargin);
+        ll.setOrientation(mOrientation);
+        addView(ll,new LayoutParams(viewWidth,startSize));
+
+        //set margin
+        LayoutParams lp=null;
         for(int i=0;i<mMax;i++){
-            StartView view = new StartView(mContext,startSize);
+            SquareCheckView view = new SquareCheckView(mContext,startSize);
+            view.setDrawable(uncheckDrawable,checkedDrawable);
             view.startChecked((i<mNumber-1)? true:false);
             view.setTag(i);
-
-            if (CheckMode != SELECT_START_NULL_CHECK) {
-                //允许点击
+            int otherMargin=0;
+            if(mOrientation == HORIZONTAL){
+                if(mGravity == GRAVITY_CENTER){//居中
+                    otherMargin = getLeftRightMargin();
+                    if(i==0){
+                        int left = otherMargin>0?(otherMargin/2):0;
+                        lp = PaintViewUtils.getLayoutParams(startSize,startSize, left,0,0,0);
+                    }else if(i == mMax-1){
+                        int right = otherMargin>0?(otherMargin-otherMargin/2):0;
+                        lp = PaintViewUtils.getLayoutParams(startSize,startSize,mMargin,0,right,0);
+                    }else{
+                        lp = PaintViewUtils.getLayoutParams(startSize,startSize,mMargin,0,0,0);
+                    }
+                }else{//left or right
+                    otherMargin = mGravity == GRAVITY_RIGHT? getLeftRightMargin():0;
+                    lp = PaintViewUtils.getLayoutParams(startSize,startSize,i==0? otherMargin:mMargin,0,0,0);
+                }
+            }else{
+                if(mGravity == GRAVITY_CENTER) {//居中
+                    otherMargin = getTopBottomMargin();
+                    if(i==0){
+                        int top = otherMargin>0?(otherMargin/2):0;
+                        lp = PaintViewUtils.getLayoutParams(startSize,startSize, 0,top,0,0);
+                    }else if(i == mMax-1){
+                        int bottom = otherMargin>0?(otherMargin-otherMargin/2):0;
+                        lp = PaintViewUtils.getLayoutParams(startSize,startSize,0,mMargin,0,bottom);
+                    }else{
+                        lp = PaintViewUtils.getLayoutParams(startSize,startSize,0,mMargin,0,0);
+                    }
+                }else{
+                    otherMargin = mGravity == GRAVITY_BOTTOM? getTopBottomMargin():0;
+                    lp = PaintViewUtils.getLayoutParams(startSize,startSize,0,i==0? otherMargin:mMargin,0,0);
+                }
+            }
+            if (isChecked) {//允许点击
                 view.setStartViewClickListener(startClickListener);
             }
             dotViewsList.add(view);
-            ll.addView(view,new LayoutParams(startSize,startSize));
+            ll.addView(view,lp);
         }
+
         //设置child宽高,不设置此处后面写onLayout也不能显示
-        int widthMeasureSpec = MeasureSpec.makeMeasureSpec(viewWidth,MeasureSpec.EXACTLY);
-        int heightMeasureSpec = MeasureSpec.makeMeasureSpec(viewHeight,MeasureSpec.EXACTLY);
-        Log.i(TAG,"setView childCount:"+getChildCount());
+        int widthMeasureSpec = MeasureSpec.makeMeasureSpec(mOrientation == HORIZONTAL? viewWidth:startSize,MeasureSpec.EXACTLY);
+        int heightMeasureSpec = MeasureSpec.makeMeasureSpec(mOrientation == HORIZONTAL? startSize:viewHeight,MeasureSpec.EXACTLY);
+        TextShowUtils.ShowLog(TAG,"setView childCount:"+getChildCount());
         //这一步保证onLayout时child的宽高是有值得的
         for (int i = 0; i < getChildCount(); i++) {
             final View child = getChildAt(i);
@@ -212,6 +218,51 @@ public class CheckStart extends LinearLayout {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        TextShowUtils.ShowLog(TAG,"onMeasure padding:"+getPaddingLeft()+", "+getPaddingRight()+", "+getPaddingTop()+", "+getPaddingBottom());
+        // 获取宽-测量规则的模式和大小
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+
+        // 获取高-测量规则的模式和大小
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        TextShowUtils.ShowLog(TAG,"widthSize:"+widthSize+" heightSize:"+heightSize);
+        /**
+         * 解决宽高为wrap_content时不显示的问题
+         */
+        // 当模式是AT_MOST（即wrap_content）时设置默认值
+        if (widthMode == MeasureSpec.AT_MOST && heightMode == MeasureSpec.AT_MOST) {
+            if(mOrientation == HORIZONTAL){
+                setMeasuredDimension(mDefaultSize_max, mDefaultSize_min);
+            }else{
+                setMeasuredDimension(mDefaultSize_min, mDefaultSize_max);
+            }
+            // 宽 / 高任意一个模式为AT_MOST（即wrap_content）时，都设置默认值
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            setMeasuredDimension(mDefaultSize_min, heightSize);
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            setMeasuredDimension(widthSize, mDefaultSize_min);
+        }
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        TextShowUtils.ShowLog(TAG,"widthSize:"+w+" heightSize:"+h);
+
+        viewWidth = w-getPaddingLeft()-getPaddingRight();
+        viewHeight = h-getPaddingTop()-getPaddingBottom();
+        resetValue();
+        setView();
+    }
+
+
+
+    @SuppressLint("WrongConstant")
+    @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         for(int i=0;i<getChildCount();i++){
@@ -219,241 +270,165 @@ public class CheckStart extends LinearLayout {
             if (child.getVisibility() == View.GONE) {
                 continue;
             }
-            Log.i(TAG,"onLayout width:"+child.getMeasuredWidth()+" height:"+child.getMeasuredHeight());
-            //设置child位置
-            child.layout(getPaddingLeft(), getPaddingTop(), getPaddingLeft()+viewWidth, getPaddingTop()+viewHeight);
+            if(mOrientation == HORIZONTAL){
+                int margin = viewHeight-startSize;
+                int marginTop = margin/2+getPaddingTop();
+                //设置child位置
+                child.layout(getPaddingLeft(), marginTop, getPaddingLeft()+viewWidth, marginTop+startSize);
+            }else{
+                int margin = viewWidth-startSize;
+                int marginLeft = margin/2+getPaddingLeft();
+                //设置child位置
+                child.layout(marginLeft, getPaddingTop(), marginLeft+startSize, getPaddingTop()+viewHeight);
+            }
         }
     }
 
+    //点击事件
+    private StartOnClickListener startClickListener = new StartOnClickListener() {
+        @Override
+        public void onClick(boolean b, String tag) {
+            int number= Integer.valueOf(tag);
+            if (CheckMode == SELECT_START_RANGE_CHECK) {//范围选择
+                //从点1-2
+                if(checkFrom<0){//first
+                    clearStart();
+                    checkStart(number,true);
+                    checkFrom = number;
+                }else{
+                    checkStart(checkFrom,number,true);
+                    checkFrom = -1;
+                }
+            }else if (CheckMode == SELECT_START_ONLY_CHECK) {//唯一选择
+                //只修改点击处
+                if(number == checkFrom){//the same one
+                    checkStart(number,false);
+                    checkFrom = -1;
+                }else{
+                    checkStart(checkFrom,false);
+                    checkStart(number,true);
+                    checkFrom = number;
+                }
+            }else if(CheckMode == SELECT_START_BEGIN_CHECK){
+                clearStart();
+                checkStart(0,number,true);
+            }
+        }
+    };
+    //用于单选 设置点击效果
+    private void checkStart(int number,boolean b){
+        if(number>=0 && number<dotViewsList.size()) {
+            dotViewsList.get(number).startChecked(b);
+        }
+    }
+    //用于范围选择 设置点击效果
+    private void checkStart(int from ,int to,boolean b){
+        if(!(from >=0 && to >=0 && from <to)){
+            return;
+        }
+        if(!(from<dotViewsList.size() && to<= dotViewsList.size())){
+            return;
+        }
+        for(int i=from;i<=to;i++){
+            dotViewsList.get(i).startChecked(b);
+        }
+    }
+    //清除所有点击效果
+    private void clearStart(){
+        for(SquareCheckView start:dotViewsList){
+            if(start.isChecked()){
+                start.startChecked(false);
+            }
+        }
+    }
 
-//        if(mGravity ==0) {
-//            ll.setGravity(Gravity.CENTER);
-//        }else if(mGravity ==1){
-//            ll.setGravity(Gravity.LEFT);
-//        }else{
-//            ll.setGravity(Gravity.RIGHT);
-//        }
-//
-//        if(w1 >0  && isFirst){//need setView
-//            if(w1 != mWidth){//set width
-//                mWidth = w1;
-//            }
-//
-//            boolean bb = false;
-//            int mm = 3*mContext.getResources().getDisplayMetrics().densityDpi;
-////            int mm = context.getResources().getDimensionPixelSize(R.dimen.line);
-//            if(minWidthStart* mMax+mm *(mMax-1) >w1){//不能满足最小需求时更改Max
-//                mMax = (w1+mm)/(minWidthStart+mm);
-//                bb = true;
-//            }
-//
-//            if(bb){
-//                widthStart = minWidthStart;
-//                mMargin = mm;
-//                mStartSize = widthStart;
-//            }else if(true){//宽度自定
-//                if(true){//完全自定义，margin占宽度的五分之一
-//                    int width = w1/mMax;
-//                    mMargin = width/5;
-//                    widthStart = (w1 - (mMargin *(mMax-1)))/mMax;
-//                    if(widthStart <minWidthStart){//重置
-//                        widthStart = minWidthStart;
-//                        mMargin = ( w1 - mMax * widthStart)/(mMax-1);
-//                    }
-//                }else{//有margin
-//                    widthStart = (w1 - mMargin*(mMax-1))/mMax;
-//                    if(widthStart<minWidthStart){//重置
-//                        widthStart = minWidthStart;
-//                        mMargin = ( w1 - mMax * widthStart)/(mMax-1);
-//                    }
-//                }
-//                mStartSize = widthStart;
-//            }else{//has width
-//                if(true){//set
-//                    mWidth = w1;
-//                    if( widthStart*mMax >w1){
-//                        mMargin = 3*mContext.getResources().getDisplayMetrics().densityDpi;
-////                        mMargin = context.getResources().getDimensionPixelSize(R.dimen.line);
-//                        widthStart =( w1- mMargin*(mMax-1) )/mMax;
-//                    }else{
-//                        mMargin = w1/mMax -widthStart;
-//                        mStartSize = widthStart;
-//                    }
-//                }else{//确定宽度和间隔，需计算宽度和间隔是否小于w1
-//                    if( ( widthStart * mMax )+ mMargin*(mMax-1)>w1){
-//
-//                        if(widthStart*mMax >w1){//需要更改宽度
-//                            mMargin = 3*mContext.getResources().getDisplayMetrics().densityDpi;
-////                            mMargin = context.getResources().getDimensionPixelSize("1dp");
-//                            widthStart =( w1- mMargin*(mMax-1) )/mMax;
-//                        }else{//近更改margin
-//                            mMargin = (w1 - (widthStart*mMax))/(mMax-1);
-//                        }
-//                    }else{
-//                        mMargin =  (w1 - (widthStart*mMax))/(mMax-1);
-//                    }
-//                }
-//                mStartSize = widthStart;
-//            }
-//
-//            isFirst = false;
-//            if(mMax >0){
-//                setData(mNumber);
-//            }
-//        }
+    private int getLeftRightMargin(){
+        return viewWidth-(startSize*mMax)-mMargin*(mMax-1);
+    }
+    private int getTopBottomMargin(){
+        return viewHeight-(startSize*mMax)-mMargin*(mMax-1);
+    }
+    //重置未取值的默认值
+    private void resetValue() {
+        dotViewsList = new ArrayList<>();
+
+        if(mOrientation == HORIZONTAL && mGravity>GRAVITY_RIGHT){
+            mGravity = GRAVITY_CENTER;
+        }
+        if(mOrientation == VERTICAL && mGravity!=GRAVITY_CENTER && mGravity<GRAVITY_TOP){
+            mGravity = GRAVITY_CENTER;
+        }
+        if(mMargin<0){//未设置
+            isAutoMargin = true;
+            //默认值为5dp
+            mMargin = Math.round(mContext.getResources().getDisplayMetrics().density*5);
+        }
+        if(mMax<0){
+            mMax = 5;
+        }
+        int size;
+        if(mOrientation == HORIZONTAL){
+            if(isAutoMargin){
+                size = Math.min(viewWidth/mMax,viewHeight);
+                if(startSize==0 || startSize>size){
+                    startSize = size;
+                }
+                mMargin = (viewWidth-startSize*mMax)/(mMax-1);
+            }else{
+                size = Math.min((viewWidth-(mMax-1)*mMargin)/mMax,viewHeight);
+                if(startSize==0 || startSize>size){
+                    startSize = size;
+                }
+            }
+        }else{
+            if(isAutoMargin){
+                size = Math.min(viewWidth,viewHeight/mMax);
+                if(startSize==0 || startSize>size){
+                    startSize = size;
+                }
+                mMargin = (viewHeight-startSize*mMax)/(mMax-1);
+            }else{
+                size = Math.min(viewWidth,(viewHeight-(mMax-1)*mMargin)/mMax);
+                if(startSize==0 || startSize>size){
+                    startSize = size;
+                }
+            }
+        }
+        TextShowUtils.ShowLog(TAG,"view:"+startSize+" margin:"+mMargin);
+    }
+
+
 
 
     public void setMax(int max){
         this.mMax = max;
     }
 
-//    public void setProgress(int progress){
-//        if(null != dotViewsList && dotViewsList.size()>= progress){
-//            if(dotViewsList.size()<progress){
-//                progress = dotViewsList.size();
-//            }
-//
-//            if (CheckMode == SELECT_START_BEGIN_CHECK) {
-//                mNumber = progress;
-//                for (int i = 0; i < dotViewsList.size(); i++) {
-//                    if (i <= progress) {
-//                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_on);
-//                    } else {
-//                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_off);
-//                    }
-//                }
-//            } else if (CheckMode == SELECT_START_ONLY_CHECK) {
-//                mNumber = progress;
-//                for (int i = 0; i < dotViewsList.size(); i++) {
-//                    if (i == progress) {
-//                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_on);
-//                    } else {
-//                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_off);
-//                    }
-//                }
-//            } else if (CheckMode == SELECT_START_NULL_CHECK) {
-//                if(mNumber == progress){
-//                    mNumber = -1;
-//                    for (int i = 0; i < dotViewsList.size(); i++) {
-//                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_off);
-//                    }
-//                } else {
-//                    mNumber = progress;
-//                    for (int i = 0; i < dotViewsList.size(); i++) {
-//                        if (i <= progress) {
-//                            dotViewsList.get(i).setBackgroundResource(R.mipmap.star_on);
-//                        } else {
-//                            dotViewsList.get(i).setBackgroundResource(R.mipmap.star_off);
-//                        }
-//                    }
-//                }
-//            }
-//        }else{
-//            setData(progress);
-//        }
-//    }
+    public void setProgress(int progress){
+        if(progress<0 || progress>dotViewsList.size()-1)
+            return;
+        clearStart();
+        if(CheckMode == SELECT_START_ONLY_CHECK){
+            checkStart(progress,true);
+        }else{
+            checkStart(0,progress,true);
+        }
+    }
 
     public void setMode(int fag){
         this.CheckMode = fag;
     }
-//    public void setData(final int num){
-//        Log.d(TAG,"setData:"+num);
-//        if(mMax == 0){
-//            mMax = num;
-//        }
-//
-//        mNumber = num;
-//        if( mStartSize >0) {
-//            ll.removeAllViews();
-//            dotViewsList = new ArrayList<>();
-//            if (mMax > 0) {
-//                for (int i = 0; i < mMax; i++) {
-//                    TextView cb = new TextView(mContext);
-//                    cb.setTag(i);
-//                    cb.setWidth(mStartSize);
-//                    cb.setHeight(mStartSize);
-//                    if (CheckMode == SELECT_START_ONLY_CHECK) {
-//                        if (mNumber > 0 && i == mNumber - 1) {
-//                            cb.setBackgroundResource(R.mipmap.star_on);
-//                        } else {
-//                            cb.setBackgroundResource(R.mipmap.star_off);
-//                        }
-//                    } else {
-//                        if (mNumber > 0 && i <= mNumber - 1) {
-//                            cb.setBackgroundResource(R.mipmap.star_on);
-//                        } else {
-//                            cb.setBackgroundResource(R.mipmap.star_off);
-//                        }
-//                    }
-//                    cb.setOnClickListener(new OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            int number = Integer.valueOf(v.getTag().toString());
-//                            ViewGroup.LayoutParams lp = dotViewsList.get(number).getLayoutParams();
-//
-//                            if (CheckMode == SELECT_START_BEGIN_CHECK) {
-//                                mNumber = number;
-//                                for (int i = 0; i < dotViewsList.size(); i++) {
-//                                    if (i <= number) {
-//                                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_on);
-//                                    } else {
-//                                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_off);
-//                                    }
-//                                }
-//                            } else if (CheckMode == SELECT_START_ONLY_CHECK) {
-//                                mNumber = number;
-//                                for (int i = 0; i < dotViewsList.size(); i++) {
-//                                    if (i == number) {
-//                                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_on);
-//                                    } else {
-//                                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_off);
-//                                    }
-//                                }
-//                            } else if (CheckMode == SELECT_START_NULL_CHECK) {
-//                                if (mNumber == number) {
-//                                    mNumber = -1;
-//                                    for (int i = 0; i < dotViewsList.size(); i++) {
-//                                        dotViewsList.get(i).setBackgroundResource(R.mipmap.star_off);
-//                                    }
-//                                } else {
-//                                    mNumber = number;
-//                                    for (int i = 0; i < dotViewsList.size(); i++) {
-//                                        if (i <= number) {
-//                                            dotViewsList.get(i).setBackgroundResource(R.mipmap.star_on);
-//                                        } else {
-//                                            dotViewsList.get(i).setBackgroundResource(R.mipmap.star_off);
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    });
-//                    if (!isChecked) {
-//                        cb.setOnClickListener(new OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//
-//                            }
-//                        });
-//                    }
-//                    dotViewsList.add(cb);
-//
-//                    if (i != 0) {
-//                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-//                                LinearLayout.LayoutParams.WRAP_CONTENT);
-//                        lp.setMargins(mMargin, 0, 0, 0);
-//                        cb.setLayoutParams(lp);
-//                        ll.addView(cb);
-//                    } else {
-//                        ll.addView(cb);
-//                    }
-//                }
-//            }
-//        }
-//    }
 
-    public int getChecked(){
-        return mNumber;
+    /**
+     * checked is 1,uncheck is 0
+     * @return
+     */
+    public int[] getChecked(){
+        int size = dotViewsList.size();
+        int[] checked =new int[size];
+        for(int i=0;i<size;i++){
+            checked[i] = dotViewsList.get(i).isChecked()? 1:0;
+        }
+        return checked;
     }
-
 }

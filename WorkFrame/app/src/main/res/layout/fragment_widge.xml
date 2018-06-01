@@ -11,9 +11,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_nocopy"/>
     <com.guoxd.work_frame_library.widges.CheckStart
+        android:id="@+id/checkStart"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:padding="5dp"
-        app:title="@string/cancel"
-        android:background="@color/colorAccent"/>
+        android:layout_height="wrap_content"
+        app:CheckedDrawable="@android:drawable/ic_menu_edit"
+        app:isChecked="true"
+        android:padding="5dp"/>
 </LinearLayout>
