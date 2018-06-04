@@ -29,9 +29,9 @@ public class WidgeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_widge, container, false);
-
         CheckStart checkStart = root.findViewById(R.id.checkStart);
-        checkStart.setMode(CheckStart.SELECT_START_BEGIN_CHECK);
+        checkStart.setMax(10);
+        checkStart.setProgress(2);
         return root;
     }
 }

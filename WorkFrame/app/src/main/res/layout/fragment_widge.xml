@@ -16,5 +16,6 @@
         android:layout_height="wrap_content"
         app:CheckedDrawable="@android:drawable/ic_menu_edit"
         app:isChecked="true"
+        app:StartMode="which"
         android:padding="5dp"/>
 </LinearLayout>

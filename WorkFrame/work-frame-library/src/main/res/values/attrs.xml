@@ -16,7 +16,8 @@
         </attr>
         <attr name="StartMode" format="enum">
             <enum name="only" value="1"></enum>
-            <enum name="range" value="2"></enum>
+            <enum name="which" value="2"></enum>
+            <enum name="range" value="3"></enum>
             <enum name="begin" value="0"></enum>
         </attr>
         <attr name="StartMargin" format="dimension"></attr>

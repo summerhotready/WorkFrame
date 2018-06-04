@@ -21,27 +21,31 @@ import java.util.List;
 /**
  * Created by guoxd on 2016/8/19.
  * this view base on checkbox to build like ratting bar
- * this class has three mode:SELECT_START_BEGIN_CHECK,SELECT_START_ONLY_CHECK,SELECT_START_RANGE_CHECK
+ * this class has four mode:SELECT_START_BEGIN_CHECK,SELECT_START_ONLY_CHECK,SELECT_START_WHICH_CHECK,SELECT_START_RANGE_CHECK
  * cause start image has width and height,when the start too much cann't show.
  */
 public class CheckStart extends LinearLayout {
     public final String TAG = "CheckStart";
     /**
-     * when you check star, only star who is checked is turn on
+     * when you check star, only star who is checked
      * 单一选择，选中的亮起
      */
     public static final int SELECT_START_ONLY_CHECK = 1;
+    /**start chedcked who click
+     * 多选，哪个星星被点击就会亮起，重新点击不会清空
+     */
+    public static final int SELECT_START_WHICH_CHECK = 2;
     /**
      * when you check star, from star who is checked is turn on
      * 范围选择，从A到B亮起
      */
-    public static final int SELECT_START_RANGE_CHECK = 2;
+    public static final int SELECT_START_RANGE_CHECK = 3;
     /**
      * when start check,when you checked the last one who is on,all turn off
      * 范围选择，从0-N亮起
      */
     public static final int SELECT_START_BEGIN_CHECK = 0;
-    @IntDef ({SELECT_START_BEGIN_CHECK,SELECT_START_ONLY_CHECK,SELECT_START_RANGE_CHECK})
+    @IntDef ({SELECT_START_BEGIN_CHECK,SELECT_START_ONLY_CHECK,SELECT_START_WHICH_CHECK,SELECT_START_RANGE_CHECK})
     @Retention(RetentionPolicy.SOURCE)
     public  @interface StartMode{}
     @StartMode int CheckMode=0;
@@ -163,7 +167,7 @@ public class CheckStart extends LinearLayout {
         for(int i=0;i<mMax;i++){
             SquareCheckView view = new SquareCheckView(mContext,startSize);
             view.setDrawable(uncheckDrawable,checkedDrawable);
-            view.startChecked((i<mNumber-1)? true:false);
+            view.startChecked((i<mNumber)? true:false);
             view.setTag(i);
             int otherMargin=0;
             if(mOrientation == HORIZONTAL){
@@ -312,6 +316,8 @@ public class CheckStart extends LinearLayout {
             }else if(CheckMode == SELECT_START_BEGIN_CHECK){
                 clearStart();
                 checkStart(0,number,true);
+            }else if(CheckMode == SELECT_START_WHICH_CHECK){
+                checkStart(number,!dotViewsList.get(number).isChecked());
             }
         }
     };
@@ -405,6 +411,10 @@ public class CheckStart extends LinearLayout {
     }
 
     public void setProgress(int progress){
+        mNumber = progress;
+        if(dotViewsList ==null){
+            return;
+        }
         if(progress<0 || progress>dotViewsList.size()-1)
             return;
         clearStart();
