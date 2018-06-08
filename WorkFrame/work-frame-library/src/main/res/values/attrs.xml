@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="Max" format="integer"></attr>
     <declare-styleable name="CheckStart">
         <attr name="Progress" format="integer"></attr>
-        <attr name="Max" format="integer"></attr>
+        <attr name="Max"/>
         <attr name="StartGravity" format="enum">
             <enum name="left" value="1"></enum>
             <enum name="right" value="2"></enum>
@@ -25,5 +26,10 @@
         <attr name="isChecked" format="boolean"></attr>
         <attr name="CheckedDrawable" format="reference"></attr>
         <attr name="UncheckDrawable" format="reference"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="ProgressShowView">
+        <attr name="ProgressBackground" format="reference"></attr>
+
     </declare-styleable>
 </resources>
