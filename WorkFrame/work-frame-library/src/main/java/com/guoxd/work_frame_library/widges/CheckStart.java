@@ -167,7 +167,13 @@ public class CheckStart extends LinearLayout {
         for(int i=0;i<mMax;i++){
             SquareCheckView view = new SquareCheckView(mContext,startSize);
             view.setDrawable(uncheckDrawable,checkedDrawable);
-            view.startChecked((i<mNumber)? true:false);
+            if (CheckMode == SELECT_START_ONLY_CHECK) {//范围选择
+                view.startChecked((i==mNumber)? true:false);
+                checkFrom = mNumber;
+            }else{
+                view.startChecked((i<mNumber)? true:false);
+            }
+
             view.setTag(i);
             int otherMargin=0;
             if(mOrientation == HORIZONTAL){
@@ -295,7 +301,7 @@ public class CheckStart extends LinearLayout {
             int number= Integer.valueOf(tag);
             if (CheckMode == SELECT_START_RANGE_CHECK) {//范围选择
                 //从点1-2
-                if(checkFrom<0){//first
+                if(checkFrom<0 || number <checkFrom){//first
                     clearStart();
                     checkStart(number,true);
                     checkFrom = number;
@@ -329,7 +335,7 @@ public class CheckStart extends LinearLayout {
     }
     //用于范围选择 设置点击效果
     private void checkStart(int from ,int to,boolean b){
-        if(!(from >=0 && to >=0 && from <to)){
+        if(!(from >=0 && to >=0 && from <=to)){
             return;
         }
         if(!(from<dotViewsList.size() && to<= dotViewsList.size())){
