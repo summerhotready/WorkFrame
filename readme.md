@@ -14,11 +14,11 @@ blocks.setDefaultTableMode(SlideBlock.COLUME);
 效果如图
 排：defaultTableMode = ROW
 此模式中先向父组件竖着添加rowSize个容器，再向容器中添加columnSize个view
-![image](https://github.com/summerhotready/WorkFrame/tree/master/images/slideblocks_%E5%88%97.gif )
-
+## 效果展示 ##
+![Screenshot]( https://github.com/summerhotready/WorkFrame/tree/master/images/slideblocks_%E5%88%97.gif )
 列：defaultTableMode = COLUME
 此模式中先向父组件横向添加rowSize个容器，再向容器中竖着添加columnSize个view
-![image](https://github.com/summerhotready/WorkFrame/tree/master/images/slideblocks_%E6%8E%92.gif )
+![Screenshot](https://github.com/summerhotready/WorkFrame/tree/master/images/slideblocks_%E6%8E%92.gif )
 
 2、CheckStart
 具有四种模式的小星星，打分专用，点击可控
@@ -27,13 +27,13 @@ app:Max 星星总数，不设置默认为5
 app:StartMode="begin|only|range|which"
 对应4种模式
 begin：从头到选中点亮起
-![image](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-2.png)
+![Screenshot](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-2.png)
 only：单一选择，选中的点亮起
-![image](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-4.png)
+![Screenshot](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-4.png)
 which:多选，被点击的亮起或者暗掉
-![image](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-3.png)
+![Screenshot](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-3.png)
 range：范围选择，两次点击为一次选择，显示效果为第一次点击到第二次点击范围亮起；
-![image](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-1.png)
+![Screenshot](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-1.png)
 当第二次范围小于第一次时全灭，选中同一点全灭
 
 app:Progress
@@ -41,7 +41,7 @@ app:Progress
 
 app:isChecked
 是否可选,显示效果要结合StartMode
-![image](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-0.png)
+![Screenshot](https://github.com/summerhotready/WorkFrame/tree/master/images/CheckStart-0.png)
 
 app:StartOrientation="horizontal|vertical"
 星星方向有横竖两种选择,默认为横向
@@ -59,4 +59,4 @@ app:StartGravity="left|right|center|top|bottom"
 基于之前的组件ProgressBGView，做了优化了修改，支持padding，支持背景色修改
 这个组件为了解决复杂背景进度条的问题，思路是矩形绘制。
 ProgressBackground 设置组件背景色
-![image](https://github.com/summerhotready/WorkFrame/tree/master/images/ProgressShowView.png)
+![Screenshot](https://github.com/summerhotready/WorkFrame/tree/master/images/ProgressShowView.png)
