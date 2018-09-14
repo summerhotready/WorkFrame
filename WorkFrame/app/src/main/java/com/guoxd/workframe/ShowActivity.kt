@@ -18,11 +18,6 @@ import android.support.v7.app.AppCompatDelegate
  */
 class ShowActivity : AppCompatActivity(){
 
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show)
@@ -52,6 +47,5 @@ class ShowActivity : AppCompatActivity(){
         }
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment, fragment).commit();
-
     }
 }

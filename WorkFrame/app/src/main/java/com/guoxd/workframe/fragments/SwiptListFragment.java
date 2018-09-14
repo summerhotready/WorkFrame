@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +35,7 @@ import java.util.List;
 public class SwiptListFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout refreshLayout;
     private List<DeviceModle> mData;
     DeviceAdapter adapter;
 
@@ -59,12 +62,23 @@ public class SwiptListFragment extends BaseFragment {
 
         adapter = new DeviceAdapter();
         mRecyclerView.setAdapter(adapter);
+        refreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.refreshLayout);
         initListener();
 
         getData();
         return root;
     }
 
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 101:
+                    refreshLayout.setRefreshing(false);
+                    break;
+            }
+        }
+    };
 
     private void initListener() {
 
@@ -85,6 +99,12 @@ public class SwiptListFragment extends BaseFragment {
             }
         });
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mHandler.sendEmptyMessageDelayed(101,2000);
+            }
+        });
     }
 
 
@@ -184,6 +204,8 @@ public class SwiptListFragment extends BaseFragment {
                         isOpen = -1;
                         Log.e("Adapter","close:"+position);
                     }
+
+
                 }
 
                 @Override
