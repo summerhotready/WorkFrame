@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- 背景颜色 -->
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="#D0CED1" />
+        </shape>
+    </item>
+    <!-- 进度颜色 -->
+    <item android:id="@android:id/progress">
+        <!-- clip标签不能少了,使用它和背景区分,设置进度 -->
+        <clip>
+            <shape>
+                <solid android:color="@android:color/holo_red_light" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

@@ -4,9 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-/**
+/**提供联网判断服务
  * Created by guoxd on 2018/8/14.
- * 联网判断
  */
 
 public class NetUtils {

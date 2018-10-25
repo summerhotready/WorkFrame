@@ -32,4 +32,18 @@
         <attr name="ProgressBackground" format="reference"></attr>
 
     </declare-styleable>
+
+    <declare-styleable name="CalendarView">
+        <attr name="mc_color" format="color"/>
+        <attr name="mc_selectColor" format="color"/>
+        <attr name="mc_selectTextColor" format="color"/>
+        <attr name="mc_textColor" format="color"/>
+        <attr name="mc_startsOnSunday" format="boolean"/>
+    </declare-styleable>
+
+    <!-- 进度条属性 -->
+    <declare-styleable name="CustomProgress">
+        <attr name="pgText" format="reference|string" />
+    </declare-styleable>
+
 </resources>

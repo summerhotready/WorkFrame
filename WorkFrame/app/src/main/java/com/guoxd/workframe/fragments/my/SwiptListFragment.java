@@ -1,4 +1,4 @@
-package com.guoxd.workframe.fragments;
+package com.guoxd.workframe.fragments.my;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -63,6 +63,7 @@ public class SwiptListFragment extends BaseFragment {
         adapter = new DeviceAdapter();
         mRecyclerView.setAdapter(adapter);
         refreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.refreshLayout);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent,R.color.colorPrimary);
         initListener();
 
         getData();
@@ -185,6 +186,8 @@ public class SwiptListFragment extends BaseFragment {
                 public void onClick(View v) {
                     holder.layout.setStatus(SwipeListLayout.Status.Close, true);
                     listener.onDelete(device);
+                    mData.remove(position);
+                    notifyItemRemoved(position);
                 }
             });
             holder.layout.setOnSwipeStatusListener(new SwipeListLayout.OnSwipeStatusListener() {

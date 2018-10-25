@@ -3,14 +3,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     buildToolsVersion '26.0.3'
     defaultConfig {
         applicationId "com.guoxd.workframe"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        // Enabling multidex support.
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,9 +29,16 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':work-frame-library')
-    compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+    compile 'com.android.support:recyclerview-v7:27.+'
+    compile 'com.android.support:design:27.+'
+    //网络请求
+    implementation 'com.squareup.okhttp3:okhttp:3.4.2'
+    implementation 'com.google.code.gson:gson:2.2.4'
+    //lottie动画
+    compile 'com.airbnb.android:lottie:2.5.0'
+    // 图表
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

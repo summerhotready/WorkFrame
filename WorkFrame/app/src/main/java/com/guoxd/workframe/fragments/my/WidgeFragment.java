@@ -1,19 +1,16 @@
-package com.guoxd.workframe.fragments;
+package com.guoxd.workframe.fragments.my;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.guoxd.work_frame_library.views.CustomProgress;
 import com.guoxd.work_frame_library.widges.CheckStart;
 import com.guoxd.work_frame_library.widges.ProgressShowView;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
-import com.guoxd.workframe.views.MyItemDecoration;
 
 import java.util.HashMap;
 
@@ -52,6 +49,13 @@ public class WidgeFragment extends BaseFragment {
         }
         //设置data
         view.setData(array);
+
+        CustomProgress pb = (CustomProgress) root.findViewById(R.id.custom_pb);
+        pb.setPbMax(100);
+        pb.setProgress(20);
+        pb.setTextLeft("已使用 20%");
+        pb.setTextRight("未使用 80%");
+
         return root;
     }
 }

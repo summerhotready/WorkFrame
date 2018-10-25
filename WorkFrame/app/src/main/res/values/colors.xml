@@ -6,4 +6,6 @@
 
 
 
+    <color name="text_color_tab">#878787</color>
+    <color name="text_color_click">#31AAFF</color>
 </resources>

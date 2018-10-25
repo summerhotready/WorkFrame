@@ -5,7 +5,19 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="TextTitleStyle" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
+    </style>
+
+
+    <!--AVLoadingIndicatorView-->
+    <style name="AVLoadingIndicatorView">
+        <item name="minWidth">48dip</item>
+        <item name="maxWidth">48dip</item>
+        <item name="minHeight">48dip</item>
+        <item name="maxHeight">48dip</item>
+        <item name="indicatorName">BallPulseIndicator</item>
+    </style>
 </resources>

@@ -5,8 +5,18 @@ package com.guoxd.workframe.base;
  */
 
 public interface ShowTextUrl {
+    //my
     String Widge="Widge";
     String SlideBlock="SlideBlock";
     String StaggeredList="StaggeredList";
     String SwiptList="SwiptList";
+    String BitmapImage="BitmapImage";
+
+
+    //system
+    String SystemWidge="SystemWidge";
+
+    //other
+    String OtherAnimWidge="AnimWidgeFragment";
+
 }
