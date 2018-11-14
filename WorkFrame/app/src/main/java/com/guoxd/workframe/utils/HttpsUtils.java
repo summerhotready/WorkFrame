@@ -1,20 +1,25 @@
 package com.guoxd.workframe.utils;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Environment;
 import android.os.Handler;
 
-
-import com.guoxd.workframe.utils.http_info.HttpCallListener;
 import com.guoxd.workframe.utils.http_info.FileDownloadListener;
+import com.guoxd.workframe.utils.http_info.HttpCallListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,14 +35,14 @@ import okhttp3.Response;
  * 符合rest模式
  */
 
-public class HttpUtils {
-    final String TAG="HttpUtils";
+public class HttpsUtils {
+    final String TAG="HttpsUtils";
     // 将请求成功的数据返回到主线程进行数据更新
     Handler mainHandler;
     static Context mContext;
 
     //
-    static HttpUtils utils = null;
+    static HttpsUtils utils = null;
     OkHttpClient mHttpClient;
     final MediaType jsonMediaType= MediaType.parse("application/json;charset=utf-8");
 
@@ -47,22 +52,78 @@ public class HttpUtils {
      * 第一次由MainApplication调用，保证了获取的getMainLooper
      * @param context
      */
-    public static HttpUtils getIntent(Context context){
+    public static HttpsUtils getIntent(Context context){
         if(utils == null){
-            utils = new HttpUtils(context);
+            utils = new HttpsUtils(context);
         }
         return utils;
     }
 
-    private HttpUtils(Context context){
+    private HttpsUtils(Context context){
         mContext = context;
         mainHandler = new Handler(mContext.getMainLooper());
 
         mHttpClient = new OkHttpClient.Builder()
                 .readTimeout(60*1000L, TimeUnit.MILLISECONDS)
                 .connectTimeout(60*1000L, TimeUnit.MILLISECONDS)
+                .hostnameVerifier(new HostnameVerifier() {//设置tsl的主域名验证
+                    @Override
+                    public boolean verify(String hostname, SSLSession session) {
+                        return true;
+                    }
+                })
+                .sslSocketFactory(getSocketFactory(mContext))
                 .build();
     }
+    private static SSLSocketFactory getSocketFactory(Context context) {
+        InputStream mTrust_input = null;
+        InputStream mClient_input = null;
+        try {
+            //服务器授信证书
+            mTrust_input = context.getAssets().open("ca.bks");
+            //客户端证书
+            mClient_input = context.getAssets().open("outgoing.CertwithKey.pkcs12");
+
+
+            // 1 Import the CA certificate of the server
+            KeyStore trustStore = KeyStore.getInstance("BKS");
+            trustStore.load(mTrust_input, "Huawei@123".toCharArray());
+
+            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            trustManagerFactory.init(trustStore);
+
+
+            // 2 Import your own certificate
+            KeyStore keyStore = KeyStore.getInstance("PKCS12");
+            keyStore.load(mClient_input, "IoM@1234".toCharArray());
+
+            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            keyManagerFactory.init(keyStore, "IoM@1234".toCharArray());
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
+            SSLSocketFactory factory = sslContext.getSocketFactory();
+            return factory;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {//关闭
+            try{
+                if(mTrust_input !=null) {
+                    mTrust_input.close();
+                }
+                if(mClient_input !=null) {
+                    mClient_input.close();
+                }
+            }catch (IOException e){
+
+            }
+
+        }
+        return null;
+    }
+
 
     /**
      * 给http做判断

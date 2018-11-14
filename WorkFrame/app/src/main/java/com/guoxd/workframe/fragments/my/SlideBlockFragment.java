@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.guoxd.work_frame_library.widges.SlideBlock;
 import com.guoxd.workframe.R;
@@ -28,7 +27,7 @@ public class SlideBlockFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_slideblock, container, false);
+        View root = inflater.inflate(R.layout.my_fragment_slideblock, container, false);
         Log.i(TAG,"ScanWidth:"+getActivity().getResources().getDisplayMetrics().widthPixels);
         Log.i(TAG,"ScanHeight:"+getActivity().getResources().getDisplayMetrics().heightPixels);
         SlideBlock blocks = (SlideBlock)root.findViewById(R.id.blocks);

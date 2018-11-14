@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.view.View
 import android.widget.*
-import com.guoxd.workframe.base.ShowTextUrl
 import com.guoxd.workframe.fragments.main.MainMyWidgeFragment
 
 class MainActivity : AppCompatActivity() ,View.OnClickListener{

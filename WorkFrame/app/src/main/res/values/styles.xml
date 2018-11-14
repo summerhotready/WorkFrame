@@ -11,7 +11,12 @@
     <style name="TextTitleStyle" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
     </style>
 
-
+    <!---->
+    <style name="TextTitle" parent="Base.TextAppearance.AppCompat.Title">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:padding">@dimen/padding_5</item>
+    </style>
     <!--AVLoadingIndicatorView-->
     <style name="AVLoadingIndicatorView">
         <item name="minWidth">48dip</item>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/ll_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        android:layout_marginRight="@dimen/padding_15"
+        android:layout_marginBottom="@dimen/padding_15"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true">
+        <ImageView
+            android:id="@+id/iv_3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_alignTop="@id/iv_menu"/>
+        <ImageView
+            android:id="@+id/iv_2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_alignTop="@id/iv_menu"/>
+        <ImageView
+            android:id="@+id/iv_1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/icon_gis_off"
+            android:layout_alignTop="@id/iv_menu"/>
+        <ImageView
+            android:id="@+id/iv_menu"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/icon_gis_on"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+  <!--  <ImageView
+        android:id="@+id/point_1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@android:drawable/ic_menu_edit"
+        android:layout_alignTop="@id/iv_menu"/>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true">
+        <ImageView
+            android:id="@+id/iv_x_1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/icon_gis_off"
+            android:layout_alignLeft="@id/iv_x_menu"/>
+        <ImageView
+            android:id="@+id/iv_x_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/icon_gis_on"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"/>
+    </RelativeLayout>
+
+    <com.guoxd.work_frame_library.menus.arcmenu.ArcMenu
+        android:id="@+id/arcMenu"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edittext_password">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/icon_gis_off" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_gis_on" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_manage_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_manage_on" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_user_off" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_user_on" />
+
+        <!--<ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/composer_sleep" />-->
+    </com.guoxd.work_frame_library.menus.arcmenu.ArcMenu>
+</RelativeLayout>

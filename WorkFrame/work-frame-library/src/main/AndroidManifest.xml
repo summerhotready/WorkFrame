@@ -1,8 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.guoxd.work_frame_library" >
-    <!--mWifiManager.setWifiEnabled(true);-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!--wifiManager.getConnectionInfo();-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-</manifest>
+    package="com.guoxd.work_frame_library">
 
+    <!-- mWifiManager.setWifiEnabled(true); -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- wifiManager.getConnectionInfo(); -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application>
+
+    </application>
+
+</manifest>

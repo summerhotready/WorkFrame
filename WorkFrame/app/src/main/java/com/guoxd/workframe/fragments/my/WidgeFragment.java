@@ -28,7 +28,7 @@ public class WidgeFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_widge, container, false);
+        View root = inflater.inflate(R.layout.my_fragment_widge, container, false);
         CheckStart checkStart = root.findViewById(R.id.checkStart);
         checkStart.setMax(10);
         checkStart.setProgress(2);
@@ -52,9 +52,10 @@ public class WidgeFragment extends BaseFragment {
 
         CustomProgress pb = (CustomProgress) root.findViewById(R.id.custom_pb);
         pb.setPbMax(100);
-        pb.setProgress(20);
-        pb.setTextLeft("已使用 20%");
-        pb.setTextRight("未使用 80%");
+        pb.setProgress(30);
+        pb.setTextLeft("已使用 30%");
+        pb.setTextRight("未使用 70%");
+
 
         return root;
     }

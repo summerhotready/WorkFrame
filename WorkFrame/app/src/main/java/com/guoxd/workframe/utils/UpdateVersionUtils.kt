@@ -35,9 +35,12 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
     var updateUrl:String?=null
     //检查版本更新地址
     var versionCheckUrl:String ?=null
+    //该flag在执行close后会置为false，主要用于异步网络后，是否还有弹出后续页面的需求
+    var isRun = true;
 
     init{
         //入口
+        isRun = true;
         checkVersion()
     }
 
@@ -55,7 +58,9 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
                     LogUtil.e("Login_checkVersion", "versionCode:" + versionCode + "\nfir_server:" + fir_version);
                     if (fir_version > versionCode) {//
                         updateUrl = firVersionEntity.updateUrl
-                        showVersionDialog()
+                        if(isRun) {
+                            showVersionDialog()
+                        }
                     }else{
                         LogUtil.d("Login","same version")
                     }
@@ -91,7 +96,9 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
         builder.setPositiveButton("更新",  DialogInterface.OnClickListener(){
             dialog, which ->
             dialog.dismiss()
-            showUpdateDialog()
+            if(isRun) {
+                showUpdateDialog()
+            }
         })
         builder.setNegativeButton("取消",  DialogInterface.OnClickListener(){
             dialog,which->
@@ -117,7 +124,9 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
             override fun onDownloadSuccess(file: File) {
                 mContext.runOnUiThread(Runnable {
                     alertDialog.dismiss()
-                    installApk(file)
+                    if(isRun) {
+                        installApk(file)
+                    }
                 })
             }
             override fun onDownloadFailed() {
@@ -131,7 +140,7 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
                 })
             }
         })
-        alertDialog.show();
+        alertDialog.show()
     }
 
     /**
@@ -152,6 +161,12 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
             intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive")
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        mContext.startActivity(intent)
+        if(isRun) {
+            mContext.startActivity(intent)
+        }
+    }
+
+    fun close(){
+        isRun = false
     }
 }

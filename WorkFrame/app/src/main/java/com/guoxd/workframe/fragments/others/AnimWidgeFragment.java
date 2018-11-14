@@ -18,7 +18,7 @@ public class AnimWidgeFragment extends BaseFragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_anim_widge, container, false);
+        View root = inflater.inflate(R.layout.system_fragment_anim, container, false);
 
         return root;
     }

@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.guoxd.workframe.base.ShowTextUrl
-import com.guoxd.workframe.fragments.my.SlideBlockFragment
-import com.guoxd.workframe.fragments.my.StaggeredListFragment
-import com.guoxd.workframe.fragments.my.SwiptListFragment
 import android.support.v7.app.AppCompatDelegate
 import android.widget.Toast
-import com.guoxd.workframe.fragments.my.BitmapImageFragment
+import com.guoxd.workframe.fragments.my.*
 import com.guoxd.workframe.utils.LogUtil
 import java.lang.reflect.Field
 
@@ -37,6 +34,12 @@ class ShowActivity : AppCompatActivity(){
             }
             ShowTextUrl.Widge->{
                 fragment = com.guoxd.workframe.fragments.my.WidgeFragment()
+            }
+            ShowTextUrl.PaintView->{
+                fragment = PaintViewFragment();
+            }
+            ShowTextUrl.MenuWidge->{
+                fragment = MenuWidgeFragment()
             }
             ShowTextUrl.SwiptList->{
                 fragment = SwiptListFragment()
@@ -66,7 +69,9 @@ class ShowActivity : AppCompatActivity(){
 //                fragment =
             }
         }
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment, fragment).commit();
+        if(fragment !=null) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.add(R.id.fragment, fragment).commit();
+        }
     }
 }
