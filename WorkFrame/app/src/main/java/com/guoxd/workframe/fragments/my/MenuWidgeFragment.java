@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.guoxd.work_frame_library.menus.arcmenu.ArcMenu;
@@ -31,6 +32,7 @@ public class MenuWidgeFragment extends BaseFragment {
     }
 
     PointMenuViewUtils utils;
+    PointMenuViewUtils utilsX;
     ArcMenu mArc;
     final String TAG="MenuWidgeFragment" ;
 
@@ -40,7 +42,6 @@ public class MenuWidgeFragment extends BaseFragment {
         View root = inflater.inflate(R.layout.my_fragment_menus,container,false);
 
         initTranY(root);
-
         initTranX(root);
 
         mArc = (ArcMenu) root. findViewById(R.id.arcMenu);
@@ -50,21 +51,19 @@ public class MenuWidgeFragment extends BaseFragment {
                 LogUtil.d(TAG, "position" + position);
             }
         });
-//        initListView();
         return root;
     }
 
     void initTranY(View root){
-        ImageView iv_menu = (ImageView)root.findViewById(R.id.iv_menu);
+        View parentView = root.findViewById(R.id.rl_constan_y);
+        ImageView base_menu = (ImageView)root.findViewById(R.id.iv_menu);
         ImageView iv_1 = (ImageView)root.findViewById(R.id.iv_1);
         ImageView iv_2 = (ImageView)root.findViewById(R.id.iv_2);
         ImageView iv_3 = (ImageView)root.findViewById(R.id.iv_3);
 
         utils = new PointMenuViewUtils();
-        utils.setImageViews(180,iv_menu,iv_1,iv_2,iv_3);
-
-
-        iv_menu.setOnClickListener(new View.OnClickListener() {
+        utils.setImageViews(180,parentView,iv_1,iv_2,iv_3);
+        base_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(utils.isOpen){
@@ -74,7 +73,6 @@ public class MenuWidgeFragment extends BaseFragment {
                         ToastUtils.showMsgToast(getActivity(),"can't open");
                     }
                 }else{
-
                     if(!utils.isMoveing) {
                         utils.showMenu();
                     }else{
@@ -87,15 +85,12 @@ public class MenuWidgeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ToastUtils.showMsgToast(getActivity(),"view1");
-
-
             }
         });
         iv_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ToastUtils.showMsgToast(getActivity(),"view2");
-
             }
         });
 
@@ -103,45 +98,46 @@ public class MenuWidgeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ToastUtils.showMsgToast(getActivity(),"view3");
-
             }
         });
     }
     void initTranX(final View root){
-        root.findViewById(R.id.iv_x_menu).setOnClickListener(new View.OnClickListener() {
+        View parentView = root.findViewById(R.id.rl_constan_x);
+        ImageView base_menu = (ImageView)root.findViewById(R.id.iv_x_menu);
+        ImageView iv_1 = (ImageView)root.findViewById(R.id.iv_x_1);
+        ImageView iv_2 = (ImageView)root.findViewById(R.id.iv_x_2);
+        utilsX = new PointMenuViewUtils();
+        utilsX.setOrientation(LinearLayout.HORIZONTAL);
+        utilsX.setImageViews(120,parentView,iv_1,iv_2);
+
+        base_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(utilsX.isOpen){
+                    if(!utilsX.isMoveing) {
+                        utilsX.closeMenu();
+                    }else{
+                        ToastUtils.showMsgToast(getActivity(),"can't open");
+                    }
+                }else{
+                    if(!utilsX.isMoveing) {
+                        utilsX.showMenu();
+                    }else{
+                        ToastUtils.showMsgToast(getActivity(),"can't close");
+                    }
+                }
+            }
+        });
+
+        /*root.findViewById(R.id.iv_x_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ObjectAnimator mObjectAnimator= ObjectAnimator.ofFloat(root.findViewById(R.id.iv_x_1), "translationX", 0,  120);
                 mObjectAnimator.setDuration(2500);
                 mObjectAnimator.start();
             }
-        });
-
+        });*/
     }
 
-   /* private void initListView() {
-//        mListView = (ListView) findViewById(R.id.listview);
-        mData = new ArrayList<String>();
-        for (int i = 'A'; i <= 'z'; i++) {
-            mData.add((char) i + "");
-        }
-        mAdapter = new ArrayAdapter<String>(
-                MainActivity.this, android.R.layout.simple_list_item_1, mData);
-        mListView.setAdapter(mAdapter);
-
-        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (mArc.isOpen()) {
-                    mArc.subItemAnim();
-                }
-            }
-        });
-    }*/
 
 }

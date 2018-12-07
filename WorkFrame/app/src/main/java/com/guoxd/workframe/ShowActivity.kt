@@ -5,10 +5,11 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.guoxd.workframe.base.ShowTextUrl
 import android.support.v7.app.AppCompatDelegate
-import android.widget.Toast
+import com.guoxd.workframe.base.BaseFragment
 import com.guoxd.workframe.fragments.my.*
+import com.guoxd.workframe.fragments.system.RecyclerViewFragment
+import com.guoxd.workframe.fragments.system.TextWidgeFragment
 import com.guoxd.workframe.utils.LogUtil
-import java.lang.reflect.Field
 
 
 /**
@@ -29,49 +30,76 @@ class ShowActivity : AppCompatActivity(){
     fun showFragment(str:String){
         var fragment: Fragment ?=null;
         when(str){
-            ShowTextUrl.SlideBlock->{
-                fragment = SlideBlockFragment()
+            //my
+            ShowTextUrl.BitmapImage->{
+                fragment = BitmapImageFragment()
             }
-            ShowTextUrl.Widge->{
-                fragment = com.guoxd.workframe.fragments.my.WidgeFragment()
-            }
-            ShowTextUrl.PaintView->{
-                fragment = PaintViewFragment();
+            ShowTextUrl.CameraView->{
+                fragment = CameraViewFragment()
             }
             ShowTextUrl.MenuWidge->{
                 fragment = MenuWidgeFragment()
             }
-            ShowTextUrl.SwiptList->{
-                fragment = SwiptListFragment()
+            ShowTextUrl.PaintView->{
+                fragment = PaintViewFragment();
+            }
+            ShowTextUrl.SlideBlock->{
+                try {
+                    val clazz = Class.forName(ShowTextUrl.SlideBlock) //SlideBlockFragment()
+                    fragment = clazz.newInstance() as Fragment;
+                } catch (e: ClassNotFoundException) {
+                    e.printStackTrace()
+                } catch (e: java.lang.IllegalAccessException) {
+                    e.printStackTrace()
+                } catch (e: java.lang.InstantiationException) {
+                    e.printStackTrace()
+                }
             }
             ShowTextUrl.StaggeredList->{
                 fragment = StaggeredListFragment()
             }
-            ShowTextUrl.BitmapImage->{
-                fragment = BitmapImageFragment()
+            ShowTextUrl.SwiptList->{
+                fragment = SwiptListFragment()
             }
-            ShowTextUrl.SystemWidge->{
-                fragment = com.guoxd.workframe.fragments.system.WidgeFragment()
+            ShowTextUrl.Widge->{
+                fragment = ShowWidgeFragment()
             }
 
+            //system
+            ShowTextUrl.TextWidge->{
+                fragment = TextWidgeFragment()
+            }
+            ShowTextUrl.RecyclerView->{
+                fragment = RecyclerViewFragment()
+            }
+
+            //other
             ShowTextUrl.OtherAnimWidge->{
                 try {
-                    var mToast: Toast = Toast(this)
+                    var animFragemnt = Class.forName("com.guoxd.workframe.fragments.others."+ShowTextUrl.OtherAnimWidge)
+                    fragment = animFragemnt.newInstance() as Fragment;
+                   /* var mToast: Toast = Toast(this)
                     var filed: Field = mToast.javaClass.getDeclaredField("mTN")
                     filed.isAccessible = true;
                     var obj = filed.get(mToast)
                     var showMethod = obj.javaClass.getDeclaredMethod("show", null);
-                    var hideMethod = obj.javaClass.getDeclaredMethod("hide", null);
+                    var hideMethod = obj.javaClass.getDeclaredMethod("hide", null);*/
                     LogUtil.d("","")
                 }catch (e:Exception){
                     LogUtil.d("","")
                 }
-//                fragment =
+            }
+            ShowTextUrl.MpChar->{
+                var clazz = Class.forName("com.guoxd.workframe.fragments.others."+ShowTextUrl.MpChar)
+                fragment = clazz.newInstance() as Fragment;
             }
         }
-        if(fragment !=null) {
+        if(fragment !=null && fragment is BaseFragment) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.add(R.id.fragment, fragment).commit();
+        }else{
+            LogUtil.d("Show Fragmen","error:")
         }
     }
+
 }

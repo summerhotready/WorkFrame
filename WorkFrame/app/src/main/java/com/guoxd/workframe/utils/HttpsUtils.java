@@ -2,6 +2,7 @@ package com.guoxd.workframe.utils;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.guoxd.workframe.utils.http_info.FileDownloadListener;
 import com.guoxd.workframe.utils.http_info.HttpCallListener;
@@ -10,20 +11,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.SecureRandom;
 import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -66,89 +59,34 @@ public class HttpsUtils {
         mHttpClient = new OkHttpClient.Builder()
                 .readTimeout(60*1000L, TimeUnit.MILLISECONDS)
                 .connectTimeout(60*1000L, TimeUnit.MILLISECONDS)
-                .hostnameVerifier(new HostnameVerifier() {//设置tsl的主域名验证
-                    @Override
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                })
-                .sslSocketFactory(getSocketFactory(mContext))
                 .build();
     }
-    private static SSLSocketFactory getSocketFactory(Context context) {
-        InputStream mTrust_input = null;
-        InputStream mClient_input = null;
-        try {
-            //服务器授信证书
-            mTrust_input = context.getAssets().open("ca.bks");
-            //客户端证书
-            mClient_input = context.getAssets().open("outgoing.CertwithKey.pkcs12");
 
-
-            // 1 Import the CA certificate of the server
-            KeyStore trustStore = KeyStore.getInstance("BKS");
-            trustStore.load(mTrust_input, "Huawei@123".toCharArray());
-
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            trustManagerFactory.init(trustStore);
-
-
-            // 2 Import your own certificate
-            KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            keyStore.load(mClient_input, "IoM@1234".toCharArray());
-
-            KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            keyManagerFactory.init(keyStore, "IoM@1234".toCharArray());
-
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
-            SSLSocketFactory factory = sslContext.getSocketFactory();
-            return factory;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {//关闭
-            try{
-                if(mTrust_input !=null) {
-                    mTrust_input.close();
-                }
-                if(mClient_input !=null) {
-                    mClient_input.close();
-                }
-            }catch (IOException e){
-
-            }
-
-        }
-        return null;
-    }
-
-
-    /**
-     * 给http做判断
+    /**给http做检查，通过为true，未通过为false
      * @param url
      * @param callback
+     * @return true:ok false:can't
      */
-    String checkHttp(String url, final HttpCallListener callback){
-        if(url.equals("")){
-            return "无效的url";
+    boolean isRequeseHttp(String url, final HttpCallListener callback){
+        if(TextUtils.isEmpty(url)){
+            sendCallback(false,Constant.HTTP_NO_URL,callback,"Invalid URL");
+            return false;
         }
         if(!NetUtils.isNetConnect(mContext)){
-            return "当前网络不可用，请检查！";
+            sendCallback(false,-Constant.HTTP_NO_NETWORK,callback,"No Network");
+            return false;
         }
-        return null;
+        return true;
     }
+
 
     /**get请求
      * success:200;failure:204
      * @param url
-     * @param callback
+     * @param mListener
      */
-    public void getRequest(String url, final HttpCallListener callback){
-        String check = checkHttp(url, callback);
-        if(check !=null){
-            sendCallback(false,callback,check);
+    public void getRequest(String url, final HttpCallListener mListener){
+        if(!isRequeseHttp(url,mListener)){
             return;
         }
         Request request = new Request.Builder()
@@ -159,7 +97,7 @@ public class HttpsUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtil.d(TAG, "on failure:"+e.getMessage() == null? "null":e.getMessage());
-                sendCallback(false,callback,e.getMessage() == null? "null":e.getMessage());
+                sendCallback(false,Constant.HTTP_FAILURE,mListener,e.getMessage() == null? "null":e.getMessage());
             }
 
             @Override
@@ -167,9 +105,9 @@ public class HttpsUtils {
                 String tempResponse =  response.body().string();
                 LogUtil.d(TAG, "on success:"+tempResponse);
                 if(response.code() == 200) {
-                    sendCallback(true,callback,tempResponse);
+                    sendCallback(true,response.code(),mListener,tempResponse);
                 }else{
-                    sendCallback(false,callback,"code error");
+                    sendCallback(false,response.code(),mListener,"code error");
                 }
             }
         });
@@ -181,9 +119,7 @@ public class HttpsUtils {
      * @param mListener
      */
     public void postRequest(String url, String jsonStr, final HttpCallListener mListener){
-        String check = checkHttp(url, mListener);
-        if(check !=null){
-            sendCallback(false,mListener,check);
+        if(!isRequeseHttp(url,mListener)){
             return;
         }
         RequestBody requestBody=RequestBody.create(jsonMediaType,jsonStr);
@@ -196,7 +132,7 @@ public class HttpsUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtil.d(TAG, "on failure:"+e.getMessage() == null? "null":e.getMessage());
-                sendCallback(false,mListener,e.getMessage() == null? "null":e.getMessage());
+                sendCallback(false,Constant.HTTP_FAILURE,mListener,e.getMessage() == null? "null":e.getMessage());
             }
 
             @Override
@@ -204,9 +140,9 @@ public class HttpsUtils {
                 String tempResponse =  response.body().string();
                 LogUtil.d(TAG, "on success:"+tempResponse);
                 if(response.code() == 201) {
-                    sendCallback(true,mListener,tempResponse);
+                    sendCallback(true,response.code(),mListener,tempResponse);
                 }else{
-                    sendCallback(false,mListener,"code error");
+                    sendCallback(false,response.code(),mListener,"code error");
                 }
             }
         });
@@ -216,12 +152,10 @@ public class HttpsUtils {
      * success:204;failure:404
      * @param url
      * @param jsonStr
-     * @param callback
+     * @param mListener
      */
-    public void putRequest(String url, String jsonStr, final HttpCallListener callback){
-        String check = checkHttp(url, callback);
-        if(check !=null){
-            sendCallback(false,callback,check);
+    public void putRequest(String url, String jsonStr, final HttpCallListener mListener){
+        if(!isRequeseHttp(url,mListener)){
             return;
         }
         RequestBody requestBody= RequestBody.create(jsonMediaType,jsonStr);
@@ -233,7 +167,7 @@ public class HttpsUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtil.d(TAG, "on failure:"+e.getMessage() == null? "null":e.getMessage());
-                sendCallback(false,callback,e.getMessage() == null? "null":e.getMessage());
+                sendCallback(false,Constant.HTTP_FAILURE,mListener,e.getMessage() == null? "null":e.getMessage());
             }
 
             @Override
@@ -241,9 +175,9 @@ public class HttpsUtils {
                 String tempResponse =  response.body().string();
                 LogUtil.d(TAG, "on success:"+tempResponse);
                 if(response.code() == 204) {
-                    sendCallback(true,callback,tempResponse);
+                    sendCallback(true,response.code(),mListener,tempResponse);
                 }else{
-                    sendCallback(false,callback,"code error");
+                    sendCallback(false,response.code(),mListener,"code error");
                 }
             }
         });
@@ -256,9 +190,7 @@ public class HttpsUtils {
      * @param mListener
      */
     public void patchRequest(String url, String jsonStr, final HttpCallListener mListener){
-        String check = checkHttp(url, mListener);
-        if(check !=null){
-            sendCallback(false,mListener,check);
+        if(!isRequeseHttp(url,mListener)){
             return;
         }
         RequestBody requestBody=RequestBody.create(jsonMediaType,jsonStr);
@@ -271,7 +203,7 @@ public class HttpsUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtil.d(TAG, "on failure:"+e.getMessage() == null? "null":e.getMessage());
-                sendCallback(false,mListener,e.getMessage() == null? "null":e.getMessage());
+                sendCallback(false,Constant.HTTP_FAILURE,mListener,e.getMessage() == null? "null":e.getMessage());
             }
 
             @Override
@@ -279,9 +211,9 @@ public class HttpsUtils {
                 String tempResponse =  response.body().string();
                 LogUtil.d(TAG, "on success:"+tempResponse);
                 if(response.code() == 204) {
-                    sendCallback(true,mListener,tempResponse);
+                    sendCallback(true,response.code(),mListener,tempResponse);
                 }else{
-                    sendCallback(false,mListener,"code error");
+                    sendCallback(false,response.code(),mListener,"code error");
                 }
             }
         });
@@ -290,12 +222,10 @@ public class HttpsUtils {
     /**del请求
      * success:204;failure:404
      * @param url
-     * @param callback
+     * @param mListener
      */
-    public void delRequest(String url, final HttpCallListener callback){
-        String check = checkHttp(url, callback);
-        if(check !=null){
-            sendCallback(false,callback,check);
+    public void delRequest(String url, final HttpCallListener mListener){
+        if(!isRequeseHttp(url,mListener)){
             return;
         }
         Request request = new Request.Builder()
@@ -306,7 +236,7 @@ public class HttpsUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtil.d(TAG, "on failure:"+e.getMessage() == null? "null":e.getMessage());
-                sendCallback(false,callback,e.getMessage() == null? "null":e.getMessage());
+                sendCallback(false,Constant.HTTP_FAILURE,mListener,e.getMessage() == null? "null":e.getMessage());
             }
 
             @Override
@@ -314,9 +244,9 @@ public class HttpsUtils {
                 String tempResponse =  response.body().string();
                 LogUtil.d(TAG, "on success:"+tempResponse);
                 if(response.code() == 204) {
-                    sendCallback(true,callback,tempResponse);
+                    sendCallback(true,response.code(),mListener,tempResponse);
                 }else{
-                    sendCallback(false,callback,"code error");
+                    sendCallback(false,response.code(),mListener,"code error");
                 }
             }
         });
@@ -330,9 +260,7 @@ public class HttpsUtils {
      * @param mListener
      */
     public void postFormRequest(String url, String jsonStr, final HttpCallListener mListener){
-        String check = checkHttp(url, mListener);
-        if(check !=null){
-            sendCallback(false,mListener,check);
+        if(!isRequeseHttp(url,mListener)){
             return;
         }
         RequestBody requestBody=RequestBody.create(jsonMediaType,jsonStr);
@@ -344,16 +272,16 @@ public class HttpsUtils {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtil.d(TAG, "on failure:"+e.getMessage() == null? "null":e.getMessage());
-                sendCallback(false,mListener,e.getMessage() == null? "null":e.getMessage());
+                sendCallback(false,Constant.HTTP_FAILURE,mListener,e.getMessage() == null? "null":e.getMessage());
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String tempResponse =  response.body().string();
                 LogUtil.d(TAG, "on success:"+tempResponse);
                 if(response.code() == 201) {
-                    sendCallback(true,mListener,tempResponse);
+                    sendCallback(true,response.code(),mListener,tempResponse);
                 }else{
-                    sendCallback(false,mListener,"code error");
+                    sendCallback(false,response.code(),mListener,"code error");
                 }
             }
         });
@@ -363,21 +291,23 @@ public class HttpsUtils {
     /*** 成功失败处理
      * 简化了mainHandler.post操作
      * @param flag
-     * @param callback
+     * @param code
+     * @param listener
      * @param data
      */
-    void sendCallback(final boolean flag, final HttpCallListener callback, final String data){
+    void sendCallback(final boolean flag,final int code ,final HttpCallListener listener, final String data){
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
                 if(flag){
-                    callback.Success(data);
+                    listener.Success(code,data);
                 }else {
-                    callback.Failure(data);
+                    listener.Failure(code,data);
                 }
             }
         });
     }
+
 
 
     //文件操作
@@ -387,6 +317,7 @@ public class HttpsUtils {
      * @param listener 下载监听
      */
     public void fileDownload(final String url, final String fileName, final FileDownloadListener listener) {
+
         Request request = new Request.Builder().url(url).build();
         mHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -424,7 +355,6 @@ public class HttpsUtils {
                                 listener.onDownloading(progress);
                             }
                         });
-
                     }
                     fos.flush();
                     // 下载完成
@@ -454,6 +384,44 @@ public class HttpsUtils {
                     } catch (IOException e) {
                     }
                 }
+            }
+        });
+    }
+
+    /**
+     *
+     * @param url
+     * @param fileName
+     * @param listener
+     */
+    public void fileUpload(String url, String fileName, final HttpCallListener listener){
+        if(!isRequeseHttp(url,listener)){//未通过检查
+            return;
+        }
+        File file = getFile(fileName);// new File(savePath, getNameFromUrl(url));
+        MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+        RequestBody fileBody = RequestBody.create(MEDIA_TYPE_PNG, file);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                //可以根据自己的接口需求在这里添加上传的参数
+                .addFormDataPart("file", file.getName(), fileBody)
+                .build();
+        Request request = new Request.Builder().url(url)//上传接口
+                .post(requestBody)
+                .header("Content-Type","application/x-www-form-urlencoded")
+                .build();
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call,IOException e) {
+                LogUtil.d(TAG, "fileUpload onFailure message:"+e.getMessage() == null? "null":e.getMessage());
+                sendCallback(false,Constant.HTTP_FAILURE,listener,e.getMessage() == null? "null":e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call,final Response response) throws IOException {
+                String tempResponse = response.body().string();
+                LogUtil.d(TAG, "on success:" + tempResponse);
+                sendCallback(true,response.code(),listener,tempResponse);
             }
         });
     }

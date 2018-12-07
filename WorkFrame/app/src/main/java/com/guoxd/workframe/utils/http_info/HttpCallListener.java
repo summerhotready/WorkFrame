@@ -5,6 +5,6 @@ package com.guoxd.workframe.utils.http_info;
  */
 
 public interface HttpCallListener {
-    void Success(String data);
-    void Failure(String message);
+    void Success(int code,String data);
+    void Failure(int code,String message);
 }

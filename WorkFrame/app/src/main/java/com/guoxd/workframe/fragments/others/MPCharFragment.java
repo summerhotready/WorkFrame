@@ -1,14 +1,18 @@
-package com.guoxd.workframe.fragments.system;
+package com.guoxd.workframe.fragments.others;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -28,24 +32,26 @@ import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.utils.LogUtil;
 
+import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
+/**反射掉用
  * Created by guoxd on 2018/5/8.
  */
 
-public class WidgeFragment extends BaseFragment {
+public class MPCharFragment extends BaseFragment {
 
-    final String TAG="WidgeFragment";
+    final String TAG="other.MPCharFragment";
     @Override
     public void onRefresh() {
 
     }
 
     LineChart lineChart;
+    PieChart pieChart;
     Timer mTimer;
     TimerTask mTimerTask;
 
@@ -53,10 +59,12 @@ public class WidgeFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.system_fragment_widge, container, false);
+        View root = inflater.inflate(R.layout.other_fragment_mpchar, container, false);
 
         lineChart = (LineChart)root.findViewById(R.id.line_chart);
         initChart(lineChart);
+        pieChart = (PieChart)root.findViewById(R.id.pie_chart);
+        initPie(pieChart);
 
 
         mTimerTask = new TimerTask() {
@@ -68,8 +76,8 @@ public class WidgeFragment extends BaseFragment {
         };
         mTimer = new Timer();
         mTimer.schedule(mTimerTask,2,10*1000);
-        Log.i(TAG,String.format("******** new Line **********"));
-//        setDate();
+        setDate();
+
         return root;
     }
     void initChart(LineChart mLineChart){
@@ -301,6 +309,7 @@ public class WidgeFragment extends BaseFragment {
 
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -308,5 +317,13 @@ public class WidgeFragment extends BaseFragment {
         mTimerTask = null;
         mTimer.cancel();
         mTimer = null;
+
+        //Android加密算法中需要随机数时要使用SecureRandom来获取随机数
+        SecureRandom sr = new SecureRandom();
+        
+
+
+        byte[] output = new byte[16];
+        sr.nextBytes(output);
     }
 }

@@ -13,12 +13,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:visibility="visible"/>
-    <com.airbnb.lottie.LottieAnimationView
+   <!-- <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:lottie_fileName="finish_success_anim.json"
         app:lottie_loop="true"
         app:lottie_autoPlay="false"
-        android:visibility="visible"/>
+        android:visibility="visible"/>-->
 </LinearLayout>

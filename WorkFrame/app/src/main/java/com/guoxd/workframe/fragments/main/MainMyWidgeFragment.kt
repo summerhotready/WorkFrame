@@ -26,8 +26,6 @@ class MainMyWidgeFragment : BaseFragment() {
 
     }
 
-    var strs1= arrayOf(ShowTextUrl.Widge,ShowTextUrl.PaintView,ShowTextUrl.MenuWidge, ShowTextUrl.SlideBlock, ShowTextUrl.SwiptList, ShowTextUrl.StaggeredList, ShowTextUrl.BitmapImage);
-    var strs2= arrayOf(ShowTextUrl.SystemWidge,ShowTextUrl.OtherAnimWidge);
 
     var listView: ListView ?=null
 
@@ -41,11 +39,19 @@ class MainMyWidgeFragment : BaseFragment() {
     var strs:Array<String>?=null
     fun initAdapter(){
 
-        if(arguments?.isEmpty?:true){
-            strs = strs1
-        }else{
-            strs = strs2
+        var tag = arguments?.getString("tag")
+        when(tag){
+            "my"->{//自定义组件
+                strs = arrayOf(ShowTextUrl.Widge,ShowTextUrl.PaintView,ShowTextUrl.MenuWidge, ShowTextUrl.SlideBlock, ShowTextUrl.SwiptList, ShowTextUrl.StaggeredList, ShowTextUrl.BitmapImage,ShowTextUrl.CameraView);
+            }
+            "other"->{//第三方
+                strs = arrayOf(ShowTextUrl.OtherAnimWidge,ShowTextUrl.MpChar);
+            }
+            "system"->{//系统组件和功能测试
+                strs = arrayOf(ShowTextUrl.RecyclerView,ShowTextUrl.TextWidge);
+            }
         }
+
         var listAdapter: ArrayAdapter<String> = ArrayAdapter<String>(activity,android.R.layout.simple_expandable_list_item_1, strs);
 
         listView?.adapter = listAdapter;

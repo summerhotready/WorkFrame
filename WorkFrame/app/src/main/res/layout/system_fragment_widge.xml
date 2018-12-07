@@ -23,7 +23,6 @@
                   android:id="@+id/edit_1"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-
                   android:hint="请输入"/>
           </android.support.design.widget.TextInputLayout>
 
@@ -42,21 +41,13 @@
                   android:hint="请输入"
                   android:imeActionLabel="注册"
                   android:imeOptions="actionUnspecified"
-                  android:inputType="textPassword" />
+                   />
           </android.support.design.widget.TextInputLayout>
 
           <View
               android:layout_width="match_parent"
               android:layout_height="@dimen/line"
               android:background="@color/colorPrimary" />
-          <com.github.mikephil.charting.charts.LineChart
-              android:id="@+id/line_chart"
-              android:layout_width="match_parent"
-              android:layout_height="300dp"/>
-          <com.github.mikephil.charting.charts.PieChart
-              android:id="@+id/pie_chart"
-              android:layout_width="match_parent"
-              android:layout_height="300dp"/>
 
       </LinearLayout>
   </android.support.v4.widget.NestedScrollView>

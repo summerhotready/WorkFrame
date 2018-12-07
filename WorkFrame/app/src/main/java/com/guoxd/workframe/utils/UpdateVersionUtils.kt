@@ -49,24 +49,28 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
      */
     fun checkVersion() {
         HttpUtils.getIntent(mContext).getRequest(versionCheckUrl,object: HttpCallListener {
-            override fun Success(data: String?) {
-                if (data != null) {
-                    LogUtil.d("Login_checkVersion", "response:" + data);
-                    var firVersionEntity: FirVersionEntity = Gson().fromJson(data, FirVersionEntity::class.java)
-                    var fir_version = firVersionEntity.fir_version
-                    var versionCode = SystemUtils.getIntent().getVersionCode(mContext);
-                    LogUtil.e("Login_checkVersion", "versionCode:" + versionCode + "\nfir_server:" + fir_version);
-                    if (fir_version > versionCode) {//
-                        updateUrl = firVersionEntity.updateUrl
-                        if(isRun) {
-                            showVersionDialog()
+            override fun Success(code:Int,data: String?) {
+                try {
+                    if (data != null) {
+                        LogUtil.d("Login_checkVersion", "response:" + data);
+                        var firVersionEntity: FirVersionEntity = Gson().fromJson(data, FirVersionEntity::class.java)
+                        var fir_version = firVersionEntity.fir_version
+                        var versionCode = SystemUtils.getIntent().getVersionCode(mContext);
+                        LogUtil.e("Login_checkVersion", "versionCode:" + versionCode + "\nfir_server:" + fir_version);
+                        if (fir_version > versionCode) {//
+                            updateUrl = firVersionEntity.updateUrl
+                            if (isRun) {
+                                showVersionDialog()
+                            }
+                        } else {
+                            LogUtil.d("Login", "same version")
                         }
-                    }else{
-                        LogUtil.d("Login","same version")
                     }
+                }catch (e:Exception){
+                    e.printStackTrace()
                 }
             }
-            override fun Failure(message: String?) {
+            override fun Failure(code:Int,message: String?) {
                 LogUtil.e("Login_checkVersion", "Failure:" );
             }
         })

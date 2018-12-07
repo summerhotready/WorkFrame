@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.guoxd.work_frame_library.views.SwipeListLayout;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.modles.DeviceModle;
@@ -52,7 +50,7 @@ public class StaggeredListFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_base_recycler, container, false);
+        View root = inflater.inflate(R.layout.layout_base_recycler, container, false);
         refreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.refreshLayout);
         refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light, android.R.color.holo_orange_light,

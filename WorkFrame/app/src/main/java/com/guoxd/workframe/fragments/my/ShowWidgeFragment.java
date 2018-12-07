@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.guoxd.work_frame_library.views.ChangeRingImageView;
 import com.guoxd.work_frame_library.views.CustomProgress;
 import com.guoxd.work_frame_library.widges.CheckStart;
 import com.guoxd.work_frame_library.widges.ProgressShowView;
@@ -14,11 +15,11 @@ import com.guoxd.workframe.base.BaseFragment;
 
 import java.util.HashMap;
 
-/**
+/**展示小尺寸自定义组件
  * Created by guoxd on 2018/5/8.
  */
 
-public class WidgeFragment extends BaseFragment {
+public class ShowWidgeFragment extends BaseFragment {
 
     @Override
     public void onRefresh() {
@@ -28,7 +29,7 @@ public class WidgeFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.my_fragment_widge, container, false);
+        View root = inflater.inflate(R.layout.my_fragment_show_widge, container, false);
         CheckStart checkStart = root.findViewById(R.id.checkStart);
         checkStart.setMax(10);
         checkStart.setProgress(2);
@@ -56,6 +57,9 @@ public class WidgeFragment extends BaseFragment {
         pb.setTextLeft("已使用 30%");
         pb.setTextRight("未使用 70%");
 
+        //
+        ChangeRingImageView iv = root.findViewById(R.id.iv_changeRing);
+//        iv.
 
         return root;
     }

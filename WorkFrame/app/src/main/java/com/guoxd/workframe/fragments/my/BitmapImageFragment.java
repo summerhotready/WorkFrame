@@ -1,6 +1,5 @@
 package com.guoxd.workframe.fragments.my;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -48,7 +47,7 @@ public class BitmapImageFragment extends BaseFragment implements OnPageChangeLis
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.layout_pic, container, false);
+        View root = inflater.inflate(R.layout.my_fragment_bitmap, container, false);
         mVp = (ViewPager) root.findViewById(R.id.vp);
         closeBtn = (Button) root.findViewById(R.id.close_btn);
         picNumTv = (TextView) root.findViewById(R.id.picnum_tv);

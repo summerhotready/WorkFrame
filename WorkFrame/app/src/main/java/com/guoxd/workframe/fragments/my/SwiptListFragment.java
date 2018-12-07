@@ -1,9 +1,6 @@
 package com.guoxd.workframe.fragments.my;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.guoxd.work_frame_library.views.RecyclerRefreshLayout;
 import com.guoxd.work_frame_library.views.SwipeListLayout;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
@@ -54,7 +50,7 @@ public class SwiptListFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_base_recycler, container, false);
+        View root = inflater.inflate(R.layout.layout_base_recycler, container, false);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         //分割线
