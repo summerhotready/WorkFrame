@@ -1,5 +1,6 @@
 package com.guoxd.workframe
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -9,6 +10,8 @@ import com.guoxd.workframe.base.BaseFragment
 import com.guoxd.workframe.fragments.my.*
 import com.guoxd.workframe.fragments.system.RecyclerViewFragment
 import com.guoxd.workframe.fragments.system.TextWidgeFragment
+import com.guoxd.workframe.fragments.system.camera.Camera2Activity
+import com.guoxd.workframe.fragments.system.camera.CameraViewFragment
 import com.guoxd.workframe.utils.LogUtil
 
 
@@ -23,7 +26,7 @@ class ShowActivity : AppCompatActivity(){
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         var str = intent.getStringExtra("value")
         LogUtil.d("ShowActivity","tag:"+str)
-        setTitle(str)
+//        setTitle(str)
         showFragment(str)
     }
 
@@ -35,7 +38,8 @@ class ShowActivity : AppCompatActivity(){
                 fragment = BitmapImageFragment()
             }
             ShowTextUrl.CameraView->{
-                fragment = CameraViewFragment()
+//                fragment = CameraViewFragment()
+                startActivity(Intent(this@ShowActivity,Camera2Activity::class.java))
             }
             ShowTextUrl.MenuWidge->{
                 fragment = MenuWidgeFragment()
@@ -63,6 +67,14 @@ class ShowActivity : AppCompatActivity(){
             }
             ShowTextUrl.Widge->{
                 fragment = ShowWidgeFragment()
+            }
+            ShowTextUrl.INTENT_SEND->{
+                fragment =null
+                val sendIntent = Intent()
+                sendIntent.action = Intent.ACTION_SEND
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+                sendIntent.type = "text/plain"
+                startActivity(sendIntent)
             }
 
             //system

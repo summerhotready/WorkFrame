@@ -15,6 +15,7 @@ public interface ShowTextUrl {
     String BitmapImage="BitmapImage";//大图
     String CameraView="CAMERA_VIEW";
     String TestView="Test_VIEW";
+    String INTENT_SEND = "IntentSend";
 
     //system
     String RecyclerView="RecyclerView";

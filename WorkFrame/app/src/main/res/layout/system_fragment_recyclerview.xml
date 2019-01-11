@@ -5,7 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding_15">
-
+<Button
+    android:id="@+id/btn_shouquan"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="授权"/>
+    <Button
+        android:id="@+id/btn_zhiling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="指令"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView1"
         android:layout_width="match_parent"

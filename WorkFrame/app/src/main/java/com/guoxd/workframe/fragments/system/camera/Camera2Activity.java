@@ -1,11 +1,11 @@
-package com.guoxd.workframe.fragments.my;
+package com.guoxd.workframe.fragments.system.camera;
 
 import android.Manifest;
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Camera;
+import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -15,28 +15,27 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Size;
 import android.util.SparseIntArray;
-import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.guoxd.workframe.R;
-import com.guoxd.workframe.base.BaseFragment;
+import com.guoxd.workframe.base.BaseActivity;
+import com.guoxd.workframe.utils.FileUtils;
 import com.guoxd.workframe.utils.LogUtil;
 import com.guoxd.workframe.utils.ToastUtils;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,23 +44,25 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
 /**
- * Android SDK 21（LOLLIPOP） 开始已经弃用了之前的 Camera 类，提供了 camera2 相关 API
+ * Camera2+TextureView
+ * TextureView只能运行在硬件加速窗口
  */
-public class CameraViewFragment extends BaseFragment implements View.OnClickListener {
-    final String TAG="CameraViewFragment";
+public class Camera2Activity extends BaseActivity implements View.OnClickListener {
     private Button btnTakePic;
     private Button btnCancle;
     private TextureView mTextureView;
 
-    boolean isCamera = true;
+    private ImageView view;
     private CameraManager mCameraManager;
     private CameraDevice mCameraDevice;
     private String mCameraId;
     private Size mPreviewSize;
+    private int mImageSize = 0;
     private int mWidth ;//获取相机宽度
     private int mHeight ;//获取相机高度
+
+    Bitmap mBitmap;
     //
     private HandlerThread mBackgroundThread;
     private Handler mBackgroundHandler;
@@ -75,6 +76,7 @@ public class CameraViewFragment extends BaseFragment implements View.OnClickList
     private CameraCaptureSession mSession;
     private CaptureRequest.Builder mBuilder;
 
+    //CameraDeviceandroid.hardware.Camera也就是Camera1的Camera
     private CameraDevice.StateCallback mCameraDeviceStateCallback = new CameraDevice.StateCallback() {
         @Override
         public void onOpened(CameraDevice cameraDevice) {
@@ -102,30 +104,18 @@ public class CameraViewFragment extends BaseFragment implements View.OnClickList
     };
 
     @Override
-    public void onRefresh() {
-
+    protected int getLayoutId() {
+        return R.layout.system_camera_activity_camera2;
     }
 
-
-    View rootView;
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.my_wigth_camera, container, false);
-        //按钮
-        btnTakePic = (Button)findViewById(R.id.bnt_takepicture);
-        btnCancle = (Button)findViewById(R.id.bnt_enter);
-        btnCancle.setVisibility(View.GONE);
-
-        btnTakePic.setOnClickListener(this);
-        btnCancle.setOnClickListener(this);
-
-        mCameraManager = (CameraManager) getActivity().getSystemService(getActivity().CAMERA_SERVICE);
+    public void initView() {
+        mCameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
         //照相机预览的空间
         mTextureView = (TextureView) findViewById(R.id.surfaceView);
         mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
             @Override //解决画面拉伸的问题
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                //可用
                 mWidth = width;
                 mHeight = height;
                 getCameraId();
@@ -134,35 +124,89 @@ public class CameraViewFragment extends BaseFragment implements View.OnClickList
 
             @Override
             public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-
+                //改变
             }
 
             @Override
             public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                //释放
+                stopCamera();
                 return false;
             }
 
             @Override
             public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
+                //更新
             }
         });
-        return rootView;
+
+        btnTakePic = (Button)findViewById(R.id.bnt_takepicture);
+        btnCancle = (Button)findViewById(R.id.bnt_enter);
+        btnCancle.setVisibility(View.GONE);
+
+        btnTakePic.setOnClickListener(this);
+        btnCancle.setOnClickListener(this);
+
+        view = findViewById(R.id.view);
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mImageSize = view.getWidth();
+                view.getViewTreeObserver()
+                        .removeGlobalOnLayoutListener(this);
+            }
+        });
     }
 
-    View findViewById(int id){
-        return rootView.findViewById(id);
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.bnt_takepicture:
+                if(btnCancle.getVisibility() == View.GONE){//拍照
+                    Bitmap bitmap = mTextureView.getBitmap();
+                    LogUtil.e(TAG,String.format("getBitmap width:%d,height:%d",bitmap.getWidth(),bitmap.getHeight()));
+                    mBitmap= cropBitmap(bitmap);
+                    LogUtil.e(TAG,String.format("mBitmap width:%d,height:%d",mBitmap.getWidth(),mBitmap.getHeight()));
+                    view.setImageBitmap(mBitmap);
+                    btnTakePic.setText("确定");
+                    btnCancle.setVisibility(View.VISIBLE);
+                }else{//确认
+                    if(setBimapForFile()){//save
+                        LogUtil.e(TAG,"save ok");
+                        Intent intent = new Intent();
+                        setResult(Activity.RESULT_OK,intent);
+                        finish();
+                    }else{
+                        LogUtil.e(TAG,"save error");
+                    }
+                }
+                break;
+            case R.id.bnt_enter://取消
+                mBitmap = null;
+                view.setImageResource(android.R.color.transparent);
+                btnTakePic.setText("拍照");
+                btnCancle.setVisibility(View.GONE);
+                break;
+        }
     }
 
+    /**
+     * 活动获取照相机ID
+     * 前置为1，后置为0
+     */
     private void getCameraId() {
         try {
+            //获取可用相机列表
+            LogUtil.e(TAG,"可用相机的个数是:"+mCameraManager.getCameraIdList().length);
             for (String cameraId : mCameraManager.getCameraIdList()) {
                 CameraCharacteristics characteristics = mCameraManager.getCameraCharacteristics(cameraId);
+                LogUtil.e(TAG,"可用相机:"+characteristics.get(CameraCharacteristics.LENS_FACING));
                 if (characteristics.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_FRONT) {
                     continue;
                 }
                 mCameraId = cameraId;
-                LogUtil.d(TAG,"cameraID:"+mCameraId);
+                LogUtil.e(TAG,"cameraID:"+mCameraId);
                 return;
             }
         }catch (CameraAccessException e) {
@@ -183,11 +227,11 @@ public class CameraViewFragment extends BaseFragment implements View.OnClickList
         List<Size> collectorSizes = new ArrayList<>();
         for (Size option : sizes) {
             if (width > height) {
-                if (option.getWidth() > width && option.getHeight() > height) {
+                if (option.getWidth() >= width && option.getHeight() >= height) {
                     collectorSizes.add(option);
                 }
             } else {
-                if (option.getHeight() > width && option.getWidth() > height) {
+                if (option.getHeight() >= width && option.getWidth() >= height) {
                     collectorSizes.add(option);
                 }
             }
@@ -209,14 +253,14 @@ public class CameraViewFragment extends BaseFragment implements View.OnClickList
      * 初始化相机
      */
     private void openCamera() {
-        if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED){
-            LogUtil.d(TAG,"openCamera no permission");
-           this.requestPermissions(new String[]{
-                   Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
-           },REQUEST_CAMERA_PERMISSION);
+            LogUtil.e(TAG,"openCamera no permission");
+            ActivityCompat.requestPermissions(this,new String[]{
+                    Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
+            },REQUEST_CAMERA_PERMISSION);
         }else{
             try {
                 mCameraManager.openCamera(mCameraId, mCameraDeviceStateCallback, null);
@@ -256,7 +300,9 @@ public class CameraViewFragment extends BaseFragment implements View.OnClickList
             assert texture != null;
             CameraCharacteristics characteristics = mCameraManager.getCameraCharacteristics(mCameraId);
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            int deviceOrientation = getActivity(). getWindowManager().getDefaultDisplay().getOrientation();
+
+            int deviceOrientation =getWindowManager().getDefaultDisplay().getOrientation();
+            //纠正角度
             int totalRotation = sensorToDeviceRotation(characteristics, deviceOrientation);
             boolean swapRotation = totalRotation == 90 || totalRotation == 270;
             int rotatedWidth = mWidth;
@@ -265,9 +311,10 @@ public class CameraViewFragment extends BaseFragment implements View.OnClickList
                 rotatedWidth = mHeight;
                 rotatedHeight = mWidth;
             }
-            mPreviewSize = getPreferredPreviewSize(map.getOutputSizes(SurfaceTexture.class), rotatedWidth, rotatedHeight);
+            Size[] sizes = map.getOutputSizes(SurfaceTexture.class);
+            mPreviewSize = getPreferredPreviewSize(sizes, rotatedWidth, rotatedHeight);
             texture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
-            LogUtil.e("CameraActivity", "OptimalSize width: " + mPreviewSize.getWidth() + " height: " + mPreviewSize.getHeight());
+            LogUtil.e(TAG, "OptimalSize width: " + mPreviewSize.getWidth() + " height: " + mPreviewSize.getHeight());
             Surface surface = new Surface(texture);
             mBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mBuilder.addTarget(surface);
@@ -288,11 +335,20 @@ public class CameraViewFragment extends BaseFragment implements View.OnClickList
 
                 @Override
                 public void onConfigureFailed(CameraCaptureSession cameraCaptureSession) {
-                    ToastUtils.showMsgToast(getActivity(), "Camera configuration change");
+                    ToastUtils.showMsgToast(Camera2Activity.this,"Camera configuration change");
                 }
             }, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 停止拍照释放资源*/
+    private void stopCamera(){
+        if(mCameraDevice!=null){
+            mCameraDevice.close();
+            mCameraDevice=null;
         }
     }
 
@@ -302,68 +358,48 @@ public class CameraViewFragment extends BaseFragment implements View.OnClickList
         return (sensorOrientation + deviceOrientation + 360) % 360;
     }
 
-    Bitmap mBitmap;
     boolean setBimapForFile(){
-
+        String fileName = getIntent().getStringExtra("fileName");
         if(mBitmap !=null){
-            File file = new File(getActivity().getCacheDir(),"save.jpg");
-            mBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-            FileOutputStream fos = null;
+            String fileUrl =FileUtils.getIntent().getDiskCacheDir(this);
+            File file=new File(fileUrl,fileName);//将要保存图片的路径
             try {
-                fos = new FileOutputStream(file);
-                mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.flush();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                LogUtil.e(TAG,"FileNotFoundException");
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                mBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bos);
+                bos.flush();
+                bos.close();
+                return true;
             } catch (IOException e) {
                 e.printStackTrace();
-                LogUtil.e(TAG,"IOException");
-            } finally {
-                try {
-                    if (fos != null) {
-                        fos.close();
-                        LogUtil.d(TAG,"save");
-                        return true;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         }
         return false;
     }
 
-    /**
-     * 三个按钮点击事件
-     */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bnt_takepicture:
-                if(isCamera){//拍照
-                    mBitmap= mTextureView.getBitmap();
-                    btnTakePic.setText("确定");
-                    btnCancle.setVisibility(View.VISIBLE);
-                    isCamera = false;
-                }else{//确认
-                    if(setBimapForFile()){//save
-                        LogUtil.d(TAG,"save ok");
-                    }else{
-                        LogUtil.e(TAG,"save error");
-                    }
-                }
-                break;
-
-            case R.id.bnt_enter:
-                mBitmap = null;
-                isCamera = true;
-                btnTakePic.setText("拍照");
-                btnCancle.setVisibility(View.GONE);
-                    LogUtil.d(TAG,"bundle null");
-                break;
+    private Bitmap cropBitmap(Bitmap bitmap) {
+        int w = bitmap.getWidth(); // 得到图片的宽，高
+        int h = bitmap.getHeight();
+        LogUtil.e(TAG,String.format("cropBitmap width:%d,height:%d",w,h));
+        if(w>h){
+            Matrix matrix = new Matrix();
+            matrix.setRotate(90);
+            // 围绕原地进行旋转
+            Bitmap newBM = Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, false);
+            bitmap = newBM;
+            newBM.recycle();
+        }
+        w = bitmap.getWidth(); // 得到图片的宽度
+        Bitmap current = Bitmap.createBitmap(bitmap, 0, 0, w, w, null, false);
+        if(w>mImageSize){//缩放
+            float size = mImageSize;
+            float w_dip = w/size;
+            Matrix matrix = new Matrix();
+            matrix.preScale(w_dip, w_dip);
+            Bitmap newBM = Bitmap.createBitmap(current, 0, 0, mImageSize, mImageSize, matrix, false);
+            return newBM;
+        }else {//w<=mImageSize
+            mImageSize = w;
+            return current;
         }
     }
-
-
 }

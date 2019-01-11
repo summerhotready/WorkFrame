@@ -33,6 +33,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
+import com.guoxd.workframe.fragments.system.dialog.ShowModleProgressDialog;
 import com.guoxd.workframe.utils.LogUtil;
 
 import java.security.SecureRandom;
@@ -49,24 +50,76 @@ import java.util.TimerTask;
 public class RecyclerViewFragment extends BaseFragment {
 
     final String TAG="RecyclerViewFragment";
+    ShowModleProgressDialog progressDialog;
     @Override
     public void onRefresh() {
 
     }
 
+    final int delayTime = 2*1000;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.system_fragment_recyclerview, container, false);
 
+        progressDialog = new ShowModleProgressDialog();
         //
+        root.findViewById(R.id.btn_shouquan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.show(getActivity().getSupportFragmentManager(),"recyclerViewVertical");
+                mHandler.sendEmptyMessageDelayed(101,delayTime);
+            }
+        });
+        root.findViewById(R.id.btn_zhiling).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.show(getActivity().getSupportFragmentManager(),"recyclerViewVertical");
+                mHandler.sendEmptyMessageDelayed(101,delayTime);
+            }
+        });
         RecyclerView recyclerViewVertical = root.findViewById(R.id.recyclerView1);
         recyclerViewVertical.setLayoutManager(new LinearLayoutManager(getActivity()));//default is LinearLayoutManager.VERTICAL
+        recyclerViewVertical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
        //横向RecyclerView
         RecyclerView recyclerViewHorizontal = root.findViewById(R.id.recyclerView2);
         recyclerViewHorizontal.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
         return root;
     }
+
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what){
+                case 101:{
+                    progressDialog.addProgress("101的头衔");
+                    mHandler.sendEmptyMessageDelayed(102,delayTime);
+                    break;
+                }
+                case 102:{
+                    progressDialog.addProgress("102的头衔");
+                    mHandler.sendEmptyMessageDelayed(103,delayTime);
+                    break;
+                }
+                case 103:{
+                    progressDialog.addProgress("103的头衔");
+                    mHandler.sendEmptyMessageDelayed(104,delayTime);
+                    break;
+                }
+                case 104:{
+                    progressDialog.addProgress("104的头衔");
+                    break;
+                }
+            }
+        }
+    };
+
+//    recycler1
     class Code{
         int type=0;
         String title;

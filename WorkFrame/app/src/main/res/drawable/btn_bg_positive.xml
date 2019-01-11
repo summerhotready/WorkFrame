@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--用于肯定意义的-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size
+        android:width="100dp"
+        android:height="38dp"/>
+    <corners android:radius="5dp"/>
+    <solid android:color="@color/text_color_click"/>
+</shape>
