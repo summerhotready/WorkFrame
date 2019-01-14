@@ -1,4 +1,4 @@
-package com.guoxd.work_frame_library.utils;
+package com.guoxd.workframe.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
