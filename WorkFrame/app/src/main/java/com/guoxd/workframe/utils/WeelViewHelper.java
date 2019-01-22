@@ -189,7 +189,7 @@ public class WeelViewHelper implements ISelectTimeCallback {
             today[0] = mCalendar.get(Calendar.YEAR);
             today[1] = mCalendar.get(Calendar.MONTH)+1;
             today[2] = mCalendar.get(Calendar.DAY_OF_MONTH);
-            today[3] = mCalendar.get(Calendar.HOUR);
+            today[3] = mCalendar.get(Calendar.HOUR_OF_DAY);
             today[4] = mCalendar.get(Calendar.MINUTE);
             today[5] = mCalendar.get(Calendar.SECOND);
             mPickerOptions.startYear = today[0];
@@ -659,6 +659,7 @@ public class WeelViewHelper implements ISelectTimeCallback {
                 wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
             }
         }
+        wv_day.setCurrentItem(currentItem);
         if (currentItem > wv_day.getAdapter().getItemsCount() - 1) {
             currentItem = wv_day.getAdapter().getItemsCount() - 1;
             wv_day.setCurrentItem(currentItem);
@@ -824,7 +825,7 @@ public class WeelViewHelper implements ISelectTimeCallback {
         mCalendar.set(Calendar.YEAR, year);
         mCalendar.set(Calendar.MONTH, month);
         mCalendar.set(Calendar.DAY_OF_MONTH, day);
-        mCalendar.set(Calendar.HOUR, hour);
+        mCalendar.set(Calendar.HOUR_OF_DAY, hour);
         mCalendar.set(Calendar.MINUTE, minute);
         mCalendar.set(Calendar.SECOND, second);
         return mCalendar.getTime();
