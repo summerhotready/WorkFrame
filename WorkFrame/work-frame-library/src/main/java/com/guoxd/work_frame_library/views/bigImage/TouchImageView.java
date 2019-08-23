@@ -8,12 +8,12 @@ import android.graphics.PointF;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 import java.lang.ref.WeakReference;
 import java.util.Timer;

@@ -7,8 +7,6 @@
     <!-- wifiManager.getConnectionInfo(); -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <application>
-
-    </application>
+    <application>    </application>
 
 </manifest>

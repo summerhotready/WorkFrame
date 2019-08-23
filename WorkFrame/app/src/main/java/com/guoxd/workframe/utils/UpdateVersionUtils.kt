@@ -4,11 +4,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.support.v4.content.FileProvider
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.google.gson.Gson
 import com.guoxd.workframe.R
 import com.guoxd.workframe.utils.HttpUtils
@@ -25,7 +25,7 @@ import java.io.File
  * 需要在res中增加layout：dialog_download_progress
  */
 
-class UpdateVersionUtils(var mContext:AppCompatActivity){
+class UpdateVersionUtils(var mContext: AppCompatActivity){
 
     interface LoginControllerListener{
         fun onUpdateFailure(msg:String)
@@ -53,7 +53,7 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
                 try {
                     if (data != null) {
                         LogUtil.d("Login_checkVersion", "response:" + data);
-                        var firVersionEntity: FirVersionEntity = Gson().fromJson(data, FirVersionEntity::class.java)
+                        var firVersionEntity: FirVersionEntity = Gson().fromJson(data, FirVersionEntity::class as Class<FirVersionEntity>)
                         var fir_version = firVersionEntity.fir_version
                         var versionCode = SystemUtils.getIntent().getVersionCode(mContext);
                         LogUtil.e("Login_checkVersion", "versionCode:" + versionCode + "\nfir_server:" + fir_version);
@@ -117,8 +117,8 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
     private fun showUpdateDialog(){
         val builder = AlertDialog.Builder(mContext)
         val view = mContext.layoutInflater.inflate(R.layout.dialog_download_progress, null)
-        var mProgress: ProgressBar = view.findViewById(R.id.progress)
-        var mPresemt: TextView = view.findViewById(R.id.present)
+        var mProgress: ProgressBar = view.findViewById(R.id.progress) as ProgressBar
+        var mPresemt: TextView = view.findViewById(R.id.present) as TextView
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(view)
@@ -152,7 +152,7 @@ class UpdateVersionUtils(var mContext:AppCompatActivity){
      */
     protected fun installApk(file: File) {
         val intent = Intent(Intent.ACTION_VIEW)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= 24) {// Build.VERSION_CODES.N
             try {
                 val apkUri = FileProvider.getUriForFile(mContext, "com.elco.tieta.tieta.fileprovider", file)
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)

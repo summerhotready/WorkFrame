@@ -1,17 +1,19 @@
 package com.guoxd.workframe.views;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.guoxd.workframe.R;
 
@@ -20,7 +22,7 @@ import com.guoxd.workframe.R;
  * AUTHOR: The_Android
  * DATE: 2018/4/12
  */
-
+@TargetApi(21)
 public class MyItemDecoration extends RecyclerView.ItemDecoration {
 	public static final int HORIZONTAL = LinearLayout.HORIZONTAL;
 	public static final int VERTICAL = LinearLayout.VERTICAL;

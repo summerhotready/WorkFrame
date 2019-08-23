@@ -1,13 +1,15 @@
 package com.guoxd.workframe.widge.materialcalendar;
 
+import android.annotation.TargetApi;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.guoxd.workframe.widge.materialcalendar.Interface.CalendarCallback;
 import com.guoxd.workframe.widge.materialcalendar.Interface.OnDateChangedListener;
@@ -17,7 +19,7 @@ import com.guoxd.workframe.widge.materialcalendar.Util.CalendarUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
-
+@TargetApi(14)
 public class MonthView extends ViewGroup {
     private static final int DEFAULT_DAYS_IN_WEEK = 7;
     final OnClickListener dayClickListener;

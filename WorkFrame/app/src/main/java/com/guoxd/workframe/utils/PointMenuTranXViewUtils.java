@@ -2,6 +2,7 @@ package com.guoxd.workframe.utils;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by guoxd on 2018/10/25.
  */
-
+@TargetApi(11)
 public class PointMenuTranXViewUtils {
     final String TAG="PointMenuTranXViewUtils";
     ArrayList<ImageView> imageList;
@@ -22,7 +23,6 @@ public class PointMenuTranXViewUtils {
     public boolean isOpen=false;
 
     public void setImageViews(int size, ImageView... imageViews){
-
         if(imageViews.length>0){
             viewSize = imageViews.length;
             imageList = new ArrayList<>();

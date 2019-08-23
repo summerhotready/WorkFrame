@@ -3,9 +3,10 @@ package com.guoxd.work_frame_library.views.surface;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.locks.Lock;
@@ -97,12 +98,12 @@ public class WeakHandler {
     /**
      * Causes the Runnable r to be added to the message queue, to be run
      * at a specific time given by <var>uptimeMillis</var>.
-     * <b>The time-base is {@link android.os.SystemClock#uptimeMillis}.</b>
+     * <b>The time-base is .</b>
      * The runnable will be run on the thread to which this handler is attached.
      *
      * @param r The Runnable that will be executed.
      * @param uptimeMillis The absolute time at which the callback should run,
-     *         using the {@link android.os.SystemClock#uptimeMillis} time-base.
+     *         using the time-base.
      *
      * @return Returns true if the Runnable was successfully placed in to the
      *         message queue.  Returns false on failure, usually because the
@@ -118,12 +119,12 @@ public class WeakHandler {
     /**
      * Causes the Runnable r to be added to the message queue, to be run
      * at a specific time given by <var>uptimeMillis</var>.
-     * <b>The time-base is {@link android.os.SystemClock#uptimeMillis}.</b>
+     * <b>The time-base is .</b>
      * The runnable will be run on the thread to which this handler is attached.
      *
      * @param r The Runnable that will be executed.
      * @param uptimeMillis The absolute time at which the callback should run,
-     *         using the {@link android.os.SystemClock#uptimeMillis} time-base.
+     *         using the time-base.
      *
      * @return Returns true if the Runnable was successfully placed in to the
      *         message queue.  Returns false on failure, usually because the
@@ -132,7 +133,7 @@ public class WeakHandler {
      *         the looper is quit before the delivery time of the message
      *         occurs then the message will be dropped.
      *
-     * @see android.os.SystemClock#uptimeMillis
+     *
      */
     public final boolean postAtTime(Runnable r, Object token, long uptimeMillis) {
         return mExec.postAtTime(wrapRunnable(r), token, uptimeMillis);
@@ -269,13 +270,13 @@ public class WeakHandler {
     /**
      * Enqueue a message into the message queue after all pending messages
      * before the absolute time (in milliseconds) <var>uptimeMillis</var>.
-     * <b>The time-base is {@link android.os.SystemClock#uptimeMillis}.</b>
+     * <b>The time-base is .</b>
      * You will receive it in callback, in the thread attached
      * to this handler.
      *
      * @param uptimeMillis The absolute time at which the message should be
      *         delivered, using the
-     *         {@link android.os.SystemClock#uptimeMillis} time-base.
+     *         time-base.
      *
      * @return Returns true if the message was successfully placed in to the
      *         message queue.  Returns false on failure, usually because the

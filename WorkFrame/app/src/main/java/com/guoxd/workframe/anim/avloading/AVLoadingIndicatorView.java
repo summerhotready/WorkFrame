@@ -21,7 +21,7 @@ import com.guoxd.workframe.R;
 /**
  * Created by guoxd on 2018/10/8.
  */
-
+@TargetApi(11)
 public class AVLoadingIndicatorView extends View {
 
     private static final String TAG="AVLoadingIndicatorView";
@@ -335,6 +335,7 @@ public class AVLoadingIndicatorView extends View {
         drawTrack(canvas);
     }
 
+    @TargetApi(Build.VERSION_CODES.DONUT)
     void drawTrack(Canvas canvas) {
         final Drawable d = mIndicator;
         if (d != null) {

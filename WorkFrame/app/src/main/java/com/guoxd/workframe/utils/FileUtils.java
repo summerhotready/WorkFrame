@@ -1,5 +1,6 @@
 package com.guoxd.workframe.utils;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Environment;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by guoxd on 2018/10/23.
  */
-
+@TargetApi(9)
 public class FileUtils {
     static FileUtils utils=null;
     private FileUtils(){

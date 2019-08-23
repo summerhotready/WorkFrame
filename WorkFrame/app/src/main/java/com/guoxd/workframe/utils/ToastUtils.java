@@ -2,9 +2,10 @@ package com.guoxd.workframe.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 /**弹出提示专用工具
  * Created by guoxd on 2017/3/1.

@@ -1,5 +1,6 @@
 package com.guoxd.workframe;
 
+
 import android.content.Intent;
 
 import com.guoxd.workframe.base.BaseActivity;
@@ -20,7 +21,7 @@ public class SendMessageActivity extends BaseActivity {
     public void initView() {
         super.initView();
         LogUtil.d(TAG,"SendMessageActivity initView()");
-        Intent intent = getIntent();
+       /* Intent intent = getAppSettingIntent("");
         String action = intent.getAction();
         String type = intent.getType();
         if (Intent.ACTION_SEND.equals(action) && type != null) {
@@ -36,7 +37,7 @@ public class SendMessageActivity extends BaseActivity {
             }
         } else {
             // Handle other intents, such as being started from the home screen
-        }
+        }*/
     }
 
     void handleSendText(Intent intent) {

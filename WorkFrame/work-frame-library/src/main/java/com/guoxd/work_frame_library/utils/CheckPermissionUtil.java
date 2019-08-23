@@ -9,9 +9,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.guoxd.work_frame_library.R;
 

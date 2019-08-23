@@ -14,4 +14,10 @@
 
     <!--hint-->
     <string name="hint_nocopy">不能复制粘贴的edittext</string>
+
+    <!--text-->
+    <string name="title_avLoading">AVLoadingIndicatorView</string>
+    <string name="title_text_avLoading">https://github.com/jzeferino/Xamarin.Android.AVLoadingIndicatorView</string>
+    <string name="title_buttons">Buttons</string>
+
 </resources>

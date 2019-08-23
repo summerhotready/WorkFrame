@@ -7,10 +7,11 @@ import android.view.View;
 
 import com.guoxd.work_frame_library.anmi.SpringRotatInterpolator;
 import com.guoxd.work_frame_library.anmi.SpringScaleInterpolator;
-import com.guoxd.work_frame_library.listeners.AnimtorCallBackListener;
+import com.guoxd.work_frame_library.utils.info.AnimtorCallBackListener;
 
 /**
  * Created by guoxd on 2018/6/26.
+ * 普通属性动画效果
  */
 
 public class AnimatorUtils {
@@ -27,12 +28,11 @@ public class AnimatorUtils {
         set.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-//                LogUtil.d("Animtor","onAnimationCancel");
             }
 
             @Override
             public void onAnimationEnd(Animator animator) {
-//                LogUtil.d("Animtor","onAnimationCancel");
+
                 listener.finish();
             }
 

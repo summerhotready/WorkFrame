@@ -2,20 +2,20 @@ package com.guoxd.workframe
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import com.guoxd.workframe.base.ShowTextUrl
-import android.support.v7.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import com.guoxd.workframe.base.BaseFragment
-import com.guoxd.workframe.fragments.my.*
-import com.guoxd.workframe.fragments.system.RecyclerViewFragment
-import com.guoxd.workframe.fragments.system.TextWidgeFragment
-import com.guoxd.workframe.fragments.system.camera.Camera2Activity
-import com.guoxd.workframe.fragments.system.camera.CameraViewFragment
+import com.guoxd.workframe.my_page.*
+import com.guoxd.workframe.system.AnimtorFragment
+import com.guoxd.workframe.system.RecyclerViewFragment
+import com.guoxd.workframe.system.TextWidgeFragment
+import com.guoxd.workframe.system.camera.Camera2Activity
 import com.guoxd.workframe.utils.LogUtil
 
 
-/**
+/**加载页面的Activity
  * Created by guoxd on 2018/5/23.
  */
 class ShowActivity : AppCompatActivity(){
@@ -31,7 +31,7 @@ class ShowActivity : AppCompatActivity(){
     }
 
     fun showFragment(str:String){
-        var fragment: Fragment ?=null;
+        var fragment: Fragment?=null;
         when(str){
             //my
             ShowTextUrl.BitmapImage->{
@@ -39,7 +39,7 @@ class ShowActivity : AppCompatActivity(){
             }
             ShowTextUrl.CameraView->{
 //                fragment = CameraViewFragment()
-                startActivity(Intent(this@ShowActivity,Camera2Activity::class.java))
+                startActivity(Intent(this@ShowActivity,Camera2Activity::class as Class<Camera2Activity>))
             }
             ShowTextUrl.MenuWidge->{
                 fragment = MenuWidgeFragment()
@@ -53,9 +53,9 @@ class ShowActivity : AppCompatActivity(){
                     fragment = clazz.newInstance() as Fragment;
                 } catch (e: ClassNotFoundException) {
                     e.printStackTrace()
-                } catch (e: java.lang.IllegalAccessException) {
+                } catch (e: IllegalAccessException) {
                     e.printStackTrace()
-                } catch (e: java.lang.InstantiationException) {
+                } catch (e: InstantiationException) {
                     e.printStackTrace()
                 }
             }
@@ -84,11 +84,14 @@ class ShowActivity : AppCompatActivity(){
             ShowTextUrl.RecyclerView->{
                 fragment = RecyclerViewFragment()
             }
+            ShowTextUrl.AnimtorView->{
+                fragment = AnimtorFragment()
+            }
 
             //other
             ShowTextUrl.OtherAnimWidge->{
                 try {
-                    var animFragemnt = Class.forName("com.guoxd.workframe.fragments.others."+ShowTextUrl.OtherAnimWidge)
+                    var animFragemnt = Class.forName("com.guoxd.workframe.others."+ShowTextUrl.OtherAnimWidge)
                     fragment = animFragemnt.newInstance() as Fragment;
                    /* var mToast: Toast = Toast(this)
                     var filed: Field = mToast.javaClass.getDeclaredField("mTN")
@@ -102,7 +105,7 @@ class ShowActivity : AppCompatActivity(){
                 }
             }
             ShowTextUrl.MpChar->{
-                var clazz = Class.forName("com.guoxd.workframe.fragments.others."+ShowTextUrl.MpChar)
+                var clazz = Class.forName("com.guoxd.workframe.others."+ShowTextUrl.MpChar)
                 fragment = clazz.newInstance() as Fragment;
             }
         }

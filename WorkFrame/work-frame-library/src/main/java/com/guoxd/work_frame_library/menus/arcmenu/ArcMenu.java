@@ -12,8 +12,7 @@ import android.view.animation.TranslateAnimation;
 
 import com.guoxd.work_frame_library.R;
 
-/**
- * 放射状，卫星菜单
+/**放射状，卫星菜单
  */
 public class ArcMenu extends ViewGroup {
     private View mButton;

@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:text="PaintSurfaceview"
     style="@style/TextTitle"/>
-    <com.guoxd.work_frame_library.views.PaintSurfaceview
+    <com.guoxd.work_frame_library.views.paint.PaintSurfaceview
         android:layout_width="match_parent"
         android:id="@+id/paintView"
         android:layout_height="300dp"

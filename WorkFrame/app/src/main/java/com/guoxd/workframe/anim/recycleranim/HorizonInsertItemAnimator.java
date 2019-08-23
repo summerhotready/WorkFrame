@@ -1,14 +1,18 @@
 package com.guoxd.workframe.anim.recycleranim;
 
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import android.annotation.TargetApi;
 import android.util.Log;
 
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
+@TargetApi(11)
 public class HorizonInsertItemAnimator extends BaseItemAnimator {
     String TAG = "MyAnimationDemo";
+
     @Override
     protected void animateRemoveImpl(RecyclerView.ViewHolder holder) {
+
         Log.i(TAG,String.format("%d",holder.itemView.getRootView().getWidth()));
         ViewCompat.animate(holder.itemView)
                 //完成态是移除
@@ -44,5 +48,10 @@ public class HorizonInsertItemAnimator extends BaseItemAnimator {
                 .setStartDelay(getRemoveDelay(holder))
                 .setListener(new DefaultAddVpaListener(holder))
                 .start();
+    }
+
+    @Override
+    protected long getRemoveDelay(RecyclerView.ViewHolder holder) {
+        return super.getRemoveDelay(holder);
     }
 }

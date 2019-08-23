@@ -5,14 +5,19 @@ package com.guoxd.workframe.base;
  */
 
 public interface ShowTextUrl {
+    String MY_PAGE = "com.guoxd.workframe.my_page.";
+    String OTHER_PAGE = "com.guoxd.workframe.others.";
+    String SYSTEM_PAGE = "com.guoxd.workframe.system.";
     //my 自定义
-    String Widge="ShowWidge";//自定义小组件
+    String BitmapImage="BitmapImage";//大图BitmapImageFragment
+    String MenuWidge="MENU_WIDGE";//弹出menu MenuWidgeFragment
+    String Widge="ShowWidge";//自定义小组件 ShowWidgeFragment
     String PaintView="PaintView";//绘画板
-    String MenuWidge="MENU_WIDGE";//弹出menu
-    String SlideBlock="com.guoxd.workframe.fragments.my.SlideBlockFragment";
+
+    String SlideBlock=MY_PAGE+"SlideBlockFragment";
     String SwiptList="SwiptList";//侧滑list
     String StaggeredList="StaggeredList";//瀑布流
-    String BitmapImage="BitmapImage";//大图
+
     String CameraView="CAMERA_VIEW";
     String TestView="Test_VIEW";
     String INTENT_SEND = "IntentSend";
@@ -20,6 +25,7 @@ public interface ShowTextUrl {
     //system
     String RecyclerView="RecyclerView";
     String TextWidge="TextWidge";
+    String AnimtorView = "animtor_view";
 
     //other  第三方
     String OtherAnimWidge="AnimWidgeFragment";

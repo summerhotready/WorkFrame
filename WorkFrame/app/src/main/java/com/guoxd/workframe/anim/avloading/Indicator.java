@@ -1,6 +1,7 @@
 package com.guoxd.workframe.anim.avloading;
 
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 /**
  * Created by guoxd on 2018/10/8.
  */
-
+@TargetApi(14)
 public abstract class Indicator extends Drawable implements Animatable {
 
     private HashMap<ValueAnimator,ValueAnimator.AnimatorUpdateListener> mUpdateListeners=new HashMap<>();

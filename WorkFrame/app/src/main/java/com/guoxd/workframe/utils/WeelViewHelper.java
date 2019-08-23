@@ -25,7 +25,6 @@ import java.util.List;
 /**
  * Created by guoxd on 2019/1/10.
  */
-@SuppressLint("WrongConstant")
 public class WeelViewHelper implements ISelectTimeCallback {
     final String TAG = "WeelViewHelper";
     //输出的格式化

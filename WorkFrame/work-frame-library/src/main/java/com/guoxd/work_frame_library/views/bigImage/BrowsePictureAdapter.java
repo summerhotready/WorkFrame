@@ -1,13 +1,15 @@
 package com.guoxd.work_frame_library.views.bigImage;
 
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
 
 /**
  * Created by guoxd on 2018/10/16.
+ * 这是一个图片滚动器
  */
 
 public class BrowsePictureAdapter extends PagerAdapter {
