@@ -2,24 +2,17 @@
 
 buildscript {
     ext.kotlin_version = '1.3.10'
-    ext.gradle_version = '3.2.0'// classpath 'com.android.tools.build:gradle:'
-//    ext.android_version = '3.0.0-alpha4'//'3.0.0-beta6'
+    ext.gradle_version = '3.2.0'
     repositories {
         jcenter()
         maven { url 'https://jitpack.io' }
         google()
     }
     dependencies {
-//        classpath 'com.android.tools.build:gradle:3.0.0' gradle-5.1.1
-//        classpath 'com.android.tools.build:gradle:3.4.1'
         classpath "com.android.tools.build:gradle:$gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
-
 allprojects {
     repositories {
         jcenter()
@@ -28,7 +21,6 @@ allprojects {
         mavenCentral()
     }
 }
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

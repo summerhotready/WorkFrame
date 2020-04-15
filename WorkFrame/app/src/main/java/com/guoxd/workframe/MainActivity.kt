@@ -5,14 +5,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.guoxd.workframe.main.MainMyWidgeFragment
+import java.util.ArrayList
+
+
+
 //程序入口
 class MainActivity : AppCompatActivity() ,View.OnClickListener{
     var fragment_my: MainMyWidgeFragment?=null //自定义组件展示页面
     var fragment_system: MainMyWidgeFragment?=null//系统级别的组件使用展示/测试页面
     var fragment_other: MainMyWidgeFragment?=null//其他优秀的三方开源使用页面
+
+    lateinit var viewMy:AppCompatTextView
+    lateinit var viewOther:AppCompatTextView
+    lateinit var viewSystem:AppCompatTextView
 
     var fragmentManager: FragmentManager?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +36,39 @@ class MainActivity : AppCompatActivity() ,View.OnClickListener{
         transaction?.add(R.id.fragment,fragment_my as Fragment)
         transaction?.commit()
 
-        findViewById<TextView>(R.id.tv_my).setOnClickListener(this)
-        findViewById<TextView>(R.id.tv_system).setOnClickListener(this)
-        findViewById<TextView>(R.id.tv_other).setOnClickListener(this)
+        viewMy = findViewById(R.id.tv_my)
+        viewMy.setOnClickListener(this)
+        viewSystem = findViewById(R.id.tv_system)
+        viewSystem.setOnClickListener(this)
+        viewOther = findViewById(R.id.tv_other)
+        viewOther.setOnClickListener(this)
+    }
+
+    fun List<String>.getM():List<String>{
+        var result = this.toMutableList();
+        return result;
+    }
+    fun genTodayLuck(): Pair<List<Map<String, String>>, List<Map<String, String>>>{
+        val goodList = ArrayList<Map<String, String>>()
+        val badList = ArrayList<Map<String, String>>()
+
+        return Pair(goodList, badList)
+    }
+
+    //给TextView着色
+    fun changeTextView(textView:AppCompatTextView){
+
+
+
+        /*final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTintList(wrappedDrawable, colors);
+        return wrappedDrawable;*/
+        /*final Drawable wrappedDrawable = tintDrawable(originalDrawable, ColorStateList.valueOf(Color.RED));
+editText1.setBackgroundDrawable(wrappedDrawable);
+EditText editText2 = (EditText) findViewById(R.id.edit_2);
+editText2.setBackgroundDrawable(tintDrawable(editText2.getBackground(),
+        ColorStateList.valueOf(Color.parseColor("#03A9F4"))));*/
+
     }
 
     override fun onClick(v: View) {

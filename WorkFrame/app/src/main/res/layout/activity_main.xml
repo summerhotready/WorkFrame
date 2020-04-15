@@ -17,7 +17,7 @@
     android:layout_weight="1"
     android:orientation="horizontal"
     android:paddingTop="@dimen/padding_10">
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_my"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -27,7 +27,7 @@
         android:textSize="12dp"
         android:drawableTop="@mipmap/icon_gis_on"
         android:textColor="@color/text_color_click"/>
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_other"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -37,7 +37,7 @@
         android:textSize="12dp"
         android:drawableTop="@mipmap/icon_manage_off"
         android:textColor="@color/text_color_tab"/>
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_system"
         android:layout_width="0dp"
         android:layout_weight="1"

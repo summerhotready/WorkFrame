@@ -14,6 +14,9 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+       /* viewBinding {
+            enabled = true
+        }*/
     }
     buildTypes {
         release {
@@ -26,6 +29,9 @@ android {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
+    }
+    dataBinding{
+        enabled=true;
     }
 }
 String SDK_DIR = System.getenv("ANDROID_SDK_HOME")
@@ -47,7 +53,7 @@ dependencies {
     //网络请求
     //    implementation 'com.squareup.okhttp3:okhttp:3.4.2'
     implementation 'com.zhy:okhttputils:2.6.2'
-    implementation 'com.google.code.gson:gson:2.8.5'
+//    implementation 'com.google.code.gson:gson:2.8.5'
     //lottie动画
     implementation 'com.airbnb.android:lottie:3.0.3'
     //avLoading动画
@@ -62,11 +68,16 @@ dependencies {
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
     //日历时间选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
+    //Pop SharpView
+    implementation 'com.github.zengzhaoxing:SharpView:v2.4.4'
+    //XPopup for androidx.
+    implementation 'com.lxj:xpopup:1.8.10-x'
     //BasePopup 优秀的三方开源popupwindow
-    implementation 'com.github.razerdp:BasePopup:2.1.5'
+    implementation 'com.github.razerdp:BasePopup:2.2.1'
+
+
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-//    implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.android.support:design:28.0.0-alpha1'
     // ble
     implementation 'no.nordicsemi.android:ble:2.1.1'
@@ -80,4 +91,7 @@ dependencies {
 //    implementation "com.mapzen:on-the-road:$kotlin_version"
 //    implementation 'io.alterac.blurkit:blurkit:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //tabLayout
+    implementation  'com.github.devlight.navigationtabstrip:navigationtabstrip:+'
+    implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
 }

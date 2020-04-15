@@ -13,6 +13,7 @@ import androidx.customview.widget.ViewDragHelper;
  * 侧滑item layout
  * 用于列表页
  * 默认情况下允许所有item划出，控制单个需要在adapter中控制
+ * 但效果来说，并不如成熟的三方好用，推荐swipelayout
  */
 public class SwipeListLayout extends FrameLayout {
 	//隐藏部分

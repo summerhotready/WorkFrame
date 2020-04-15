@@ -15,9 +15,9 @@ public final class R {
         public static final int basepopup_fade_in = 0x7f01000f;
         public static final int basepopup_fade_out = 0x7f010010;
     }
-    public static final class style {
-        private style() {}
+    public static final class id {
+        private id() {}
 
-        public static final int PopupAnimaFade = 0x7f1000d9;
+        public static final int base_popup_content_root = 0x7f080030;
     }
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
@@ -32,6 +33,9 @@ public class TextWidgeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.system_fragment_widge, container, false);
 
+        //TextView
+        AppCompatTextView textView = root.findViewById(R.id.tv_textView);
+        textView.setText("可滚动内容的textview\n该滚动和ScrollerView是冲突的\n使用时需要注意\nhhhhhhhhhhhhhhhh\nggggggg");
         //edittext筛选
         EditText edit = root.findViewById(R.id.edit_2);
        edit.addTextChangedListener(new SearchWather(edit));

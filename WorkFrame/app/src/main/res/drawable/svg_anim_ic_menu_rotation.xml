@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--变换动画-->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/svg_image_ic_menu">
+    <target
+        android:name="search"
+        android:animation="@animator/svg_anim_rotation" />
+<!--name指定路径名称，animation指定使用的动画-->
+</animated-vector>

@@ -6,12 +6,11 @@ import com.guoxd.workframe.base.ShowTextUrl
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import com.guoxd.workframe.base.BaseFragment
 import com.guoxd.workframe.my_page.*
 import com.guoxd.workframe.system.AnimtorFragment
+import com.guoxd.workframe.system.BLETestFragment
 import com.guoxd.workframe.system.RecyclerViewFragment
 import com.guoxd.workframe.system.TextWidgeFragment
-import com.guoxd.workframe.system.camera.Camera2Activity
 import com.guoxd.workframe.utils.LogUtil
 
 
@@ -32,15 +31,16 @@ class ShowActivity : AppCompatActivity(){
 
     fun showFragment(str:String){
         var fragment: Fragment?=null;
+        var isFragment = true;
         when(str){
             //my
+            ShowTextUrl.MY_CHARMP->{
+                fragment = CharMPViewFragment()
+            }
             ShowTextUrl.BitmapImage->{
                 fragment = BitmapImageFragment()
             }
-            ShowTextUrl.CameraView->{
-//                fragment = CameraViewFragment()
-                startActivity(Intent(this@ShowActivity,Camera2Activity::class as Class<Camera2Activity>))
-            }
+
             ShowTextUrl.MenuWidge->{
                 fragment = MenuWidgeFragment()
             }
@@ -49,7 +49,7 @@ class ShowActivity : AppCompatActivity(){
             }
             ShowTextUrl.SlideBlock->{
                 try {
-                    val clazz = Class.forName(ShowTextUrl.SlideBlock) //SlideBlockFragment()
+                    val clazz = Class.forName(String.format("%s%s",ShowTextUrl.MY_PAGE,ShowTextUrl.SlideBlock)) //SlideBlockFragment()
                     fragment = clazz.newInstance() as Fragment;
                 } catch (e: ClassNotFoundException) {
                     e.printStackTrace()
@@ -62,7 +62,7 @@ class ShowActivity : AppCompatActivity(){
             ShowTextUrl.StaggeredList->{
                 fragment = StaggeredListFragment()
             }
-            ShowTextUrl.SwiptList->{
+            ShowTextUrl.SwiptList->{//侧滑
                 fragment = SwiptListFragment()
             }
             ShowTextUrl.Widge->{
@@ -75,6 +75,7 @@ class ShowActivity : AppCompatActivity(){
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
                 sendIntent.type = "text/plain"
                 startActivity(sendIntent)
+                finish()
             }
 
             //system
@@ -87,11 +88,14 @@ class ShowActivity : AppCompatActivity(){
             ShowTextUrl.AnimtorView->{
                 fragment = AnimtorFragment()
             }
+            ShowTextUrl.BLEView->{
+                fragment = BLETestFragment()
+            }
 
             //other
-            ShowTextUrl.OtherAnimWidge->{
+            ShowTextUrl.OtherAnim->{
                 try {
-                    var animFragemnt = Class.forName("com.guoxd.workframe.others."+ShowTextUrl.OtherAnimWidge)
+                    var animFragemnt = Class.forName("com.guoxd.workframe.others."+ShowTextUrl.OtherAnim)
                     fragment = animFragemnt.newInstance() as Fragment;
                    /* var mToast: Toast = Toast(this)
                     var filed: Field = mToast.javaClass.getDeclaredField("mTN")
@@ -104,12 +108,27 @@ class ShowActivity : AppCompatActivity(){
                     LogUtil.d("","")
                 }
             }
+            ShowTextUrl.OtherWidge->{
+                try {
+                    var animFragemnt = Class.forName("com.guoxd.workframe.others."+
+                            ShowTextUrl.OtherWidge)
+                    fragment = animFragemnt.newInstance() as Fragment;
+                }catch (e:Exception){
+                    LogUtil.d("","")
+                }
+            }
             ShowTextUrl.MpChar->{
                 var clazz = Class.forName("com.guoxd.workframe.others."+ShowTextUrl.MpChar)
                 fragment = clazz.newInstance() as Fragment;
             }
+            ShowTextUrl.MpCharList->{
+                var clazz = Class.forName("com.guoxd.workframe.others."+ShowTextUrl.MpCharList)
+                fragment = clazz.newInstance() as Fragment;
+            }
+
         }
-        if(fragment !=null && fragment is BaseFragment) {
+
+        if(fragment !=null && fragment is Fragment) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.add(R.id.fragment, fragment).commit();
         }else{

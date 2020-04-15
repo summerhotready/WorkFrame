@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--旋转360度动画-->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/svg_image_vector">
+    <target
+        android:name="path"
+        android:animation="@animator/anim_rotation_float_type" >
+
+    </target>
+
+</animated-vector>

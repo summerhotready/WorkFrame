@@ -70,4 +70,11 @@ public class ViewHelpUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    //为了计算使popupwindow与目标view中间对其
+    public static int dipTopx(Context context, float dipValue){
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int)(dipValue * scale + 0.5f);
+    }
+
+
 }

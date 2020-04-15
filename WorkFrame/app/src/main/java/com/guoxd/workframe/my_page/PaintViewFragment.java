@@ -13,7 +13,7 @@ import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.utils.PointMenuViewUtils;
 
-/**
+/**画板
  * Created by guoxd on 2018/10/25.
  */
 

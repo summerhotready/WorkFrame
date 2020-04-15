@@ -9,12 +9,14 @@
     </style>
 
     <style name="TextTitleStyle" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:padding">@dimen/padding_10</item>
-        <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">@dimen/padding_15</item>
     </style>
 
     <style name="TextValueStyle" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
@@ -38,5 +40,11 @@
         <item name="minHeight">48dip</item>
         <item name="maxHeight">48dip</item>
         <item name="indicatorName">BallPulseIndicator</item>
+    </style>
+    <style name="LineStyle">
+        <item name="android:layout_height">@dimen/line</item>
+        <item name="android:layout_marginTop">@dimen/padding_15</item>
+        <item name="android:layout_marginBottom">@dimen/padding_15</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 </resources>

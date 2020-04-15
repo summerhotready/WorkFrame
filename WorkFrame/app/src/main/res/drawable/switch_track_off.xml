@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size android:height="30dp" android:width="100dp"/>
+    <corners android:radius="20dp"/>
+    <gradient
+        android:startColor="@color/_xpopup_content_color"
+        android:endColor="@color/_xpopup_title_color"/>
+</shape>

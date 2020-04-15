@@ -49,7 +49,7 @@ public class BitmapImageFragment extends BaseFragment implements ViewPager.OnPag
 
         try {
 
-            Socket socket = new Socket("192.168.1.12", 4556);
+            Socket socket = new Socket("http://img0.imgtn.bdimg.com/it/u=252455698,1433189660&fm=26&gp=0.jpg", 4556);
             //读取硬盘文件
             InputStream inputStream = new FileInputStream("path");
 

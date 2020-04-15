@@ -1,0 +1,47 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:1-12:12
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:1-12:12
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:1-12:12
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:1-12:12
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:1-12:12
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:1-12:12
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:1-12:12
+	package
+		ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:3:5-43
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+		ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:1-12:12
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+		ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:1-12:12
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:6:5-76
+	android:name
+		ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:6:22-73
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:8:5-76
+	android:name
+		ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:8:22-73
+application
+ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml:10:5-36
+uses-sdk
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+		ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+		ADDED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml
+		INJECTED from E:\BookGit\WorkFrame\WorkFrame\work-frame-library\src\main\AndroidManifest.xml

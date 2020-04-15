@@ -25,6 +25,7 @@ import java.math.BigDecimal;
  * Created by LuckyCrystal on 2017/3/9.
  * https://juejin.im/post/59e95e09f265da430405bf33
  * 使用Movie实现Gif播放
+ * 使用时
  */
 
 @TargetApi(16)

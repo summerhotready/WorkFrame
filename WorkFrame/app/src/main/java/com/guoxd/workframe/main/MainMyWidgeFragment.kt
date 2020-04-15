@@ -5,8 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +18,10 @@ import com.guoxd.workframe.R
 import com.guoxd.workframe.ShowActivity
 import com.guoxd.workframe.base.BaseFragment
 import com.guoxd.workframe.base.ShowTextUrl
+import com.guoxd.workframe.my_page.data_binding.DataBindingTestActivity
+import com.guoxd.workframe.system.camera.Camera2Activity
 import com.guoxd.workframe.utils.LogUtil
+import com.guoxd.workframe.utils.PermissionUtils
 import com.guoxd.workframe.utils.ToastUtils
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -30,7 +31,6 @@ import pub.devrel.easypermissions.EasyPermissions
  * DATE: 2018/4/24
  */
 class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
-
 
     override fun onRefresh() {
 
@@ -52,13 +52,15 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
         var tag = arguments?.getString("tag")
         when(tag){
             "my"->{//自定义组件
-                strs = arrayOf(ShowTextUrl.Widge,ShowTextUrl.PaintView,ShowTextUrl.MenuWidge, ShowTextUrl.SlideBlock, ShowTextUrl.SwiptList, ShowTextUrl.StaggeredList, ShowTextUrl.BitmapImage,ShowTextUrl.INTENT_SEND);
+                strs = arrayOf(ShowTextUrl.Widge,ShowTextUrl.PaintView,ShowTextUrl.MenuWidge,ShowTextUrl.MY_CHARMP, ShowTextUrl.SlideBlock,
+                        ShowTextUrl.SwiptList, ShowTextUrl.StaggeredList,
+                        ShowTextUrl.INTENT_SEND);//ShowTextUrl.BitmapImage,
             }
             "other"->{//第三方
-                strs = arrayOf(ShowTextUrl.OtherAnimWidge,ShowTextUrl.MpChar);
+                strs = arrayOf(ShowTextUrl.OtherWidge,ShowTextUrl.OtherAnim,ShowTextUrl.MpChar,ShowTextUrl.MpCharList,ShowTextUrl.OtherDataBinding);
             }
-            "system"->{//系统组件和功能测试
-                strs = arrayOf(ShowTextUrl.RecyclerView,ShowTextUrl.CameraView,ShowTextUrl.TextWidge);
+            "system"->{//系统组件和功能
+                strs = arrayOf(ShowTextUrl.TextWidge,ShowTextUrl.RecyclerView,ShowTextUrl.CameraView,ShowTextUrl.BLEView);
             }
         }
 
@@ -75,12 +77,35 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
     fun showActivity(str:String){
         if(TextUtils.isEmpty(str))
             return
-        try {
-            var intent: Intent = Intent(activity, ShowActivity().javaClass);
-            intent.putExtra("value", str)
-            startActivity(intent)
-        }catch (e:Exception){
-            e.printStackTrace()
+
+        when(str){
+            ShowTextUrl.OtherDataBinding->{
+                startActivity(Intent(activity, DataBindingTestActivity::class.java))
+            }
+            ShowTextUrl.CameraView->{
+                if(EasyPermissions.hasPermissions(activity?.baseContext!!, *PermissionUtils.getCameraPermiss())){
+                    startActivity(Intent(activity, Camera2Activity::class.java))
+                }else{
+                    EasyPermissions.requestPermissions(this@MainMyWidgeFragment,"",101,*PermissionUtils.getCameraPermiss())
+                }
+            }
+            ShowTextUrl.INTENT_SEND->{
+                val sendIntent = Intent()
+                sendIntent.action = Intent.ACTION_SEND
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+                sendIntent.type = "text/plain"
+                startActivity(sendIntent)
+            }
+
+            else->{
+                try {
+                    var intent: Intent = Intent(activity, ShowActivity().javaClass);
+                    intent.putExtra("value", str)
+                    startActivity(intent)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+            }
         }
     }
     fun main(vararg args:String){
@@ -88,11 +113,14 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
                 .map { println("$it") }
     }
 
-    
 
-    public fun onCameraPermission(){
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
     }
+
     val REQUEST_CODE_PERMS_EXTERNAL_STORAGE = 101
     val REQUEST_CODE_PERMS_CAMERA = 102
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {

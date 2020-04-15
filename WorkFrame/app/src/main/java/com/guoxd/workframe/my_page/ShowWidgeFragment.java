@@ -1,11 +1,13 @@
 package com.guoxd.workframe.my_page;
 
+import android.annotation.TargetApi;
+import android.hardware.Camera;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 
 import com.guoxd.work_frame_library.views.widges.ChangeRingImageView;
 import com.guoxd.work_frame_library.views.progress.CustomProgress;
@@ -14,23 +16,27 @@ import com.guoxd.work_frame_library.views.progress.ProgressShowView;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.HashMap;
 
 /**展示小尺寸自定义组件
  * Created by guoxd on 2018/5/8.
  */
-
+@TargetApi(9)
 public class ShowWidgeFragment extends BaseFragment {
+
 
     @Override
     public void onRefresh() {
+        Camera camera = Camera.open(0);
 
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.my_fragment_show_widge, container, false);
+
         CheckStart checkStart = root.findViewById(R.id.checkStart);
         checkStart.setMax(10);
         checkStart.setProgress(2);

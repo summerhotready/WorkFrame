@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorPrimary">
+    <item>
+        <selector>
+            <item
+                android:drawable="@android:color/transparent"
+                android:state_pressed="true">
+            </item>
+            <!--default color-->
+            <item android:drawable="@color/colorAccent"/>
+        </selector>
+    </item>
+</ripple>

@@ -57,4 +57,25 @@
         <attr name="end_last_frame" format="boolean"  />
     </declare-styleable>
 
+    <!--shape sanjiao-->
+    <declare-styleable name="SanJiaoView">
+        <attr name="sjv_resolutionWidth" format="dimension" />
+        <attr name="sjv_resolutionHeight" format="dimension" />
+        <attr name="sjv_color" format="color" />
+        <attr name="sjv_direction">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="right" value="2" />
+            <enum name="left" value="3" />
+        </attr>
+    </declare-styleable>
+<!---->
+    <declare-styleable name="CircleLoadingHWView">
+        <!--控件大小-->
+        <attr name="view_size" format="dimension" />
+        <!--控件颜色-->
+        <attr name="view_color" format="color" />
+        <!--转一圈花费时长-->
+        <attr name="circle_duration" format="integer"/>
+    </declare-styleable>
 </resources>
