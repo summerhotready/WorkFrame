@@ -99,4 +99,8 @@ dependencies {
     // 目前支持常见的 4 种图片加载库，必须在下面四个图片加载库中选择一个添加依赖
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    //选图组件2
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.6'
+    //选图组件3
+//    implementation 'com.github.HuanTanSheng:EasyPhotos:3.0.6' //androidx版本，支持android 10，永久维护
 }
