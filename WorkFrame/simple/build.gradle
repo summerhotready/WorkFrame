@@ -1,0 +1,102 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        applicationId "com.guoxd.workframe"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 2
+        versionName "1.1"
+        // Enabling multidex support.
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+       /* viewBinding {
+            enabled = true
+        }*/
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    android{
+        compileOptions{
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+    dataBinding{
+        enabled=true;
+    }
+}
+String SDK_DIR = System.getenv("ANDROID_SDK_HOME")
+if(SDK_DIR == null) {
+    Properties props = new Properties()
+    props.load(new FileInputStream(project.rootProject.file("local.properties")))
+    SDK_DIR = props.get('sdk.dir');
+}
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly files("${SDK_DIR}/platforms/android-21/data/layoutlib.jar")
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.3-alpha', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+//    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    testImplementation 'junit:junit:4.13-beta-3'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation project(':work-frame-library')
+    //网络请求
+    //    implementation 'com.squareup.okhttp3:okhttp:3.4.2'
+    implementation 'com.zhy:okhttputils:2.6.2'
+//    implementation 'com.google.code.gson:gson:2.8.5'
+    //lottie动画
+    implementation 'com.airbnb.android:lottie:3.0.3'
+    //avLoading动画
+    implementation 'com.wang.avi:library:2.1.3'
+    // 图表
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    //权限（fragment不好用）
+    implementation 'pub.devrel:easypermissions:1.3.0'
+    //样式button
+    implementation 'com.sackcentury:shinebutton:0.2.0'
+    //button（仿ios开关，可用）
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    //日历时间选择器
+    implementation 'com.contrarywind:Android-PickerView:4.1.6'
+    //Pop SharpView
+    implementation 'com.github.zengzhaoxing:SharpView:v2.4.4'
+    //XPopup for androidx.
+    implementation 'com.lxj:xpopup:1.8.10-x'
+    //BasePopup 优秀的三方开源popupwindow
+    implementation 'com.github.razerdp:BasePopup:2.2.1'
+
+
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.android.support:design:28.0.0-alpha1'
+    // ble
+    implementation 'no.nordicsemi.android:ble:2.1.1'
+    implementation 'no.nordicsemi.android.support.v18:scanner:1.0.0'
+    implementation 'no.nordicsemi.android:log:2.1.1'
+    //network
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    //影响运行的
+//    implementation "com.mapzen:on-the-road:$kotlin_version"
+//    implementation 'io.alterac.blurkit:blurkit:1.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //tabLayout
+    implementation  'com.github.devlight.navigationtabstrip:navigationtabstrip:+'
+    implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
+    //选图组件
+    implementation 'com.yuyh.imgsel:library:2.0.6'
+    // 目前支持常见的 4 种图片加载库，必须在下面四个图片加载库中选择一个添加依赖
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+}

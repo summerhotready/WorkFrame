@@ -1,1 +1,1 @@
-include ':app', ':work-frame-library'
+include ':simple', ':work-frame-library'

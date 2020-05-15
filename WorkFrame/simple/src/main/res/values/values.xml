@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="reference" name="toolbar"/>
+    <attr format="reference|color" name="album.element.color"/>
+    <attr format="reference" name="album.emptyView"/>
+    <attr format="reference|color" name="album.emptyView.textColor"/>
+    <attr format="reference|color" name="bottomToolbar.apply.textColor"/>
+    <attr format="reference|color" name="bottomToolbar.bg"/>
+    <attr format="reference|color" name="bottomToolbar.preview.textColor"/>
+
+    <string name="button_original">Original</string>
+    <string name="button_preview">Preview</string>
+    <string name="button_sure">Sure(%1$d)</string>
+<!--    <string name="button_sure_default">Sure</string>-->
+    <string name="empty_text">No media yet</string>
+
+    <style name="Matisse.Dracula" parent="Theme.AppCompat.NoActionBar">
+        <item name="album.element.color">@android:color/white</item>
+    </style>
+</resources>
