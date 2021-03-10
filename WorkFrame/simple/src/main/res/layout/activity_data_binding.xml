@@ -9,7 +9,7 @@
         <variable
             name="view"
             type="View" />
-        <import type="java.lang.String"/>
+<!--        <import type="java.lang.String"/>-->
         <import type="java.util.List"/>
         <variable
             name="lists"
@@ -28,32 +28,50 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_photo"
+        android:text="@string/databind_title_photo_text"
+        android:textStyle="bold"
+        android:padding="@dimen/padding_10"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/pic_photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_margin="@dimen/padding_15"
+        android:layout_marginLeft="@dimen/padding_10"
+        android:background="@color/color_yellow_dark"
         android:src="@drawable/ic_add_a_photo_black_24dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_photo"
         app:layout_constraintLeft_toLeftOf="parent"/>
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/pic_photo2"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_margin="@dimen/padding_15"
+        android:layout_marginLeft="@dimen/padding_15"
         android:src="@drawable/ic_add_a_photo_black_24dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pic_photo"
         app:layout_constraintLeft_toRightOf="@id/pic_photo"
-        android:background="@color/colorAccent"/>
+        android:background="@color/color_purple_dark"/>
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/pic_photo3"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_margin="@dimen/padding_15"
+        android:layout_marginLeft="@dimen/padding_15"
         android:src="@drawable/ic_add_a_photo_black_24dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pic_photo"
         app:layout_constraintLeft_toRightOf="@id/pic_photo2"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/text_color_black"/>
+<!--    -->
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_change_language"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
 <!--    -->
 <androidx.appcompat.widget.AppCompatTextView
     android:id="@+id/people_name"

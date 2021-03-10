@@ -16,7 +16,7 @@ import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.modles.DeviceModle;
 import com.guoxd.workframe.modles.ImageModle;
-import com.guoxd.workframe.views.MyItemDecoration;
+import com.guoxd.workframe.views.LineItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,7 @@ public class StaggeredListFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(manager);
 
         //分割线
-        mRecyclerView.addItemDecoration(new MyItemDecoration(getActivity(), MyItemDecoration.VERTICAL));
+        mRecyclerView.addItemDecoration(new LineItemDecoration(getActivity(), LineItemDecoration.VERTICAL));
 
         adapter = new DeviceAdapter();
         mRecyclerView.setAdapter(adapter);

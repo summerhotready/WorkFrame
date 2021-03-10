@@ -41,7 +41,10 @@ public class CameraUtils {
             //用于保存拍照图片的uri
             Uri photoUri = null;//>=api 29直接获取
 
-            if (Build.VERSION.SDK_INT >= 29) {
+
+            photoUri = createImageUri(context);
+
+            /*if (Build.VERSION.SDK_INT >= 29) {
                 //Android 10创建uri的方式和使用uri加载图片的方式在10以下的手机是同样适用的
                 photoUri = createImageUri(context);
             } else {//<Q
@@ -53,12 +56,12 @@ public class CameraUtils {
                 if (photoFile != null) {// 用于保存图片的文件
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         //适配Android 7.0文件权限，通过FileProvider创建一个content类型的Uri
-                        photoUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", photoFile);
+                        photoUri = FileProvider.getUriForFile(context, String.format("%s.fileprovider",context.getPackageName()) , photoFile);
                     } else {
                         photoUri = Uri.fromFile(photoFile);
                     }
                 }
-            }
+            }*/
             mCameraUri = photoUri;
             if (photoUri != null) {
                 captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);

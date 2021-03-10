@@ -288,7 +288,7 @@ public class UpdateVersionDialog extends DialogFragment {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 try {
-                    Uri apkUri = FileProvider.getUriForFile(getActivity(), "com.elco.anfang.men.fileprovider", file);
+                    Uri apkUri = FileProvider.getUriForFile(getActivity(), String.format("%s.fileprovider",getActivity().getPackageName()), file);
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
                 } catch (Exception e) {

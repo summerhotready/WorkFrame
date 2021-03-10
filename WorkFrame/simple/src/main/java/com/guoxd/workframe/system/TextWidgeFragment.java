@@ -1,5 +1,7 @@
 package com.guoxd.workframe.system;
 
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -15,6 +17,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.utils.LogUtil;
+import com.guoxd.workframe.utils.ViewHelpUtils;
 
 /**
  * Created by guoxd on 2018/5/8.
@@ -22,6 +25,7 @@ import com.guoxd.workframe.utils.LogUtil;
 
 public class TextWidgeFragment extends BaseFragment {
 
+    AppCompatTextView widthText;
     final String TAG="system.TestWidgeFragment";
 
     @Override
@@ -31,18 +35,42 @@ public class TextWidgeFragment extends BaseFragment {
 
     @Override
     protected void initView(View root) {
+        getBaseActity().setPageTitle("Text类组件");
         //TextView
         AppCompatTextView textView = root.findViewById(R.id.tv_textView);
-        textView.setText("可滚动内容的textview\n该滚动和ScrollerView是冲突的\n使用时需要注意\nhhhhhhhhhhhhhhhh\nggggggg");
+//        textView.setText("可滚动内容的textview\n该滚动和ScrollerView是冲突的\n使用时需要注意\nhhhhhhhhhhhhhhhh\nggggggg");
         //edittext筛选
         EditText edit = root.findViewById(R.id.edit_2);
        edit.addTextChangedListener(new SearchWather(edit));
 
+       widthText =  root.findViewById(R.id.width_text);
+        widthText.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               getTextViewSize();
+           }
+       });
         //Android加密算法中需要随机数时要使用SecureRandom来获取随机数
 //        SecureRandom sr = new SecureRandom();
 //        byte[] output = new byte[16];
 //        sr.nextBytes(output);
     }
+
+    private void getTextViewSize() {
+//        LogUtil.i(TAG,String.format("getTextViewSize width:%d height:%d padding:%f",
+//                widthText.getWidth(),widthText.getHeight(),2*getResources().getDimension(R.dimen.padding_10)));
+//        LogUtil.i(TAG,"getTextViewSize Layout.getDesiredWidth:"+ViewHelpUtils.getTextViewTextWidth(getActivity(),widthText.findViewById(R.id.width_text)));
+
+        Paint paint = widthText.getPaint();
+        String text = widthText.getText().toString();
+        LogUtil.i(TAG,"getTextViewSize measureText:"+paint.measureText(text));
+        Rect rect = new Rect();
+        paint.getTextBounds(text,0,text.length(),rect);
+        LogUtil.i(TAG,String.format("getTextViewSize getTextBounds width:%d height:%d",(rect.right-rect.left),(rect.bottom-rect.top)));
+        Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
+        LogUtil.i(TAG,"getTextViewSize height fontMetrics:"+(fontMetrics.bottom-fontMetrics.top));
+    }
+
     class SearchWather implements TextWatcher {
         //监听改变的文本框
         private EditText editText;

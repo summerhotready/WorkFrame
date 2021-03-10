@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr format="integer" name="Max"/>
+    <dimen name="line">1dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="padding_15">15dp</dimen>
+    <dimen name="padding_5">5dp</dimen>
+    <dimen name="text_middle">14sp</dimen>
+    <dimen name="text_mini">8sp</dimen>
+    <dimen name="text_normal">16sp</dimen>
+    <dimen name="text_small">11sp</dimen>
+    <dimen name="text_title">18sp</dimen>
+    <string name="app_name">work-frame-library</string>
+    <string name="cancel">取消</string>
+    <string name="change">变换</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
+    <string name="hint_nocopy">不能复制粘贴的edittext</string>
+    <string name="notifyMsg">缺少权限</string>
+    <string name="notifyTitle">警告</string>
+    <string name="setting">去设置</string>
+    <string name="sure">确定</string>
+    <string name="title_avLoading">AVLoadingIndicatorView</string>
+    <string name="title_buttons">Buttons</string>
+    <string name="title_text_avLoading">https://github.com/jzeferino/Xamarin.Android.AVLoadingIndicatorView</string>
     <declare-styleable name="CalendarView">
         <attr format="color" name="mc_color"/>
         <attr format="color" name="mc_selectColor"/>
@@ -70,26 +92,4 @@
             <enum name="left" value="3"/>
         </attr>
     </declare-styleable>
-    <dimen name="line">1dp</dimen>
-    <dimen name="padding_10">10dp</dimen>
-    <dimen name="padding_15">15dp</dimen>
-    <dimen name="padding_5">5dp</dimen>
-    <dimen name="text_middle">14sp</dimen>
-    <dimen name="text_mini">8sp</dimen>
-    <dimen name="text_normal">16sp</dimen>
-    <dimen name="text_small">11sp</dimen>
-    <dimen name="text_title">18sp</dimen>
-    <string name="app_name">work-frame-library</string>
-    <string name="cancel">取消</string>
-    <string name="change">变换</string>
-    <string name="delete">删除</string>
-    <string name="edit">编辑</string>
-    <string name="hint_nocopy">不能复制粘贴的edittext</string>
-    <string name="notifyMsg">缺少权限</string>
-    <string name="notifyTitle">警告</string>
-    <string name="setting">去设置</string>
-    <string name="sure">确定</string>
-    <string name="title_avLoading">AVLoadingIndicatorView</string>
-    <string name="title_buttons">Buttons</string>
-    <string name="title_text_avLoading">https://github.com/jzeferino/Xamarin.Android.AVLoadingIndicatorView</string>
 </resources>

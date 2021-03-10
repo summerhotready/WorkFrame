@@ -12,8 +12,8 @@ import com.bigkoo.pickerview.configure.PickerOptions;
 import com.bigkoo.pickerview.listener.ISelectTimeCallback;
 import com.bigkoo.pickerview.utils.ChinaDate;
 import com.bigkoo.pickerview.utils.LunarCalendar;
-import com.contrarywind.listener.OnItemSelectedListener;
-import com.contrarywind.view.WheelView;
+//import com.contrarywind.listener.OnItemSelectedListener;
+//import com.contrarywind.view.WheelView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,17 +25,17 @@ import java.util.List;
 /**
  * Created by guoxd on 2019/1/10.
  */
-public class WeelViewHelper implements ISelectTimeCallback {
+public class WeelViewHelper {//implements ISelectTimeCallback
     final String TAG = "WeelViewHelper";
     //输出的格式化
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     //组件
-    private WheelView wv_year;
-    private WheelView wv_month;
-    private WheelView wv_day;
-    private WheelView wv_hours;
-    private WheelView wv_minutes;
-    private WheelView wv_seconds;
+//    private WheelView wv_year;
+//    private WheelView wv_month;
+//    private WheelView wv_day;
+//    private WheelView wv_hours;
+//    private WheelView wv_minutes;
+//    private WheelView wv_seconds;
     //默认定义
     private static final int DEFAULT_START_YEAR = 1900;
     private static final int DEFAULT_END_YEAR = 2100;
@@ -57,7 +57,7 @@ public class WeelViewHelper implements ISelectTimeCallback {
     //是否农历，true=农历
     private ISelectTimeCallback mSelectChangeCallback;
 
-    public WeelViewHelper(Context context, WheelView... views) {
+   /* public WeelViewHelper(Context context, WheelView... views) {
         super();
         if (views.length == 6) {
             wv_year = views[0];
@@ -75,31 +75,31 @@ public class WeelViewHelper implements ISelectTimeCallback {
         setLabels("年","月","日","时","分","秒");
     }
 
-    /**设置6个weelView的显示和隐藏
+    *//**设置6个weelView的显示和隐藏
      * new boolean[]{true, true, true, false, false, false}
      * control the "year","month","day","hours","minutes","seconds " display or hide.
      * 分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏。
      *
      * @param type 布尔型数组，长度需要设置为6。
      * @return TimePickerBuilder
-     */
+     *//*
     public void setType(boolean[] type) {
         mPickerOptions.type = type;
     }
 
-    /**设置字体大小（dp）
+    *//**设置字体大小（dp）
      * @param textSizeContent
-     */
+     *//*
     public void setContentTextSize(int textSizeContent) {
         mPickerOptions.textSizeContent = textSizeContent;
         setContentTextSize();
     }
 
-    /**
+    *//**
      * 设置格式化,此内容影响输出，
      *
      * @param dateFormat
-     */
+     *//*
     public void setDateFormat(DateFormat dateFormat) {
         this.dateFormat = dateFormat;
     }
@@ -146,15 +146,15 @@ public class WeelViewHelper implements ISelectTimeCallback {
         isCenterLabel(pickerOptions.isCenterLabel);
     }
 
-    /**设置可以选择的时间范围, 要在setTime之前调用才有效果
-     */
+    *//**设置可以选择的时间范围, 要在setTime之前调用才有效果
+     *//*
     private void setRange(PickerOptions pickerOptions) {
         setStartYear(pickerOptions.startYear);
         setEndYear(pickerOptions.endYear);
     }
 
-    /**设置可以选择的时间范围, 要在setTime之前调用才有效果
-     */
+    *//**设置可以选择的时间范围, 要在setTime之前调用才有效果
+     *//*
     private void setRangDate(PickerOptions pickerOptions) {
         setRangDate(pickerOptions.startDate, pickerOptions.endDate);
         //如果手动设置了时间范围
@@ -178,8 +178,8 @@ public class WeelViewHelper implements ISelectTimeCallback {
         setTime();
     }
 
-    /**给组件设置选中时间,默认选中当前时间
-     */
+    *//**给组件设置选中时间,默认选中当前时间
+     *//*
     private void setTime() {
         int year, month, day, hours, minute, seconds;
         mCalendar = Calendar.getInstance();
@@ -242,14 +242,14 @@ public class WeelViewHelper implements ISelectTimeCallback {
         }
     }
 
-    /**设置农历
+    *//**设置农历
      * @param year
      * @param month
      * @param day
      * @param h
      * @param m
      * @param s
-     */
+     *//*
     private void setLunar(int year, final int month, int day, boolean isLeap, int h, int m, int s) {
         // 年
         wv_year.setAdapter(new ArrayWheelAdapter(ChinaDate.getYears(mPickerOptions.startYear, mPickerOptions.endYear)));// 设置"年"的显示数据
@@ -341,14 +341,14 @@ public class WeelViewHelper implements ISelectTimeCallback {
         setContentAfter(year,month+1,day, h, m, s);
     }
 
-    /**设置公历
+    *//**设置公历
      * @param year
      * @param month
      * @param day
      * @param h
      * @param m
      * @param s
-     */
+     *//*
     private void setSolar(int year, final int month, int day, int h, int m, int s) {
         // 添加大小月月份并将其转换为list,方便之后的判断
         String[] months_big = {"1", "3", "5", "7", "8", "10", "12"};
@@ -579,12 +579,12 @@ public class WeelViewHelper implements ISelectTimeCallback {
         setContentAfter(year,month+1,day, h, m, s);
     }
 
-    /**农历和公历初始化中相同的部分
+    *//**农历和公历初始化中相同的部分
      * @param year
      * @param h
      * @param m
      * @param s
-     */
+     *//*
     private void setContentAfter(int year,int month,int day, int h, int m, int s) {
         wv_year.setGravity(mPickerOptions.textGravity);
         wv_year.setCurrentItem(year - mPickerOptions.startYear);// 初始化时显示的数据
@@ -665,7 +665,7 @@ public class WeelViewHelper implements ISelectTimeCallback {
         }
     }
 
-    /*******私有配置项**********/
+    *//*******私有配置项**********//*
     private void setContentTextSize() {//textSize
         wv_day.setTextSize(mPickerOptions.textSizeContent);
         wv_month.setTextSize(mPickerOptions.textSizeContent);
@@ -737,8 +737,8 @@ public class WeelViewHelper implements ISelectTimeCallback {
         wv_minutes.setTextXOffset(mPickerOptions.x_offset_minutes);
         wv_seconds.setTextXOffset(mPickerOptions.x_offset_seconds);
     }
-    /*******公有配置项**********/
-    /**设置单位（随内容显示）
+    *//*******公有配置项**********//*
+    *//**设置单位（随内容显示）
      * 不随内容显示需要自定义TextView
      * @param label_year
      * @param label_month
@@ -746,7 +746,7 @@ public class WeelViewHelper implements ISelectTimeCallback {
      * @param label_hours
      * @param label_mins
      * @param label_seconds
-     */
+     *//*
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
         mPickerOptions.label_year = label_year;
         mPickerOptions.label_month = label_month;
@@ -777,9 +777,9 @@ public class WeelViewHelper implements ISelectTimeCallback {
         }
     }
 
-    /**取得组件上的当前时间
+    *//**取得组件上的当前时间
      * @return
-     */
+     *//*
     public String getTime() {
         int year = (wv_year.getCurrentItem() + mPickerOptions.startYear);
         int month, day = 0;
@@ -903,55 +903,55 @@ public class WeelViewHelper implements ISelectTimeCallback {
         }
     }
 
-    /**设置间距倍数,但是只能在1.0-4.0f之间
+    *//**设置间距倍数,但是只能在1.0-4.0f之间
      * @param lineSpacingMultiplier
-     */
+     *//*
     public void setLineSpacingMultiplier(float lineSpacingMultiplier) {
         mPickerOptions.lineSpacingMultiplier = lineSpacingMultiplier;
         setLineSpacingMultiplier();
     }
-    /**设置是否循环滚动
+    *//**设置是否循环滚动
      * @param cyclic
-     */
+     *//*
     public void setCyclic(boolean cyclic) {
         mPickerOptions.cyclic = cyclic;
         setCyclic();
     }
-    /**设置分割线的颜色
+    *//**设置分割线的颜色
      * @param dividerColor
-     */
+     *//*
     public void setDividerColor(int dividerColor) {
         mPickerOptions.dividerColor = dividerColor;
         setDividerColor();
     }
 
-    /**设置分割线的类型
+    *//**设置分割线的类型
      * @param dividerType
-     */
+     *//*
     public void setDividerType(WheelView.DividerType dividerType) {
         mPickerOptions.dividerType = dividerType;
         setDividerType();
     }
 
-    /**设置分割线之间的文字的颜色
+    *//**设置分割线之间的文字的颜色
      * @param textColorCenter
-     */
+     *//*
     public void setTextColorCenter(int textColorCenter) {
         mPickerOptions.textColorCenter = textColorCenter;
         setTextColorCenter();
     }
 
-    /**设置分割线以外文字的颜色
+    *//**设置分割线以外文字的颜色
      * @param textColorOut
-     */
+     *//*
     public void setTextColorOut(int textColorOut) {
         mPickerOptions.textColorOut = textColorOut;
         setTextColorOut();
     }
 
-    /**设置只显示中间选中项
+    *//**设置只显示中间选中项
      * @param isCenterLabel 是否只显示中间选中项的
-     */
+     *//*
     public void isCenterLabel(boolean isCenterLabel) {
         wv_day.isCenterLabel(isCenterLabel);
         wv_month.isCenterLabel(isCenterLabel);
@@ -988,5 +988,5 @@ public class WeelViewHelper implements ISelectTimeCallback {
 
     public interface OnDataChangeListener {
         void onDataChange(String data);
-    }
+    }*/
 }

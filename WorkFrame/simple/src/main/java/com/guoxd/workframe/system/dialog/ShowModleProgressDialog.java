@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.anim.recycleranim.HorizonInsertItemAnimator;
 import com.guoxd.workframe.utils.LogUtil;
-import com.guoxd.workframe.views.MyItemDecoration;
+import com.guoxd.workframe.views.LineItemDecoration;
 
 import java.util.ArrayList;
 
@@ -57,7 +57,7 @@ public class ShowModleProgressDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.system_dialog_show_modle_progress, null);
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new MyItemDecoration(getActivity(),LinearLayout.HORIZONTAL));
+        recyclerView.addItemDecoration(new LineItemDecoration(getActivity(),LinearLayout.HORIZONTAL));
         recyclerView.setAdapter(mAdater);
 
         recyclerView.setItemAnimator(new HorizonInsertItemAnimator());

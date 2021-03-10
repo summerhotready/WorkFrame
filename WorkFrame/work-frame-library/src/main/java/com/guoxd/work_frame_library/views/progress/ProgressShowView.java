@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.guoxd.work_frame_library.R;
-import com.guoxd.work_frame_library.utils.TextShowUtils;
 
 import java.util.HashMap;
 
@@ -100,18 +99,18 @@ public class ProgressShowView extends LinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        TextShowUtils.ShowLog(TAG,"onMeasure");
+//        TextShowUtils.ShowLog(TAG,"onMeasure");
         if((getMeasuredWidth()>0 && getMeasuredHeight() >0)){
             viewWidth = getMeasuredWidth();
             viewHeight = getMeasuredHeight();
         }
-        TextShowUtils.ShowLog(TAG,"width:"+viewWidth+" height:"+viewHeight);
+//        TextShowUtils.ShowLog(TAG,"width:"+viewWidth+" height:"+viewHeight);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        TextShowUtils.ShowLog(TAG,"onSizeChanged"+" width:"+w+" height:"+h);
+//        TextShowUtils.ShowLog(TAG,"onSizeChanged"+" width:"+w+" height:"+h);
         viewWidth = w-(getPaddingLeft()+getPaddingRight());
         viewHeight = h-(getPaddingTop()+getPaddingBottom());
         //这个不设置会不走OnDraw
@@ -127,7 +126,7 @@ public class ProgressShowView extends LinearLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        TextShowUtils.ShowLog(TAG,"onDraw");
+//        TextShowUtils.ShowLog(TAG,"onDraw");
         try {
             if (data != null && data.length>0) {
 

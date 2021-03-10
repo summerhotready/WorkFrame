@@ -154,7 +154,7 @@ class UpdateVersionUtils(var mContext: AppCompatActivity){
         val intent = Intent(Intent.ACTION_VIEW)
         if (Build.VERSION.SDK_INT >= 24) {// Build.VERSION_CODES.N
             try {
-                val apkUri = FileProvider.getUriForFile(mContext, "com.elco.tieta.tieta.fileprovider", file)
+                val apkUri = FileProvider.getUriForFile(mContext, String.format("%s.fileprovider",mContext.packageName), file)
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 intent.setDataAndType(apkUri, "application/vnd.android.package-archive")
             }catch (e:Exception){

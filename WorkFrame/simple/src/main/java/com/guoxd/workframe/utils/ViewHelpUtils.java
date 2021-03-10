@@ -3,11 +3,20 @@ package com.guoxd.workframe.utils;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.text.Layout;
+import android.text.TextPaint;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.drawable.DrawableCompat;
+
+import com.guoxd.workframe.R;
+
+import java.time.format.TextStyle;
 
 /**视图工具类
  * Created by guoxd on 2018/6/19.
@@ -76,5 +85,16 @@ public class ViewHelpUtils {
         return (int)(dipValue * scale + 0.5f);
     }
 
+    public static int getTextViewTextHeight(Context context, AppCompatTextView textView) {
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(textView.getTextSize());
 
+        return (int) textPaint.getFontMetricsInt().bottom-textPaint.getFontMetricsInt().top;// 与文本推荐高度一致
+    }
+    public static int getTextViewTextWidth(Context context, AppCompatTextView textView){
+        TextPaint textPaint = new TextPaint();
+        textPaint.setTextSize(textView.getTextSize());
+        getTextViewTextHeight(context, textView);
+        return (int)Layout.getDesiredWidth(textView.getText().toString(),textPaint);//273
+    }
 }

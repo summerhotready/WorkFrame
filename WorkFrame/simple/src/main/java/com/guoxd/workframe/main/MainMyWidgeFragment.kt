@@ -10,13 +10,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
+import com.guoxd.workframe.LanguageActivity
 
 import com.guoxd.workframe.R
 import com.guoxd.workframe.ShowActivity
+import com.guoxd.workframe.base.BaseActivity
 import com.guoxd.workframe.base.BaseFragment
 import com.guoxd.workframe.base.ShowTextUrl
 import com.guoxd.workframe.my_page.data_binding.DataBindingTestActivity
-import com.guoxd.workframe.system.camera.Camera2Activity
 import com.guoxd.workframe.utils.LogUtil
 import com.guoxd.workframe.utils.PermissionUtils
 import com.guoxd.workframe.utils.ToastUtils
@@ -51,20 +52,19 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
             "my"->{//自定义组件
                 strs = arrayOf(
                         ShowTextUrl.Widge,
-                        ShowTextUrl.SwiptList, ShowTextUrl.StaggeredList,
-                        ShowTextUrl.PaintView,ShowTextUrl.MenuWidge,ShowTextUrl.BitmapImage,ShowTextUrl.SlideBlock,
-
-                        ShowTextUrl.INTENT_SEND);//
+                        ShowTextUrl.StaggeredList,
+                        ShowTextUrl.PaintView,ShowTextUrl.MenuWidge,ShowTextUrl.SlideBlock//ShowTextUrl.BitmapImage,
+                        );//
             }
             "other"->{//第三方
-                strs = arrayOf(ShowTextUrl.OtherWidge,ShowTextUrl.OtherAnim,ShowTextUrl.MpChar,ShowTextUrl.OtherDataBinding);
+                strs = arrayOf(ShowTextUrl.OtherWidge,ShowTextUrl.OtherAnim,ShowTextUrl.MpChar,ShowTextUrl.OtherDataBinding,ShowTextUrl.SwiptList,ShowTextUrl.GaodeMap);
             }
             "system"->{//系统组件和功能
-                strs = arrayOf(ShowTextUrl.TextWidge,ShowTextUrl.RecyclerView,ShowTextUrl.CameraView,ShowTextUrl.BLEView);
+                strs = arrayOf(ShowTextUrl.TextWidge,ShowTextUrl.RecyclerView,ShowTextUrl.BLEView,ShowTextUrl.LANGUAGE,ShowTextUrl.INTENT_SEND);
             }
         }
 
-        var listAdapter: ArrayAdapter<String> = ArrayAdapter<String>(activity,android.R.layout.simple_expandable_list_item_1, strs);
+        var listAdapter: ArrayAdapter<String> = ArrayAdapter<String>(activity as BaseActivity,android.R.layout.simple_expandable_list_item_1, strs as Array<String>);
 
         listView?.adapter = listAdapter;
 
@@ -80,21 +80,24 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
 
         when(str){
             ShowTextUrl.OtherDataBinding->{
-                startActivity(Intent(activity, DataBindingTestActivity::class.java))
-            }
-            ShowTextUrl.CameraView->{
                 if(EasyPermissions.hasPermissions(activity?.baseContext!!, *PermissionUtils.getCameraPermiss())){
-                    startActivity(Intent(activity, Camera2Activity::class.java))
+                    startActivity(Intent(activity, DataBindingTestActivity::class.java))
                 }else{
-                    EasyPermissions.requestPermissions(this@MainMyWidgeFragment,"",101,*PermissionUtils.getCameraPermiss())
+                    EasyPermissions.requestPermissions(this@MainMyWidgeFragment,"",REQUEST_CODE_PERMS_CAMERA,*PermissionUtils.getCameraPermiss())
                 }
             }
+
             ShowTextUrl.INTENT_SEND->{
                 val sendIntent = Intent()
                 sendIntent.action = Intent.ACTION_SEND
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
                 sendIntent.type = "text/plain"
                 startActivity(sendIntent)
+            }
+            ShowTextUrl.LANGUAGE->{
+                var languageIntent = Intent(activity,LanguageActivity::class.java)
+                startActivity(languageIntent)
+                activity?.finish()
             }
 
             else->{
@@ -133,7 +136,11 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        
+        when(requestCode){
+            REQUEST_CODE_PERMS_CAMERA->
+                startActivity(Intent(activity, DataBindingTestActivity::class.java))
+            else->{}
+        }
     }
 
     private fun getAppDetailSettingIntent(context: Context) {

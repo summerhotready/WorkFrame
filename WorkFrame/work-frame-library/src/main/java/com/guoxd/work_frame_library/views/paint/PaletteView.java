@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by wensefu on 17-3-21.
- * 这是一个画板
- * 本质上是缓存了一系列Paint对象
+ * Created by wensefu on 17-3-21. update by emma on 2021-2-22
+ * 这是一个画板，具有橡皮擦功能
+ * 本质上是使用mDrawingList 缓存了一系列Paint对象，缺点是随着图形复杂度高创建的Paint变多
  */
 public class PaletteView extends View {
 
@@ -31,9 +31,19 @@ public class PaletteView extends View {
     private Bitmap mBufferBitmap;
     private Canvas mBufferCanvas;
 
+//    绘制和回退记录的步数
     private static final int MAX_CACHE_STEP = 20;
+    private int cacheStep = MAX_CACHE_STEP;
 
-    private List<DrawingInfo> mDrawingList;//绘画列表，每一画都成为一个独立path
+    public int getCacheStep() {
+        return cacheStep;
+    }
+
+    public void setCacheStep(int cacheStep) {
+        this.cacheStep = cacheStep;
+    }
+
+    private List<DrawingInfo> mDrawingList;//绘画列表，每一笔画都成为一个独立path，方便回退
     private List<DrawingInfo> mRemovedList;//撤销列表
 
     private Xfermode mClearMode;
@@ -172,7 +182,7 @@ public class PaletteView extends View {
         if (size > 0) {
             DrawingInfo info = mDrawingList.remove(size - 1);
             if (mRemovedList == null) {
-                mRemovedList = new ArrayList<>(MAX_CACHE_STEP);
+                mRemovedList = new ArrayList<>(getCacheStep());
             }
             if (size == 1) {
                 mCanEraser = false;
@@ -216,8 +226,8 @@ public class PaletteView extends View {
      */
     private void saveDrawingPath(){//将当前缓存的mPath存入PathDrawingInfo，将这一条路经加入mDrawingList
         if (mDrawingList == null) {
-            mDrawingList = new ArrayList<>(MAX_CACHE_STEP);
-        } else if (mDrawingList.size() == MAX_CACHE_STEP) {
+            mDrawingList = new ArrayList<>(getCacheStep());
+        } else if (mDrawingList.size() == getCacheStep()) {
             mDrawingList.remove(0);
         }
         Path cachePath = new Path(mPath);

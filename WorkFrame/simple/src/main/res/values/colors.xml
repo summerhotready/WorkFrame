@@ -6,8 +6,11 @@
     <color name="colorPrimary_light">#70569F</color>
 
 
+    <color name="color_yellow_dark">#FF9800</color>
+    <color name="color_purple_dark">#5E2ABC</color>
 
     <color name="text_color_black">#101010</color>
     <color name="text_color_tab">#878787</color>
     <color name="text_color_click">#31AAFF</color>
+    <color name="context_bg">#D3D1D1</color>
 </resources>

@@ -5,13 +5,15 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 import java.util.ArrayList;
 
 /**顺序横向或者纵向弹出
- * Created by guoxd on 2018/10/25.
+ * Created by emma on 2018/10/25.
+ * 使用
  */
 
 public class PointMenuView extends LinearLayout {
@@ -23,7 +25,7 @@ public class PointMenuView extends LinearLayout {
     Animator exitAnimtor;
 
     //menu item
-    ArrayList<ImageView> menuItems;
+    ArrayList<AppCompatImageView> menuItems;
     //
     int width;
     //
@@ -42,7 +44,7 @@ public class PointMenuView extends LinearLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         width = MeasureSpec.getSize(widthMeasureSpec);
 //        height = MeasureSpec.getSize(heightMeasureSpec);
-        Log.d(TAG,String.format("width size:%d",width));
+//        Log.d(TAG,String.format("width size:%d",width));
     }
 
     @Override
@@ -70,7 +72,7 @@ public class PointMenuView extends LinearLayout {
             Log.d(TAG,"images");
         }else{//only one
             Log.d(TAG,"menu");
-            ImageView imageView = new ImageView(mContext);
+            AppCompatImageView imageView = new AppCompatImageView(mContext);
             imageView.setLayoutParams(new LayoutParams(width,width));
             imageView.setImageResource(android.R.drawable.ic_menu_add);
             imageView.setBackgroundResource(android.R.color.holo_blue_dark);

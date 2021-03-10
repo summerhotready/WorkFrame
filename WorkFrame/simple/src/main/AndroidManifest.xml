@@ -16,6 +16,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+<!--    gaode-->
+    <!--允许程序访问WiFi网络信息-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许程序读写手机状态和身份-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许程序访问精确的位置-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -32,7 +39,7 @@
         </activity>
         <activity android:name=".ShowActivity"/>
         <activity android:name=".my_page.data_binding.DataBindingTestActivity"/>
-        <activity android:name=".system.camera.Camera2Activity"/>
+        <activity android:name=".LanguageActivity"/>
         <activity android:name=".SendMessageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND"/>
@@ -46,6 +53,20 @@
             </intent-filter>
         </activity>
         <service android:name=".ble.BLEService"/>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.guoxd.workframe.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="9d7b6ddfab4f44d0deeb3f41e3211f19"/>
+        <service android:name="com.amap.api.location.APSService"></service>
     </application>
 
 </manifest>

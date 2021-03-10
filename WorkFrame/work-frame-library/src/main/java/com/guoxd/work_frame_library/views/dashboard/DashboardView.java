@@ -15,7 +15,7 @@ import android.util.AttributeSet;
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
-import com.guoxd.work_frame_library.utils.ColorUtils;
+import com.guoxd.work_frame_library.utils.PaintViewUtils;
 
 /**
  * @author iron
@@ -94,18 +94,18 @@ public class DashboardView extends BaseDashboardView {
     }
 
     private void initColor(){
-        mOuterArcColor =  ColorUtils.getColorWithAlpha(0.3f,ringColor);//DEFAULT_OUTER_ARC_COLOR;
-        mProgressOuterArcColor = ColorUtils.getColorWithAlpha(0.9f,ringColor);
+        mOuterArcColor =  PaintViewUtils.getColorWithAlpha(0.3f,ringColor);//DEFAULT_OUTER_ARC_COLOR;
+        mProgressOuterArcColor = PaintViewUtils.getColorWithAlpha(0.9f,ringColor);
         //
-        mInnerArcColor = ColorUtils.getColorWithAlpha(0.3f,ringColor);
-        mProgressInnerArcColor = ColorUtils.getColorWithAlpha(0.9f,ringColor);
+        mInnerArcColor = PaintViewUtils.getColorWithAlpha(0.3f,ringColor);
+        mProgressInnerArcColor = PaintViewUtils.getColorWithAlpha(0.9f,ringColor);
         //
         mProgressPointColor = ringColor;
         mIndicatorColor = ringColor;
         //yanse
         mValueTextColor = ringColor;
-        mValueLevelColor =  ColorUtils.getColorWithAlpha(0.7f,ringColor);;
-        mValueDateColor =  ColorUtils.getColorWithAlpha(0.7f,ringColor);;
+        mValueLevelColor =  PaintViewUtils.getColorWithAlpha(0.7f,ringColor);;
+        mValueDateColor =  PaintViewUtils.getColorWithAlpha(0.7f,ringColor);;
 
     }
     /**

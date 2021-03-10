@@ -10,12 +10,10 @@ public interface ShowTextUrl {
     String SYSTEM_PAGE = "com.guoxd.workframe.system.";
     //my 自定义
     String DataBindingView = "data_binding.DataBindingTestActivity";
-    String CameraView="CAMERA_VIEW";
-
-
+//    String CameraView="CAMERA_VIEW";
 
     String Widge="MyCustomWidge";//自定义小组件 ShowWidgeFragment
-    String SwiptList="SwiptList";//侧滑list
+
     String StaggeredList="StaggeredList";//瀑布流
     //图表
     String My_CharMP = "CharMPViewFragment";
@@ -39,11 +37,14 @@ public interface ShowTextUrl {
     String TextWidge="TextWidge";
     String AnimtorView = "animtor_view";
     String BLEView = "ble_view";
+    String LANGUAGE = "language";
 
     //other  第三方
     String OtherWidge="OtherWidgeFragment";
     String OtherAnim="AnimWidgeFragment";
     String MpChar = "MPCharFragment";
     String OtherDataBinding = "DataBindingActivity";
+    String SwiptList="SwiptList";//侧滑list
+    String GaodeMap="GaoDe Map";
 
 }

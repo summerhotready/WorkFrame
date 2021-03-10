@@ -17,6 +17,9 @@ public class PopupFragment : BaseFragment(){
 
     override fun initView(root: View?) {
         super.initView(root)
+        Thread(Runnable {
+            
+        })
     }
 
     override fun initData() {

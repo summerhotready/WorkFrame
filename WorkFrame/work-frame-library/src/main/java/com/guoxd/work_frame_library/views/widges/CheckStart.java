@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -13,14 +14,13 @@ import androidx.annotation.IntDef;
 import com.guoxd.work_frame_library.R;
 import com.guoxd.work_frame_library.info.ViewOnClickListener;
 import com.guoxd.work_frame_library.utils.PaintViewUtils;
-import com.guoxd.work_frame_library.utils.TextShowUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Created by guoxd on 2016/8/19.
+ * Created by emma on 2016/8/19.
  * this view base on checkbox to build like ratting bar
  * this class has four mode:SELECT_START_BEGIN_CHECK,SELECT_START_ONLY_CHECK,SELECT_START_WHICH_CHECK,SELECT_START_RANGE_CHECK
  * cause start image has width and height,when the start too much cann't show.
@@ -220,7 +220,7 @@ public class CheckStart extends LinearLayout {
         //设置child宽高,不设置此处后面写onLayout也不能显示
         int widthMeasureSpec = MeasureSpec.makeMeasureSpec(mOrientation == HORIZONTAL? viewWidth:startSize,MeasureSpec.EXACTLY);
         int heightMeasureSpec = MeasureSpec.makeMeasureSpec(mOrientation == HORIZONTAL? startSize:viewHeight,MeasureSpec.EXACTLY);
-        TextShowUtils.ShowLog(TAG,"setView childCount:"+getChildCount());
+        Log.d(TAG,"setView childCount:"+getChildCount());
         //这一步保证onLayout时child的宽高是有值得的
         for (int i = 0; i < getChildCount(); i++) {
             final View child = getChildAt(i);
@@ -231,7 +231,7 @@ public class CheckStart extends LinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        TextShowUtils.ShowLog(TAG,"onMeasure padding:"+getPaddingLeft()+", "+getPaddingRight()+", "+getPaddingTop()+", "+getPaddingBottom());
+        Log.d(TAG,"onMeasure padding:"+getPaddingLeft()+", "+getPaddingRight()+", "+getPaddingTop()+", "+getPaddingBottom());
         // 获取宽-测量规则的模式和大小
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -240,7 +240,7 @@ public class CheckStart extends LinearLayout {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-        TextShowUtils.ShowLog(TAG,"widthSize:"+widthSize+" heightSize:"+heightSize);
+        Log.d(TAG,"widthSize:"+widthSize+" heightSize:"+heightSize);
         /**
          * 解决宽高为wrap_content时不显示的问题
          */
@@ -262,7 +262,7 @@ public class CheckStart extends LinearLayout {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        TextShowUtils.ShowLog(TAG,"widthSize:"+w+" heightSize:"+h);
+        Log.d(TAG,"widthSize:"+w+" heightSize:"+h);
 
         viewWidth = w-getPaddingLeft()-getPaddingRight();
         viewHeight = h-getPaddingTop()-getPaddingBottom();
@@ -407,7 +407,7 @@ public class CheckStart extends LinearLayout {
                 }
             }
         }
-        TextShowUtils.ShowLog(TAG,"view:"+startSize+" margin:"+mMargin);
+        Log.d(TAG,"view:"+startSize+" margin:"+mMargin);
     }
 
 

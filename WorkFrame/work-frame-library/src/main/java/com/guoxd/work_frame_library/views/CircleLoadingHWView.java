@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.guoxd.work_frame_library.R;
-import com.guoxd.work_frame_library.utils.ViewControlUtils;
+import com.guoxd.work_frame_library.utils.PaintViewUtils;
 
 
 /**
@@ -56,7 +56,7 @@ public class CircleLoadingHWView extends View {
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.obtainStyledAttributes(R.styleable.CircleLoadingHWView);
 
-        mSize = (int)typedArray.getDimension(R.styleable.CircleLoadingHWView_view_size, ViewControlUtils.dp2px(context,100));
+        mSize = (int)typedArray.getDimension(R.styleable.CircleLoadingHWView_view_size, PaintViewUtils.dp2px(context,100));
         mColor = typedArray.getColor(R.styleable.CircleLoadingHWView_view_color, defaultColor);
         mDuration = typedArray.getIndex(R.styleable.CircleLoadingHWView_circle_duration);
         typedArray.recycle();

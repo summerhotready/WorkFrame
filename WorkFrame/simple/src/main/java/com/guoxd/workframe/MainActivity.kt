@@ -7,12 +7,14 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.ViewUtils
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.guoxd.workframe.base.BaseActivity
 import com.guoxd.workframe.main.MainMyWidgeFragment
+import com.guoxd.workframe.utils.ViewHelpUtils
 import java.util.ArrayList
 
 
@@ -28,14 +30,17 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
     lateinit var viewSystem:AppCompatTextView
 
     var fragmentManager: FragmentManager?=null
+    var checkSize = 0
+    var uncheckSize = 0
     override fun getLayoutId(): Int {
        return R.layout.activity_main
     }
 
     override fun initView() {
         super.initView()
-//        setContentView()
-        setStateBarColor(ContextCompat.getColor(this,R.color.colorAccent),true)
+        checkSize = Math.round(30*resources.displayMetrics.density);
+        uncheckSize = Math.round(24*resources.displayMetrics.density);
+//        setStateBarColor(ContextCompat.getColor(this,R.color.colorPrimary),true)
         fragmentManager = supportFragmentManager
         var transaction = fragmentManager?.beginTransaction()
         fragment_my = MainMyWidgeFragment()
@@ -64,6 +69,37 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
         return Pair(goodList, badList)
     }
 
+    fun changeTag(changeTo:Int){
+        when(current){
+            R.id.tv_system->{
+                ViewHelpUtils.setDrawableTop(viewSystem,ContextCompat.getDrawable(this,R.mipmap.icon_user_off),uncheckSize);
+                viewSystem.setTextColor(ColorStateList.valueOf(Color.GRAY))
+            }
+            R.id.tv_my->{
+                ViewHelpUtils.setDrawableTop(viewMy,ContextCompat.getDrawable(this,R.mipmap.icon_gis_off),uncheckSize);
+                viewMy.setTextColor(ColorStateList.valueOf(Color.GRAY))
+            }
+            R.id.tv_other->{
+                ViewHelpUtils.setDrawableTop(viewOther,ContextCompat.getDrawable(this,R.mipmap.icon_manage_off),uncheckSize);
+                viewOther.setTextColor(ColorStateList.valueOf(Color.GRAY))
+            }
+        }
+        when(changeTo){
+            R.id.tv_system->{
+                ViewHelpUtils.setDrawableTop(viewSystem,ContextCompat.getDrawable(this,R.mipmap.icon_user_on),checkSize);
+                viewSystem.setTextColor(ContextCompat.getColor(this,R.color.colorAccent))
+            }
+            R.id.tv_my->{
+                ViewHelpUtils.setDrawableTop(viewMy,ContextCompat.getDrawable(this,R.mipmap.icon_gis_on),checkSize);
+                viewMy.setTextColor(ContextCompat.getColor(this,R.color.colorAccent))
+            }
+            R.id.tv_other->{
+                ViewHelpUtils.setDrawableTop(viewOther,ContextCompat.getDrawable(this,R.mipmap.icon_manage_on),checkSize);
+                viewOther.setTextColor(ContextCompat.getColor(this,R.color.colorAccent))
+            }
+        }
+        current = changeTo
+    }
     //给TextView着色
     fun changeTextView(textView:AppCompatTextView,drawable: Drawable,isCheck:Boolean){
 
@@ -79,10 +115,14 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
         //自定义方法
 //        wrappedDrawable = tintDrawable(originalDrawable, ColorStateList.valueOf(Color.RED));
         textView.compoundDrawables
-
     }
 
+    var current = R.id.tv_my;
     override fun onClick(v: View) {
+        if(current == v.id) {
+            return
+        }
+        changeTag(v.id)
         when(v.id){
             R.id.tv_system->{
                 var bundle:Bundle = Bundle()
@@ -100,6 +140,7 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
                     transaction?.show(fragment_system as Fragment)
                     transaction?.commit()
                 }
+
             }
             R.id.tv_other->{
                 var bundle:Bundle = Bundle()

@@ -13,7 +13,7 @@ import com.guoxd.workframe.utils.LogUtil;
 public class SendMessageActivity extends BaseActivity {
     @Override
     protected int getLayoutId() {
-        LogUtil.d(TAG,"SendMessageActivity getLayoutId()");
+//        LogUtil.d(TAG,"SendMessageActivity getLayoutId()");
         return R.layout.activity_send;
     }
 

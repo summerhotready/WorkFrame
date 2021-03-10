@@ -38,13 +38,13 @@ public abstract class BaseFragment extends Fragment {
     }
 
     //重定位rootView
-    private View initView(LayoutInflater inflater, @Nullable ViewGroup container){
+    public View initView(LayoutInflater inflater, @Nullable ViewGroup container){
         // View root = inflater.inflate(R.layout.other_fragment_mpchar, container, false);
         View rootView = inflater.inflate(getCurrentLayoutID(), container, false);
         return rootView;
     }
 
-    protected  void  initView(View root){
+    protected   void  initView(View root){
 
     }
 

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <paths>
+        <!--该方式提供在应用的内部存储区的文件/子目录的文件。它对应Context.getFilesDir返回的路径：eg:"/data/data/com.jph.simple/files"。-->
+        <files-path  name="app_file" path="images/" />
+        <!--该方式提供在应用的内部存储区的缓存子目录的文件。它对应getCacheDir返回的路径：eg:“/data/data/com.jph.simple/cache”；-->
+        <cache-path name="app_cache" path="images/" />
+        <!--该方式提供在外部存储区域根目录下的文件。它对应Environment.getExternalStorageDirectory返回的路径：eg:"/storage/emulated/0";-->
+        <external-path name="app_point" path="workframe/" />
+<!--        该方式提供在应用的外部存储区根目录的下的文件。它对应Context#getExternalFilesDir(String) Context.getExternalFilesDir(null)
+            返回的路径。eg:"/storage/emulated/0/Android/data/com.jph.simple/files"。-->
+        <external-files-path name="public_file" path="images/" />
         <!--代表app 外部存储区域根目录下的文件 Context.getExternalCacheDir目录下的images目录-->
         <!--/storage/emulated/0/Android/data/com.hm.camerademo/cache/images-->
-        <external-cache-path name="hm_external_cache" path="" />
-        <!--代表app 私有的存储区域 Context.getCacheDir()目录下的images目录 /data/user/0/com.hm.camerademo/cache/images-->
-        <cache-path name="hm_private_cache" path="images" />
-
+        <external-cache-path name="public_cache" path="" />
+<!--外置存儲卡 easyphoto需要-->
+        <root-path name="ex_root" path="" />
     </paths>
 </PreferenceScreen>
