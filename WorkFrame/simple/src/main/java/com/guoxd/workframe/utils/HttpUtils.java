@@ -1,9 +1,6 @@
 package com.guoxd.workframe.utils;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 

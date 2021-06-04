@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WorkFrame</string>
+    <string name="databind_title_photo_text">change a photo</string>
+    <string name="language_button_test">for test language</string>
+</resources>

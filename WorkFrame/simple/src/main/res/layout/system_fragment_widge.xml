@@ -18,25 +18,31 @@
             />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
             <Button
+                android:id="@+id/btn_stand"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="stand" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:clickable="true"
-                android:text="clickable" />
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/picture_btn_music_shape"
+                android:text="textBtn" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/white"
                 android:background="@drawable/btn_bg_ripple"
                 android:text="ripple" />
             </LinearLayout>
@@ -129,25 +135,37 @@
                 android:textColor="#121212"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Text Width Test"/>
-
+                android:text="Get Text Width For Test"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ime search"
+                android:textSize="14dp"
+                android:textColor="#121212"
+                android:textColorHint="#878787"
+                android:hint="this is an edittext can Search"
+                android:id="@+id/editSearch"
+                android:singleLine="true"
+                android:imeOptions="actionSearch"
+                />
 <!---->
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:counterEnabled="true"
+                android:textColorHint="#FFFFFF"
+                android:hint="带字数检测Edittext"
                 app:counterMaxLength="10">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_edittext_password"
                     android:paddingLeft="@dimen/padding_10"
-                    android:hint="带字数检测" />
+                    android:textColor="@android:color/white"
+                   />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -161,9 +179,23 @@
                     android:id="@+id/edit_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="改变输入键盘按钮"
-                    android:imeActionLabel="注册"
-                    android:imeOptions="actionUnspecified" />
+                    android:inputType="textPassword"
+                    android:hint="密码输入"
+                     />
             </com.google.android.material.textfield.TextInputLayout>
+<!--            -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="go System Setting then can back to app"
+                android:padding="10dp"
+                android:id="@+id/btn_set_to_go"/>
+<!--snake bar-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show snakeBar"
+                android:padding="10dp"
+                android:id="@+id/btn_snake"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

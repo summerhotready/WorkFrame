@@ -68,6 +68,22 @@
             android:layout_width="match_parent"
             style="@style/LineStyle" />-->
 
-
+<!--        -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:id="@+id/shapeLeft"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:id="@+id/shapeTop"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/shapeRight"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/shapeBottom"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1,4 +1,4 @@
-package com.elco.tieta.tieta.login
+package com.guoxd.workframe.utils;
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -11,9 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.gson.Gson
 import com.guoxd.workframe.R
-import com.guoxd.workframe.utils.HttpUtils
-import com.guoxd.workframe.utils.LogUtil
-import com.guoxd.workframe.utils.SystemUtils
 import com.guoxd.workframe.utils.http_info.FileDownloadListener
 import com.guoxd.workframe.utils.http_info.HttpCallListener
 import java.io.File
@@ -48,7 +45,7 @@ class UpdateVersionUtils(var mContext: AppCompatActivity){
      * 应用id api_Token
      */
     fun checkVersion() {
-        HttpUtils.getIntent(mContext).getRequest(versionCheckUrl,object: HttpCallListener {
+        /*HttpUtils.getIntent(mContext).getRequest(versionCheckUrl,object: HttpCallListener {
             override fun Success(code:Int,data: String?) {
                 try {
                     if (data != null) {
@@ -73,7 +70,7 @@ class UpdateVersionUtils(var mContext: AppCompatActivity){
             override fun Failure(code:Int,message: String?) {
                 LogUtil.e("Login_checkVersion", "Failure:" );
             }
-        })
+        })*/
     }
 
     class FirVersionEntity{
@@ -88,7 +85,7 @@ class UpdateVersionUtils(var mContext: AppCompatActivity){
      * updateUrl 为新版本下载地址
      */
     fun downApk(fileback: FileDownloadListener) {
-        HttpUtils.getIntent(mContext).fileDownload(updateUrl,"tieta.apk",fileback)
+//        HttpUtils.getIntent(mContext).fileDownload(updateUrl,"tieta.apk",fileback)
     }
 
     /**Dialog

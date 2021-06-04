@@ -146,7 +146,7 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
     private fun getAppDetailSettingIntent(context: Context) {
         val builder = AlertDialog.Builder(context)
         builder.setMessage("应用需要使用存储权限用来保存一些数据,禁止可能会导致某些异常")
-        builder.setPositiveButton("去设置") { dialog, which ->
+        builder.setPositiveButton("去设置") { _, _ ->
             val localIntent = Intent()
             localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             if (Build.VERSION.SDK_INT >= 9) {

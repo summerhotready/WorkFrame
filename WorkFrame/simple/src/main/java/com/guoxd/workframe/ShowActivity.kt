@@ -8,15 +8,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.guoxd.workframe.base.ShowTextUrl
 import com.guoxd.workframe.my_page.*
-import com.guoxd.workframe.others.GaodeMapFragment
 import com.guoxd.workframe.others.SwipeListFragment
+import com.guoxd.workframe.others.gaode.GaodeMapFragment
 import com.guoxd.workframe.system.AnimtorFragment
 import com.guoxd.workframe.system.BLETestFragment
 import com.guoxd.workframe.system.RecyclerViewFragment
 import com.guoxd.workframe.system.TextWidgeFragment
 import com.guoxd.workframe.utils.LogUtil
 import com.guoxd.workframe.utils.ToastUtils
-import com.luck.picture.lib.config.PictureConfig
 import kotlinx.android.synthetic.main.activity_show.*
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -137,7 +136,7 @@ class ShowActivity : AppCompatActivity(),EasyPermissions.PermissionCallbacks{
 
         }
 
-        if(fragment !=null && fragment is Fragment) {
+        if(fragment !=null ) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.add(R.id.fragment, fragment).commit();
         }else{

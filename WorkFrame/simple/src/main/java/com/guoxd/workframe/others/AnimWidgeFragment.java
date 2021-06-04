@@ -32,7 +32,7 @@ public class AnimWidgeFragment extends BaseFragment implements View.OnClickListe
     ImageView[] imageViews;
 
     private void initAnim(View root) {
-        getBaseActity().setPageTitle("Loading动画效果");
+        getBaseActity().setPageTitle("动画测试");
         animatables = new Animatable[8];
         imageViews = new ImageView[8];
         animatableStatus = new boolean[]{true,true,true,true,true,true,true,true};

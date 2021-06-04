@@ -1,6 +1,9 @@
 package com.guoxd.workframe.my_page;
 
 import android.annotation.TargetApi;
+import android.graphics.Color;
+import android.graphics.Path;
+import android.graphics.drawable.GradientDrawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -9,12 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import androidx.appcompat.widget.AppCompatTextView;
+
+import com.guoxd.work_frame_library.shape.ArrowSharpDrawable;
 import com.guoxd.work_frame_library.views.widges.ChangeRingImageView;
 import com.guoxd.work_frame_library.views.progress.CustomProgress;
 import com.guoxd.work_frame_library.views.widges.CheckStart;
 import com.guoxd.work_frame_library.views.progress.ProgressShowView;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
+import com.guoxd.workframe.utils.ViewHelpUtils;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -70,8 +77,72 @@ public class ShowWidgeFragment extends BaseFragment {
         //
         ChangeRingImageView iv =  (ChangeRingImageView)root.findViewById(R.id.iv_changeRing);
 
-//Location.distanceBetween();
+//        shape
+        float width =  ViewHelpUtils.dipTopx(getActivity(),100);
+        float height = ViewHelpUtils.dipTopx(getActivity(),60);
 
+
+        AppCompatTextView shapeLeft = root.findViewById(R.id.shapeLeft);
+//        ArrowSharpDrawable arrowSharpDrawable = new ArrowSharpDrawable(GradientDrawable.Orientation.LEFT_RIGHT, null);
+        ArrowSharpDrawable bgDrawable = new ArrowSharpDrawable(ArrowSharpDrawable.ArrowDirection.LEFT);
+        bgDrawable.setCornerRadius(ViewHelpUtils.dipTopx(getActivity(),10));
+        bgDrawable.setRelativePosition(0.3f);
+        bgDrawable.setBgColor(Color.CYAN);
+//        bgDrawable.setArrowDirection(ArrowSharpDrawable.ArrowDirection.BOTTOM);
+//        bgDrawable.setArrowPath(  width,height);
+        bgDrawable.setArrowCirclePath(ViewHelpUtils.dipTopx(getActivity(),5)
+        ,ViewHelpUtils.dipTopx(getActivity(),30),width,height);
+
+
+//        bgDrawable.setSharpSize(width,height);
+//        创建弧度三角形
+//        bgDrawable.setArrowPath(ArrowSharpDrawable.ArrowDirection.LEFT,width,height);
+//        bgDrawable.setArrowCirclePath(ArrowSharpDrawable.ArrowDirection.LEFT,
+//bgDrawable.setArrowCirclePath(ArrowSharpDrawable.ArrowDirection.LEFT,ViewHelpUtils.dipTopx(getActivity(),5)
+//        ,ViewHelpUtils.dipTopx(getActivity(),30),width,height);
+
+        shapeLeft.setBackground(bgDrawable);
+
+        AppCompatTextView shapeTop = root.findViewById(R.id.shapeTop);
+//        ArrowSharpDrawable arrowSharpDrawable = new ArrowSharpDrawable(GradientDrawable.Orientation.LEFT_RIGHT, null);
+        ArrowSharpDrawable bgDrawableTop = new ArrowSharpDrawable(ArrowSharpDrawable.ArrowDirection.TOP);
+        bgDrawableTop.setCornerRadius(ViewHelpUtils.dipTopx(getActivity(),10));
+        bgDrawableTop.setRelativePosition(0.6f);
+        bgDrawableTop.setBgColor(Color.CYAN);
+//        bgDrawableTop.setArrowDirection(ArrowSharpDrawable.ArrowDirection.TOP);
+//        bgDrawableTop.setSharpSize(width,height);
+//        bgDrawableTop.setArrowPath(  width,height);
+        bgDrawableTop.setArrowCirclePath(ViewHelpUtils.dipTopx(getActivity(),5)
+                ,ViewHelpUtils.dipTopx(getActivity(),30),width,height);
+        shapeTop.setBackground(bgDrawableTop);
+
+
+        AppCompatTextView shapeRight = root.findViewById(R.id.shapeRight);
+//        ArrowSharpDrawable arrowSharpDrawable = new ArrowSharpDrawable(GradientDrawable.Orientation.LEFT_RIGHT, null);
+        ArrowSharpDrawable bgDrawableRight = new ArrowSharpDrawable(ArrowSharpDrawable.ArrowDirection.RIGHT);
+        bgDrawableRight.setCornerRadius(ViewHelpUtils.dipTopx(getActivity(),10));
+        bgDrawableRight.setRelativePosition(0.7f);
+        bgDrawableRight.setBgColor(Color.CYAN);
+//        bgDrawableRight.setArrowDirection(ArrowSharpDrawable.ArrowDirection.RIGHT);
+//        bgDrawableRight.setSharpSize(width,height);
+//        bgDrawableRight.setArrowPath(  width,height);
+        bgDrawableRight.setArrowCirclePath(ViewHelpUtils.dipTopx(getActivity(),5)
+                ,ViewHelpUtils.dipTopx(getActivity(),30),width,height);
+        shapeRight.setBackground(bgDrawableRight);
+
+
+        AppCompatTextView shapeBottom = root.findViewById(R.id.shapeBottom);
+//        ArrowSharpDrawable arrowSharpDrawable = new ArrowSharpDrawable(GradientDrawable.Orientation.LEFT_RIGHT, null);
+        ArrowSharpDrawable bgDrawableBottom = new ArrowSharpDrawable(ArrowSharpDrawable.ArrowDirection.BOTTOM);
+        bgDrawableBottom.setCornerRadius(ViewHelpUtils.dipTopx(getActivity(),10));
+        bgDrawableBottom.setRelativePosition(1f);
+        bgDrawableBottom.setBgColor(Color.CYAN);
+//        bgDrawableBottom.setArrowDirection(ArrowSharpDrawable.ArrowDirection.BOTTOM);
+//        bgDrawableBottom.setSharpSize(width,height);
+//        bgDrawableBottom.setArrowPath(  width,height);
+        bgDrawableBottom.setArrowCirclePath(ViewHelpUtils.dipTopx(getActivity(),5)
+                ,ViewHelpUtils.dipTopx(getActivity(),30),width,height);
+        shapeBottom.setBackground(bgDrawableBottom);
     }
 
 
