@@ -1,6 +1,15 @@
-this is a frame for work
-工作框架主要用于自定义View和Utils
+WorkFrame项目是一个组件备忘录性质的项目，主要包括三部分：自己编写的组件（work-frame-library）、系统组件的定制和实践（system）和第三方开源组件（others）
 
+work-frame-library是自定义View和Utils的Java库
+
+# utils #
+收集而来常用的utils，重点提一下viewinject是压缩自传统库的
+# anmi #
+常见属性动画的使用，及自定义的几种Interpolator
+# shape #
+自定义图形绘制
+	ArrowSharpDrawable是带三角形的对话框
+	SanJiaoShapeView是一个三角形
 # Views #
 
 ## SlideBlock ##
@@ -22,7 +31,7 @@ blocks.setDefaultTableMode(SlideBlock.COLUME);
 ![Screenshot]( https://raw.githubusercontent.com/summerhotready/WorkFrame/master/images/slideblocks_%E6%8E%92.gif )
 
 ## CheckStart ##
-具有四种模式的小星星，打分专用，点击可控
+仿照ratting bar，设计是具有四种点击模式的小星星，打分专用，点击可控
 app:Max 星星总数，不设置默认为5
 
 app:StartMode="begin|only|range|which"
@@ -67,3 +76,7 @@ app:StartGravity="left|right|center|top|bottom"
 ProgressBackground 设置组件背景色
 ### 效果展示 ###
 ![Screenshot]( https://raw.githubusercontent.com/summerhotready/WorkFrame/master/images/ProgressShowView.png)
+
+
+## bigImage ##
+该项目是收录，学习使用

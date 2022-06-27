@@ -1,5 +1,12 @@
 WorkFrame/.idea/
-WorkFrame/app/release/
+WorkFrame/.gradle/
+WorkFrame/gradle/
+
+WorkFrame/local.properties
+
 WorkFrame/simple/build/
-WorkFrame/work-frame-library/build/
 WorkFrame/simple/release/
+
+WorkFrame/work-frame-library/build/
+WorkFrame/work-frame-library/src/androidTest
+WorkFrame/work-frame-library/src/test
