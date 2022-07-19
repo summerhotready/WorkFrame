@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 32
+    buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId "com.guoxd.workframe"
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion 23
+        targetSdkVersion 32
         versionCode 2
         versionName "1.1"
         // Enabling multidex support.
@@ -73,6 +73,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 //    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+
     testImplementation 'junit:junit:4.13-beta-3'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation project(':work-frame-library')
@@ -106,6 +109,7 @@ dependencies {
 
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
     //swipe
     implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
     implementation 'jp.wasabeef:recyclerview-animators:1.0.3@aar'
@@ -121,18 +125,28 @@ dependencies {
     //影响运行的
 //    implementation "com.mapzen:on-the-road:$kotlin_version"
 //    implementation 'io.alterac.blurkit:blurkit:1.0.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     //tabLayout
     implementation  'com.github.devlight.navigationtabstrip:navigationtabstrip:+'
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
+
     //选图组件（Android9成功10失败，移除）
 //    implementation 'com.yuyh.imgsel:library:2.0.6'
     // 目前支持常见的 4 种图片加载库，必须在下面四个图片加载库中选择一个添加依赖
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-    //选图组件1(android 10测试通过)
-    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.6'
+    //选图组件1 pictureselector (android 10测试通过)
+    implementation 'io.github.lucksiege:pictureselector:v3.10.3'
+    // image compress library (Not necessary)
+//    implementation 'io.github.lucksiege:compress:v3.10.3'
+
+    // uCrop library (Not necessary)
+//    implementation 'io.github.lucksiege:ucrop:v3.10.2'
+
+    // simple camerax library (Not necessary)
+//    implementation 'io.github.lucksiege:camerax:v3.10.3'
     //选图组件2（）
+//    implementation 'com.github.HuanTanSheng:EasyPhotos:3.1.5'
     implementation 'com.github.HuanTanSheng:EasyPhotos:3.0.6' //androidx版本，支持android 10，永久维护
     //jwt
     api 'io.jsonwebtoken:jjwt-api:0.11.1'
@@ -148,6 +162,8 @@ dependencies {
     //搜索功能
     implementation 'com.amap.api:search:7.7.0'
 //    bugly
-    implementation 'com.tencent.bugly:crashreport:latest.release'
+//    implementation 'com.tencent.bugly:crashreport:latest.release'
 //    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+//    选座
+    implementation 'com.github.karonl:InDoorSurfaceView:1.0'
 }

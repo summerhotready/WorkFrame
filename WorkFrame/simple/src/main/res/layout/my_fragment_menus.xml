@@ -70,7 +70,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"/>
     <!--扇形-->
-    <com.guoxd.work_frame_library.menus.arcmenu.ArcMenu
+    <com.guoxd.work_frame_library.views.arcmenu.ArcMenu
         android:id="@+id/arcMenu"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -117,5 +117,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/composer_sleep" />-->
-    </com.guoxd.work_frame_library.menus.arcmenu.ArcMenu>
+    </com.guoxd.work_frame_library.views.arcmenu.ArcMenu>
 </RelativeLayout>

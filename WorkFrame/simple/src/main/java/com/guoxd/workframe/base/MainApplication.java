@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 //import com.guoxd.workframe.utils.HttpUtils;
-import com.tencent.bugly.crashreport.CrashReport;
+//import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by guoxd on 2018/10/23.
@@ -18,7 +18,7 @@ public class MainApplication extends Application {
         //初始化一些单例类
 //        HttpUtils.getIntent(this);
 //
-        CrashReport.initCrashReport(getApplicationContext(), "e9528b76a2", false);
+//        CrashReport.initCrashReport(getApplicationContext(), "e9528b76a2", false);
     }
     static Context mContext;
 

@@ -35,7 +35,7 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
-                android:background="@drawable/picture_btn_music_shape"
+                android:background="@drawable/bg_dialog"
                 android:text="textBtn" />
 
             <Button

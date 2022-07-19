@@ -12,6 +12,7 @@ import com.guoxd.work_frame_library.R;
 
 /**
  * Created by guoxd on 2018/10/25.
+ * 包装进度条
  */
 
 public class CustomProgress extends LinearLayout {
@@ -21,7 +22,7 @@ public class CustomProgress extends LinearLayout {
 
     public CustomProgress(Context context, AttributeSet attrs) {
         super(context, attrs);
-        //注意这里使用打气筒的第三个参数要使用this,相当于把加载的这个view对象传给父类
+        //注意inflate的第三个参数要使用this,相当于把加载的这个view对象传给父类
         View.inflate(context, R.layout.view_custom_progress, this);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomProgress);
         String name = ta.getString(R.styleable.CustomProgress_pgText);

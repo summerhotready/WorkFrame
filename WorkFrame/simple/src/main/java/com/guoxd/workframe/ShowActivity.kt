@@ -3,6 +3,7 @@ package com.guoxd.workframe
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -16,7 +17,6 @@ import com.guoxd.workframe.system.RecyclerViewFragment
 import com.guoxd.workframe.system.TextWidgeFragment
 import com.guoxd.workframe.utils.LogUtil
 import com.guoxd.workframe.utils.ToastUtils
-import kotlinx.android.synthetic.main.activity_show.*
 import pub.devrel.easypermissions.EasyPermissions
 
 
@@ -37,7 +37,7 @@ class ShowActivity : AppCompatActivity(),EasyPermissions.PermissionCallbacks{
     }
 
     fun setPageTitle(str: String){
-        tv_title.setText(str)
+        findViewById<TextView>(R.id.tv_title).setText(str)
     }
     fun showFragment(str: String){
         var fragment: Fragment?=null;
@@ -60,7 +60,7 @@ class ShowActivity : AppCompatActivity(),EasyPermissions.PermissionCallbacks{
             }
             ShowTextUrl.SlideBlock -> {
                 try {
-                    val clazz = Class.forName(String.format("%s%s", ShowTextUrl.MY_PAGE, ShowTextUrl.SlideBlock)) //SlideBlockFragment()
+                    val clazz = Class.forName("${ShowTextUrl.MY_PAGE}${ShowTextUrl.SlideBlock}") //SlideBlockFragment()
                     fragment = clazz.newInstance() as Fragment;
                 } catch (e: ClassNotFoundException) {
                     e.printStackTrace()

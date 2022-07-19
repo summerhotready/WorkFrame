@@ -7,6 +7,7 @@
     android:focusableInTouchMode="true"
     android:fadeScrollbars="true"
     android:padding="@dimen/padding_15">
+<!--    text部分-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,11 +17,14 @@
             android:id="@+id/noCopyEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="123456sdghj"
             android:hint="@string/hint_nocopy"/>
+
+
+<!--        自定义组件-->
         <View
             android:layout_width="match_parent"
             style="@style/LineStyle" />
-
 
     <com.guoxd.work_frame_library.views.widges.CheckStart
         android:id="@+id/checkStart"
@@ -67,23 +71,74 @@
         <View
             android:layout_width="match_parent"
             style="@style/LineStyle" />-->
-
-<!--        -->
-        <androidx.appcompat.widget.AppCompatTextView
+        <!--        -->
+        <com.guoxd.work_frame_library.views.progress.FreeProcessView
             android:layout_width="300dp"
             android:layout_height="200dp"
+            android:id = "@+id/freeProgress"
+            android:padding="15dp"
+            android:background="@color/colorPrimary"
+            ></com.guoxd.work_frame_library.views.progress.FreeProcessView>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/change_pro_add"
+        android:background="@color/colorAccent"
+        android:padding="@dimen/padding_10"
+        android:src="@drawable/ic_add_a_photo_black_24dp"
+        />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/padding_10"
+        android:id="@+id/change_pro_del"
+        android:src="@mipmap/ic_controller_easy_photos"
+        />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/change_limit_add"
+        android:background="@color/colorAccent"
+        android:padding="@dimen/padding_10"
+        android:src="@drawable/ic_add_a_photo_black_24dp"
+        />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/padding_10"
+        android:id="@+id/change_limit_del"
+        android:src="@mipmap/ic_delete_easy_photos"
+        />
+</LinearLayout>
+        <!--        -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/shapeLeft"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="300dp"
-            android:layout_height="200dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/shapeTop"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/shapeRight"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/shapeBottom"/>
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

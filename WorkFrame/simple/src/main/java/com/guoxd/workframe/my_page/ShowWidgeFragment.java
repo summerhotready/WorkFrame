@@ -2,19 +2,13 @@ package com.guoxd.workframe.my_page;
 
 import android.annotation.TargetApi;
 import android.graphics.Color;
-import android.graphics.Path;
-import android.graphics.drawable.GradientDrawable;
-import android.hardware.Camera;
-import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.guoxd.work_frame_library.shape.ArrowSharpDrawable;
+import com.guoxd.work_frame_library.views.progress.FreeProcessView;
 import com.guoxd.work_frame_library.views.widges.ChangeRingImageView;
 import com.guoxd.work_frame_library.views.progress.CustomProgress;
 import com.guoxd.work_frame_library.views.widges.CheckStart;
@@ -22,8 +16,6 @@ import com.guoxd.work_frame_library.views.progress.ProgressShowView;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.utils.ViewHelpUtils;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
@@ -39,10 +31,6 @@ public class ShowWidgeFragment extends BaseFragment {
         return R.layout.my_fragment_show_widge;
     }
 
-    public void onRefresh() {
-        Camera camera = Camera.open(0);
-
-    }
 
     @Override
     protected void initView(View root) {
@@ -67,6 +55,12 @@ public class ShowWidgeFragment extends BaseFragment {
         }
         //设置data
         view.setData(array);
+//
+        FreeProcessView freeProcessView = root.findViewById(R.id.freeProgress);
+        freeProcessView.setTagBitmap(R.mipmap.icon_free_process);
+        freeProcessView.setLimit(23,150);
+        freeProcessView.setLimit(35);
+        freeProcessView.setProgress(30);
 
         CustomProgress pb = (CustomProgress) root.findViewById(R.id.custom_pb);
         pb.setPbMax(100);
@@ -78,8 +72,8 @@ public class ShowWidgeFragment extends BaseFragment {
         ChangeRingImageView iv =  (ChangeRingImageView)root.findViewById(R.id.iv_changeRing);
 
 //        shape
-        float width =  ViewHelpUtils.dipTopx(getActivity(),100);
-        float height = ViewHelpUtils.dipTopx(getActivity(),60);
+        float width =  ViewHelpUtils.dipTopx(getActivity(),10);
+        float height = ViewHelpUtils.dipTopx(getActivity(),6);
 
 
         AppCompatTextView shapeLeft = root.findViewById(R.id.shapeLeft);
@@ -143,6 +137,47 @@ public class ShowWidgeFragment extends BaseFragment {
         bgDrawableBottom.setArrowCirclePath(ViewHelpUtils.dipTopx(getActivity(),5)
                 ,ViewHelpUtils.dipTopx(getActivity(),30),width,height);
         shapeBottom.setBackground(bgDrawableBottom);
+
+//
+        root.findViewById(R.id.change_pro_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        root.findViewById(R.id.change_pro_del).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(root.findViewById(R.id.change_pro_add).getVisibility()==View.GONE){
+                    root.findViewById(R.id.change_pro_add).setVisibility(View.VISIBLE);
+                }else {
+                    root.findViewById(R.id.change_pro_add).setVisibility(View.GONE);
+                }
+            }
+        });
+
+        root.findViewById(R.id.change_limit_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        root.findViewById(R.id.change_limit_del).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(root.findViewById(R.id.change_limit_add).getVisibility()==View.GONE){
+                    root.findViewById(R.id.change_limit_add).setVisibility(View.VISIBLE);
+                }else {
+                    root.findViewById(R.id.change_limit_add).setVisibility(View.GONE);
+                }
+            }
+        });
+//
+//        AppCompatTextView textViewType = root.findViewById(R.id.noCopyEdit);
+//        Typeface customFace = Typeface.createFromAsset(getActivity().getAssets(),"digital.ttf");
+//        textViewType .setTypeface(customFace);
     }
 
 

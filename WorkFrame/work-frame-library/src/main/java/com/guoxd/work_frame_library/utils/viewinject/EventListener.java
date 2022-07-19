@@ -8,7 +8,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.elco.zccloud.utils.LogUtil;
 
 import java.lang.reflect.Method;
 
@@ -101,7 +100,7 @@ public class EventListener implements OnClickListener, OnLongClickListener, OnIt
 			if(method!=null)
 				return method.invoke(handler, params);
 		}catch(Exception e){
-			LogUtil.e(TAG , e.getMessage());
+//			LogUtil.e(TAG , e.getMessage());
 		}
 		
 		return null;

@@ -12,7 +12,7 @@ import android.os.LocaleList;
 import android.text.TextUtils;
 
 import com.guoxd.workframe.base.MainApplication;
-import com.luck.picture.lib.tools.SPUtils;
+
 import java.lang.reflect.Field;
 
 /**
@@ -24,10 +24,10 @@ import java.lang.reflect.Field;
 public class LanguageUtils {
 
     public static String getSaveLanguage() {
-        return SPUtils.getInstance().getString(Constant.TAG_LANG,"");
+        return SharedPreferencesUtils.getIntent().getString(MainApplication.getContext(),Constant.TAG_LANG,"");
     }
     public static void setSaveLanguage(String value) {
-        SPUtils.getInstance().put(Constant.TAG_LANG,value);
+        SharedPreferencesUtils.getIntent().putString(MainApplication.getContext(),Constant.TAG_LANG,value);
     }
 
     private static boolean isLocalChinese(java.util.Locale locale){

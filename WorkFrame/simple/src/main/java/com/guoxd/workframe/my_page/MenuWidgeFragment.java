@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.guoxd.work_frame_library.menus.arcmenu.ArcMenu;
+import com.guoxd.work_frame_library.views.arcmenu.ArcMenu;
 import com.guoxd.workframe.R;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.utils.LogUtil;

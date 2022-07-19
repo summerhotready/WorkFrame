@@ -2,6 +2,9 @@ package com.guoxd.work_frame_library.anmi;
 
 import android.view.View;
 
+/**
+ * 用于在属性动画中改变组件宽高的
+ */
 public class AnimViewSize {
     View rView;
     public AnimViewSize(View v){

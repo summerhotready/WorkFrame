@@ -13,17 +13,13 @@ import com.guoxd.workframe.base.BaseActivity;
 import com.guoxd.workframe.databinding.ActivityDataBindingBinding;
 import com.guoxd.workframe.utils.CameraUtils;
 import com.guoxd.workframe.utils.EasyGlideEngine;
-import com.guoxd.workframe.utils.GlideEngine;
-import com.guoxd.workframe.utils.LanguageUtils;
+
 import com.guoxd.workframe.utils.LogUtil;
 import com.guoxd.workframe.utils.ToastUtils;
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
-import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
-import com.luck.picture.lib.config.PictureMimeType;
-import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.tools.SPUtils;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,14 +113,14 @@ public class DataBindingTestActivity extends BaseActivity implements EasyPermiss
 
     private void setPictureSelector(){
         //https://github.com/LuckSiege/PictureSelector/wiki/PictureSelector-Api%E8%AF%B4%E6%98%8E
-            PictureSelector.create(this)
-                    .openGallery(PictureMimeType.ofImage())
-                    .loadImageEngine(GlideEngine.createGlideEngine()) // Please refer to the Demo GlideEngine.java
-                    //下面这些设置是必要的，否则拍照后不返回当前页面
-                    .selectionMode(PictureConfig.SINGLE )//单选or多选 PictureConfig.SINGLE PictureConfig.MULTIPLE
-                    .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回,default false
-//                    .isUseCustomCamera(true)// 开启自定义相机,要求录音权限，可能是为了控制拍照声
-                    .forResult(PictureConfig.CHOOSE_REQUEST);
+//            PictureSelector.create(this)
+//                    .openGallery(SelectMimeType.ofImage())
+//                    .loadImageEngine(GlideEngine.createGlideEngine()) // Please refer to the Demo GlideEngine.java
+//                    //下面这些设置是必要的，否则拍照后不返回当前页面
+//                    .selectionMode(PictureConfig.SINGLE )//单选or多选 PictureConfig.SINGLE PictureConfig.MULTIPLE
+//                    .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回,default false
+////                    .isUseCustomCamera(true)// 开启自定义相机,要求录音权限，可能是为了控制拍照声
+//                    .forResult(PictureConfig.CHOOSE_REQUEST);
     }
     protected void setCamera(){
         EasyPhotos.createAlbum(this, true, EasyGlideEngine.getInstance())
@@ -137,7 +133,7 @@ public class DataBindingTestActivity extends BaseActivity implements EasyPermiss
         if (resultCode != RESULT_OK ){
         return;
         }
-            if(requestCode == PictureConfig.CHOOSE_REQUEST){
+           /* if(requestCode == PictureConfig.CHOOSE_REQUEST){
             List<LocalMedia> selectedPhotos = PictureSelector.obtainMultipleResult(data);
             LogUtil.e("Picture",String.format("PictureConfig result:%d",selectedPhotos.size()));
             for(LocalMedia url:selectedPhotos){
@@ -146,7 +142,7 @@ public class DataBindingTestActivity extends BaseActivity implements EasyPermiss
             if(selectedPhotos.size() == 1){
                 Glide.with(this).load(selectedPhotos.get(0).getPath()).into(mDataBinding.picPhoto);
             }
-        }
+        }*/
             if(requestCode ==PictureConfig.CAMERA_BEFORE){
                 //返回对象集合：如果你需要了解图片的宽、高、大小、用户是否选中原图选项等信息，可以用这个
                 ArrayList<Photo> selectedPhotos = data.getParcelableArrayListExtra(EasyPhotos.RESULT_PHOTOS);
