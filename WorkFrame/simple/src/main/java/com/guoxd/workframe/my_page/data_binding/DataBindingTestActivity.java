@@ -1,8 +1,13 @@
 package com.guoxd.workframe.my_page.data_binding;
 
+import static com.luck.picture.lib.config.PictureSelectionConfig.compressFileEngine;
+
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -14,18 +19,32 @@ import com.guoxd.workframe.databinding.ActivityDataBindingBinding;
 import com.guoxd.workframe.utils.CameraUtils;
 import com.guoxd.workframe.utils.EasyGlideEngine;
 
+import com.guoxd.workframe.utils.GlideEngine;
 import com.guoxd.workframe.utils.LogUtil;
 import com.guoxd.workframe.utils.ToastUtils;
 import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
+import com.luck.picture.lib.basic.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.SelectMimeType;
+import com.luck.picture.lib.config.SelectModeConfig;
+import com.luck.picture.lib.engine.CompressFileEngine;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener;
+import com.luck.picture.lib.interfaces.OnKeyValueResultCallbackListener;
+import com.luck.picture.lib.interfaces.OnResultCallbackListener;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
+import top.zibin.luban.OnNewCompressListener;
 
 public class DataBindingTestActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
 
@@ -111,38 +130,97 @@ public class DataBindingTestActivity extends BaseActivity implements EasyPermiss
     }
 
 
-    private void setPictureSelector(){
-        //https://github.com/LuckSiege/PictureSelector/wiki/PictureSelector-Api%E8%AF%B4%E6%98%8E
-//            PictureSelector.create(this)
-//                    .openGallery(SelectMimeType.ofImage())
-//                    .loadImageEngine(GlideEngine.createGlideEngine()) // Please refer to the Demo GlideEngine.java
-//                    //下面这些设置是必要的，否则拍照后不返回当前页面
-//                    .selectionMode(PictureConfig.SINGLE )//单选or多选 PictureConfig.SINGLE PictureConfig.MULTIPLE
-//                    .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回,default false
-////                    .isUseCustomCamera(true)// 开启自定义相机,要求录音权限，可能是为了控制拍照声
-//                    .forResult(PictureConfig.CHOOSE_REQUEST);
+    private void setPictureSelector(){     //https://github.com/LuckSiege/PictureSelector
+        //相册
+        PictureSelector.create(this)
+                .openGallery(SelectMimeType.ofImage())
+                .setMaxSelectNum(9)
+                .setMinSelectNum(1)
+//                .setCompressEngine(CompressFileEngine)
+                .setImageEngine(GlideEngine.createGlideEngine())
+                .setCompressEngine(compressFileEngine)//                    .compress()// 是否压缩 true or false
+                .setImageSpanCount(4)
+                .setSelectionMode(SelectModeConfig.MULTIPLE)//                    .selectionMode(PictureConfig.MULTIPLE)
+                .forResult(PictureConfig.CHOOSE_REQUEST);
+//拍照
+/*        PictureSelector.create(this)
+                .openCamera(SelectMimeType.ofImage())
+                .setCompressEngine(compressFileEngine)
+                .forResultActivity(PictureConfig.CHOOSE_REQUEST);*/
+
     }
+    CompressFileEngine compressFileEngine = new CompressFileEngine(){
+        @Override
+        public void onStartCompress(Context context, ArrayList<Uri> source, OnKeyValueResultCallbackListener call) {
+            //ignoreBy设置的mLeastCompressSize不是图片的尺寸，而是压缩相关的数据，数字越大图片越大。500已经接近原图
+            Luban.with(context).load(source).ignoreBy(100)
+                    .setCompressListener(new OnNewCompressListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String source, File compressFile) {
+                            if (call != null) {
+                                call.onCallback(source, compressFile.getAbsolutePath());
+                            }
+                        }
+
+                        @Override
+                        public void onError(String source, Throwable e) {
+                            if (call != null) {
+                                call.onCallback(source, null);
+                            }
+                        }
+                    }).launch();
+        }
+    };
+
+
     protected void setCamera(){
         EasyPhotos.createAlbum(this, true, EasyGlideEngine.getInstance())
                 .setFileProviderAuthority(String.format("%s.fileprovider",getPackageName()))
                 .start(PictureConfig.CAMERA_BEFORE);
     }
+//    List<LocalMedia> selectedPhotos=new ArrayList<>()
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK ){
-        return;
-        }
-           /* if(requestCode == PictureConfig.CHOOSE_REQUEST){
-            List<LocalMedia> selectedPhotos = PictureSelector.obtainMultipleResult(data);
+            if (resultCode != RESULT_OK ){
+                return;
+            }
+            if(requestCode == PictureConfig.CHOOSE_REQUEST){
+                ArrayList<LocalMedia> selectedPhotos = PictureSelector.obtainSelectorList(data);
             LogUtil.e("Picture",String.format("PictureConfig result:%d",selectedPhotos.size()));
             for(LocalMedia url:selectedPhotos){
                 LogUtil.e("Picture",String.format("get :%s",url.getPath()));
             }
-            if(selectedPhotos.size() == 1){
+            if(selectedPhotos.size() >= 1){
                 Glide.with(this).load(selectedPhotos.get(0).getPath()).into(mDataBinding.picPhoto);
             }
-        }*/
+//预览，不显示删除
+              /*  mDataBinding.picPhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PictureSelector.create(DataBindingTestActivity.this)
+                                .openPreview()
+                                .setImageEngine(GlideEngine.createGlideEngine())
+                                .setExternalPreviewEventListener(new OnExternalPreviewEventListener() {
+                                    @Override
+                                    public void onPreviewDelete(int position) {
+
+                                    }
+
+                                    @Override
+                                    public boolean onLongPressDownload(LocalMedia media) {
+                                        return false;
+                                    }
+                                })
+                                .startActivityPreview(0, false, selectedPhotos);
+                    }
+                });*/
+        }
             if(requestCode ==PictureConfig.CAMERA_BEFORE){
                 //返回对象集合：如果你需要了解图片的宽、高、大小、用户是否选中原图选项等信息，可以用这个
                 ArrayList<Photo> selectedPhotos = data.getParcelableArrayListExtra(EasyPhotos.RESULT_PHOTOS);
