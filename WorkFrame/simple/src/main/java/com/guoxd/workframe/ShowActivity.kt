@@ -33,7 +33,9 @@ class ShowActivity : AppCompatActivity(),EasyPermissions.PermissionCallbacks{
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         var str = intent.getStringExtra("value")
         LogUtil.d("ShowActivity", "tag:" + str)
-        showFragment(str)
+        if (str != null) {
+            showFragment(str)
+        }
     }
 
     fun setPageTitle(str: String){

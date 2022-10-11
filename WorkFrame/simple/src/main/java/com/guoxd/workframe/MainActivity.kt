@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.guoxd.workframe.base.BaseActivity
 import com.guoxd.workframe.main.MainMyWidgeFragment
+import com.guoxd.workframe.utils.LogUtil
 
 //程序入口
 class MainActivity : BaseActivity() ,View.OnClickListener{
@@ -28,7 +29,9 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
     var fragmentManager: FragmentManager?=null
     var current = R.id.my_tv;
     lateinit var colorDafault:ColorStateList;
-    lateinit var colorChange:ColorStateList;
+    lateinit var colorChange_M:ColorStateList;
+    lateinit var colorChange_S:ColorStateList;
+    lateinit var colorChange_O:ColorStateList;
 
     override fun getLayoutId(): Int {
        return R.layout.activity_main
@@ -53,16 +56,18 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
         textSystem = findViewById(R.id.system_tv)
         textSystem.setOnClickListener(this)
         imageSystem= findViewById(R.id.system_image)
-        imageMy.setOnClickListener(this)
+        imageSystem.setOnClickListener(this)
         textOther = findViewById(R.id.other_tv)
         textOther.setOnClickListener(this)
         imageOther= findViewById(R.id.other_image)
         imageOther.setOnClickListener(this)
 
-            colorDafault = ContextCompat.getColorStateList(this, R.color.text_color_detail)!!
-            colorChange = ContextCompat.getColorStateList(this, R.color.colorPrimary)!!
+        colorDafault = ContextCompat.getColorStateList(this, R.color.text_color_detail)!!
+        colorChange_M = ContextCompat.getColorStateList(this, R.color.colorPrimary)!!
+        colorChange_S = ContextCompat.getColorStateList(this, android.R.color.holo_purple)!!
+        colorChange_O = ContextCompat.getColorStateList(this, android.R.color.holo_green_light)!!
 
-        toChanged(imageMy,textMy)
+        toChanged(imageMy,textMy,colorChange_M)
         toUnChanged(imageOther,textOther)
         toUnChanged(imageSystem,textSystem)
     }
@@ -71,7 +76,7 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
         imageView.imageTintList = colorDafault
         textView.setTextColor(colorDafault)
     }
-    fun toChanged(imageView: AppCompatImageView,textView: AppCompatTextView){
+    fun toChanged(imageView: AppCompatImageView,textView: AppCompatTextView,colorChange:ColorStateList){
         imageView.imageTintList = colorChange
         textView.setTextColor(colorChange)
     }
@@ -90,13 +95,13 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
         }
         when(changeTo){
             R.id.system_tv,R.id.system_image->{
-                toChanged(imageSystem,textSystem)
+                toChanged(imageSystem,textSystem,colorChange_S)
             }
             R.id.my_tv,R.id.my_image->{
-                toChanged(imageMy,textMy)
+                toChanged(imageMy,textMy,colorChange_M)
             }
             R.id.other_tv,R.id.other_image->{
-                toChanged(imageOther,textOther)
+                toChanged(imageOther,textOther,colorChange_O)
             }
         }
         current = changeTo
@@ -107,22 +112,23 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
             return
         }
         changeTag(v.id)
+        var transaction = fragmentManager?.beginTransaction()
         when(v.id){
             R.id.system_tv,R.id.system_image->{
                 var bundle = Bundle()
                 bundle.putString("tag","system")
                 hindFragment(fragment_my)
                 hindFragment(fragment_other)
-                var transaction = fragmentManager?.beginTransaction()
+
                 if(fragment_system == null){
                     fragment_system = MainMyWidgeFragment()
                     fragment_system?.arguments =bundle
                     transaction?.add(R.id.fragment,fragment_system as Fragment)
-                    transaction?.commit()
+                    LogUtil.i(TAG,"click system changeTo add")
                 }else{
                     fragment_system?.arguments =bundle
                     transaction?.show(fragment_system as Fragment)
-                    transaction?.commit()
+                    LogUtil.i(TAG,"click system changeTo show")
                 }
 
             }
@@ -131,16 +137,15 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
                 bundle.putString("tag","other")
                 hindFragment(fragment_my)
                 hindFragment(fragment_system)
-                var transaction = fragmentManager?.beginTransaction()
                 if(fragment_other == null){
                     fragment_other = MainMyWidgeFragment()
                     fragment_other?.arguments =bundle
                     transaction?.add(R.id.fragment,fragment_other as Fragment)
-                    transaction?.commit()
+                    LogUtil.i(TAG,"click other changeTo add")
                 }else{
                     fragment_other?.arguments =bundle
                     transaction?.show(fragment_other as Fragment)
-                    transaction?.commit()
+                    LogUtil.i(TAG,"click other changeTo show")
                 }
             }
             R.id.my_tv,R.id.my_image->{
@@ -148,19 +153,20 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
                 bundle.putString("tag","my")
                 hindFragment(fragment_other)
                 hindFragment(fragment_system)
-                var transaction = fragmentManager?.beginTransaction()
                 if(fragment_my == null){
                     fragment_my = MainMyWidgeFragment()
                     fragment_my?.arguments =bundle
                     transaction?.add(R.id.fragment,fragment_my as Fragment)
-                    transaction?.commit()
+                    LogUtil.i(TAG,"click my changeTo add")
                 }else{
                     fragment_my?.arguments =bundle
                     transaction?.show(fragment_my as Fragment)
-                    transaction?.commit()
+                    LogUtil.i(TAG,"click my changeTo show")
                 }
+
             }
         }
+        transaction?.commit();
     }
 
     fun hindFragment(fragment: Fragment?){

@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.guoxd.work_frame_library.views.paint.PaintSurfaceview;
 import com.guoxd.workframe.R;
+import com.guoxd.workframe.ShowActivity;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.utils.PointMenuViewUtils;
 
@@ -20,7 +21,7 @@ public class PaintViewFragment extends BaseFragment {
 
     @Override
     protected void initView(View root) {
-        getBaseActity().setPageTitle("画板");
+        setPageTitle("画板");
         final PaintSurfaceview paintView = root.findViewById(R.id.paintView);
         root.findViewById(R.id.btn_clear).setOnClickListener(new View.OnClickListener() {
             @Override

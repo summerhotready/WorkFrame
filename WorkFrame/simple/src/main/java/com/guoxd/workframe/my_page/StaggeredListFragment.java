@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.guoxd.workframe.R;
+import com.guoxd.workframe.ShowActivity;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.modles.DeviceModle;
 import com.guoxd.workframe.modles.ImageModle;
@@ -49,7 +50,7 @@ public class StaggeredListFragment extends BaseFragment {
 
     @Override
     protected void initView(View root) {
-        getBaseActity().setPageTitle("RecyclerView瀑布流");
+        setPageTitle("RecyclerView瀑布流");
         refreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.refreshLayout);
         refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light, android.R.color.holo_orange_light,

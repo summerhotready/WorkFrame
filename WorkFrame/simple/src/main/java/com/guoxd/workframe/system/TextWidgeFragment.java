@@ -48,7 +48,7 @@ public class TextWidgeFragment extends BaseFragment {
 
     @Override
     protected void initView(View root) {
-        getBaseActity().setPageTitle("Text类组件");
+        setPageTitle("Text类组件");
         //TextView
         AppCompatTextView textView = root.findViewById(R.id.tv_textView);
 //        textView.setText("可滚动内容的textview\n该滚动和ScrollerView是冲突的\n使用时需要注意\nhhhhhhhhhhhhhhhh\nggggggg");

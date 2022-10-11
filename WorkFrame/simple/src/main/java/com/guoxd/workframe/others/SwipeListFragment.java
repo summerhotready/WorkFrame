@@ -47,7 +47,7 @@ public class SwipeListFragment extends BaseFragment {
 
     @Override
     protected void initView(View root) {
-        getBaseActity().setPageTitle("RecyclerView侧滑");
+        setPageTitle("RecyclerView侧滑");
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         //分割线

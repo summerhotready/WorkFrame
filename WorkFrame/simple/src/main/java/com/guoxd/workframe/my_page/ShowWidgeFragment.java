@@ -14,6 +14,7 @@ import com.guoxd.work_frame_library.views.progress.CustomProgress;
 import com.guoxd.work_frame_library.views.widges.CheckStart;
 import com.guoxd.work_frame_library.views.progress.ProgressShowView;
 import com.guoxd.workframe.R;
+import com.guoxd.workframe.ShowActivity;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.utils.ViewHelpUtils;
 
@@ -34,7 +35,7 @@ public class ShowWidgeFragment extends BaseFragment {
 
     @Override
     protected void initView(View root) {
-        getBaseActity().setPageTitle("自定义基本组件");
+        setPageTitle("自定义基本组件");
         CheckStart checkStart = root.findViewById(R.id.checkStart);
         checkStart.setMax(10);
         checkStart.setProgress(2);

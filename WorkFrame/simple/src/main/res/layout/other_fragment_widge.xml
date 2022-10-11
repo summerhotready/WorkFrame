@@ -77,7 +77,7 @@
             app:small_shine_offset_angle="20"
             app:small_shine_color="#CC9999"
             app:shine_count="8"
-            app:siShape="@mipmap/icon_gis_off"/>
+            app:siShape="@mipmap/icon_saoma_gis"/>
         <!---->
         <com.suke.widget.SwitchButton
             android:id="@+id/switch_button"

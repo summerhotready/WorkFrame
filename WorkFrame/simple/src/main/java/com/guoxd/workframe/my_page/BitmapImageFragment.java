@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.guoxd.work_frame_library.views.bigImage.BrowsePictureAdapter;
 import com.guoxd.work_frame_library.views.bigImage.UrlTouchImageView;
 import com.guoxd.workframe.R;
+import com.guoxd.workframe.ShowActivity;
 import com.guoxd.workframe.base.BaseFragment;
 
 import java.io.FileInputStream;
@@ -71,7 +72,7 @@ public class BitmapImageFragment extends BaseFragment implements ViewPager.OnPag
 
     @Override
     protected void initView(View root) {
-        getBaseActity().setPageTitle("大图展示");
+        setPageTitle("大图展示");
         mVp = (ViewPager) root.findViewById(R.id.vp);
         closeBtn = (Button) root.findViewById(R.id.close_btn);
         picNumTv = (TextView) root.findViewById(R.id.picnum_tv);

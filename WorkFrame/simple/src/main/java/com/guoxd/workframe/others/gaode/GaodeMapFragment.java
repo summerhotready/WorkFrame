@@ -150,7 +150,7 @@ public class GaodeMapFragment extends BaseFragment {
                 }
             }
         });
-        getBaseActity().setPageTitle("高德地图");
+        setPageTitle("高德地图");
     }
     MyLocationStyle myLocationStyle;
     private void initLocation(){

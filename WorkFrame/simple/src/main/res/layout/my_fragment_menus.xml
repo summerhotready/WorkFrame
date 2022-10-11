@@ -54,7 +54,8 @@
             android:id="@+id/iv_x_2"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/icon_gis_off"
+            android:src="@drawable/icon_tab_my"
+            app:tint="@color/colorPrimary"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"/>
         <ImageView
@@ -87,36 +88,42 @@
             android:background="@drawable/bg_edittext_password">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/icon_gis_off" />
+                android:src="@drawable/icon_tab_my"
+                app:tint="@color/colorPrimary" />
         </RelativeLayout>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_gis_on" />
+            android:src="@drawable/icon_tab_my"
+            app:tint="@android:color/tertiary_text_dark" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_manage_off" />
+            android:src="@drawable/icon_tab_my"
+            app:tint="@android:color/holo_purple" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_manage_on" />
+            android:src="@drawable/icon_tab_my"
+            app:tint="@android:color/holo_red_light" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_user_off" />
+            android:src="@drawable/icon_tab_my"
+            app:tint="@android:color/holo_blue_bright"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_user_on" />
+            android:src="@drawable/icon_tab_my"
+            app:tint="@android:color/holo_green_light" />
 
         <!--<ImageView
             android:layout_width="wrap_content"

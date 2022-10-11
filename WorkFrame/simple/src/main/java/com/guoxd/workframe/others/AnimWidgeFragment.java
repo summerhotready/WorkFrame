@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.guoxd.workframe.R;
+import com.guoxd.workframe.ShowActivity;
 import com.guoxd.workframe.base.BaseFragment;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class AnimWidgeFragment extends BaseFragment implements View.OnClickListe
     ImageView[] imageViews;
 
     private void initAnim(View root) {
-        getBaseActity().setPageTitle("动画测试");
+        setPageTitle("动画测试");
         animatables = new Animatable[8];
         imageViews = new ImageView[8];
         animatableStatus = new boolean[]{true,true,true,true,true,true,true,true};

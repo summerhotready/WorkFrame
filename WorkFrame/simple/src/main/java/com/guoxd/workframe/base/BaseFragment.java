@@ -1,7 +1,6 @@
 package com.guoxd.workframe.base;
 
-
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.guoxd.workframe.R;
 import com.guoxd.workframe.ShowActivity;
+
 
 /**
  * Created by guoxd on 2018/4/27.
@@ -20,7 +19,6 @@ import com.guoxd.workframe.ShowActivity;
 
 public abstract class BaseFragment extends Fragment {
 
-    private ShowActivity mActivity = null;
     public String TAG = getClass().getName();
     @Nullable
     @Override
@@ -30,11 +28,10 @@ public abstract class BaseFragment extends Fragment {
         initData();
         return rootView;
     }
-    public ShowActivity getBaseActity(){
-        if(mActivity == null){
-            mActivity = (ShowActivity) getActivity();
-        }
-        return mActivity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
     }
 
     //重定位rootView
@@ -67,4 +64,10 @@ public abstract class BaseFragment extends Fragment {
 
     public void afterViewShow(){}
     public void afterViewHide(){}
+
+    public void setPageTitle( String str){
+        if(getActivity() instanceof ShowActivity){
+            ((ShowActivity)getActivity()).setPageTitle(str);
+        }
+    }
 }

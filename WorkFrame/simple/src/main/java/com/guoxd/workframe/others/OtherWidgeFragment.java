@@ -52,7 +52,7 @@ public class OtherWidgeFragment extends BaseFragment implements View.OnClickList
     TextView pop1,pop2,pop3,pop4;
     @Override
     protected void initView(View root) {
-        getBaseActity().setPageTitle("其他第三方组件");
+        setPageTitle("其他第三方组件");
         initTab1(root);
         initTab2(root);
         pop1 = root.findViewById(R.id.pop_am);

@@ -18,6 +18,7 @@ import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.guoxd.work_frame_library.views.dashboard.DashboardView
 import com.guoxd.workframe.R
+import com.guoxd.workframe.ShowActivity
 import com.guoxd.workframe.base.BaseFragment
 import com.guoxd.workframe.utils.LogUtil
 import java.security.SecureRandom
@@ -37,7 +38,7 @@ class MPCharFragment : BaseFragment() {
     }
 
     override fun initView(root: View) {
-        baseActity.setPageTitle("图表组件")
+        (activity as ShowActivity).setPageTitle("图表组件")
         dashboard = root.findViewById(R.id.dashboard) as DashboardView
         initDashBoard()
         lineChart = root.findViewById(R.id.line_chart) as LineChart

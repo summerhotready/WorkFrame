@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 
 import com.guoxd.work_frame_library.views.arcmenu.ArcMenu;
 import com.guoxd.workframe.R;
+import com.guoxd.workframe.ShowActivity;
 import com.guoxd.workframe.base.BaseFragment;
 import com.guoxd.workframe.utils.LogUtil;
 import com.guoxd.workframe.utils.PointMenuViewUtils;
@@ -29,7 +30,7 @@ public class MenuWidgeFragment extends BaseFragment {
 
     @Override
     protected void initView(View root) {
-        getBaseActity().setPageTitle("菜单");
+        setPageTitle("菜单");
         initTranY(root);
         initTranX(root);
 

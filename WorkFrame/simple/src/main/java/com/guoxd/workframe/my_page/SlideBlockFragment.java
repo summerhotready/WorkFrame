@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.guoxd.work_frame_library.views.widges.SlideBlock;
 import com.guoxd.workframe.R;
+import com.guoxd.workframe.ShowActivity;
 import com.guoxd.workframe.base.BaseFragment;
 
 /**
@@ -21,7 +22,7 @@ public class SlideBlockFragment extends BaseFragment {
 
     @Override
     protected void initView(View root) {
-        getBaseActity().setPageTitle("滑动滑块，待完善");
+        setPageTitle("滑动滑块，待完善");
         SlideBlock blocks = (SlideBlock)root.findViewById(R.id.blocks);
 //        blocks.setDefaultTableMode(SlideBlock.COLUME);
 
