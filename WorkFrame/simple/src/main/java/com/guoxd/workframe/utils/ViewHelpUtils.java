@@ -30,7 +30,6 @@ public class ViewHelpUtils {
      */
     public static void setDrawableTop(TextView tv, Drawable drawable, int imageSize){
         drawable.setBounds(0,0,imageSize,imageSize);
-//        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
         tv.setCompoundDrawables(null,drawable
                 ,null,null);
     }

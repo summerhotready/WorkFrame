@@ -51,18 +51,7 @@
         <activity android:name=".ShowActivity"/>
         <activity android:name=".my_page.data_binding.DataBindingTestActivity"/>
         <activity android:name=".LanguageActivity"/>
-        <activity android:name=".SendMessageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <!--接受单张图片-->
-                <!--<data android:mimeType="image/*" />-->
-                <!--多张图片-->
-                <!--<action android:name="android.intent.action.SEND_MULTIPLE" />-->
-                <!--文本-->
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-        </activity>
+
 <!--        nfc-->
         <activity android:name=".system.NfcIntentActivity">
             <intent-filter>

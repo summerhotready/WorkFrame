@@ -30,7 +30,6 @@ import pub.devrel.easypermissions.EasyPermissions
  */
 class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks {
 
-
     var listView: ListView ?=null
 
     override fun getCurrentLayoutID(): Int {
@@ -41,7 +40,6 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
         listView = root.findViewById(R.id.listView) as ListView;
 
         initAdapter()
-        main("a_b_c","d_f","g_b")
     }
 
     var strs:Array<String>?=null
@@ -111,13 +109,6 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
             }
         }
     }
-    fun main(vararg args:String){
-        args.flatMap { it.split("_") }
-                .map { println("$it") }
-    }
-
-
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

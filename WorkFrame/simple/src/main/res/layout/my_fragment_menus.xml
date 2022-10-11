@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--menu Y-->
     <RelativeLayout
@@ -23,18 +25,20 @@
             android:layout_height="60dp"
             android:src="@android:drawable/ic_menu_delete"
             android:layout_alignParentBottom="true"/>
+
         <ImageView
             android:id="@+id/iv_1"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@android:drawable/ic_menu_agenda"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:src="@android:drawable/ic_menu_agenda" />
     </RelativeLayout>
     <ImageView
         android:id="@+id/iv_menu"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@mipmap/icon_gis_on"
+        android:src="@drawable/icon_tab_my"
+        app:tint="@color/colorPrimary"
         android:layout_marginRight="@dimen/padding_15"
         android:layout_marginBottom="@dimen/padding_15"
         android:layout_alignParentBottom="true"
@@ -66,7 +70,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
-        android:src="@mipmap/icon_gis_on"
+        android:src="@drawable/icon_tab_my"
+        app:tint="@color/colorPrimary"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"/>
     <!--扇形-->

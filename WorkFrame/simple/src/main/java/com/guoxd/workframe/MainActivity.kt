@@ -2,22 +2,15 @@ package com.guoxd.workframe
 
 
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.ViewUtils
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.guoxd.workframe.base.BaseActivity
 import com.guoxd.workframe.main.MainMyWidgeFragment
-import com.guoxd.workframe.utils.ViewHelpUtils
-import java.util.ArrayList
-
-
 
 //程序入口
 class MainActivity : BaseActivity() ,View.OnClickListener{
@@ -25,21 +18,24 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
     var fragment_system: MainMyWidgeFragment?=null//系统级别的组件使用展示/测试页面
     var fragment_other: MainMyWidgeFragment?=null//其他优秀的三方开源使用页面
 
-    lateinit var viewMy:AppCompatTextView
-    lateinit var viewOther:AppCompatTextView
-    lateinit var viewSystem:AppCompatTextView
+    lateinit var textMy:AppCompatTextView
+    lateinit var textOther:AppCompatTextView
+    lateinit var textSystem:AppCompatTextView
+    lateinit var imageMy:AppCompatImageView
+    lateinit var imageOther:AppCompatImageView
+    lateinit var imageSystem:AppCompatImageView
 
     var fragmentManager: FragmentManager?=null
-    var checkSize = 0
-    var uncheckSize = 0
+    var current = R.id.my_tv;
+    lateinit var colorDafault:ColorStateList;
+    lateinit var colorChange:ColorStateList;
+
     override fun getLayoutId(): Int {
        return R.layout.activity_main
     }
 
     override fun initView() {
         super.initView()
-        checkSize = Math.round(30*resources.displayMetrics.density);
-        uncheckSize = Math.round(24*resources.displayMetrics.density);
 //        setStateBarColor(ContextCompat.getColor(this,R.color.colorPrimary),true)
         fragmentManager = supportFragmentManager
         var transaction = fragmentManager?.beginTransaction()
@@ -50,82 +46,70 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
         transaction?.add(R.id.fragment,fragment_my as Fragment)
         transaction?.commit()
 
-        viewMy = findViewById(R.id.tv_my)
-        viewMy.setOnClickListener(this)
-        viewSystem = findViewById(R.id.tv_system)
-        viewSystem.setOnClickListener(this)
-        viewOther = findViewById(R.id.tv_other)
-        viewOther.setOnClickListener(this)
+        textMy = findViewById(R.id.my_tv)
+        textMy.setOnClickListener(this)
+        imageMy= findViewById(R.id.my_image)
+        imageMy.setOnClickListener(this)
+        textSystem = findViewById(R.id.system_tv)
+        textSystem.setOnClickListener(this)
+        imageSystem= findViewById(R.id.system_image)
+        imageMy.setOnClickListener(this)
+        textOther = findViewById(R.id.other_tv)
+        textOther.setOnClickListener(this)
+        imageOther= findViewById(R.id.other_image)
+        imageOther.setOnClickListener(this)
+
+            colorDafault = ContextCompat.getColorStateList(this, R.color.text_color_detail)!!
+            colorChange = ContextCompat.getColorStateList(this, R.color.colorPrimary)!!
+
+        toChanged(imageMy,textMy)
+        toUnChanged(imageOther,textOther)
+        toUnChanged(imageSystem,textSystem)
     }
 
-    fun List<String>.getM():List<String>{
-        var result = this.toMutableList();
-        return result;
+    fun toUnChanged(imageView: AppCompatImageView,textView: AppCompatTextView){
+        imageView.imageTintList = colorDafault
+        textView.setTextColor(colorDafault)
     }
-    fun genTodayLuck(): Pair<List<Map<String, String>>, List<Map<String, String>>>{
-        val goodList = ArrayList<Map<String, String>>()
-        val badList = ArrayList<Map<String, String>>()
-
-        return Pair(goodList, badList)
+    fun toChanged(imageView: AppCompatImageView,textView: AppCompatTextView){
+        imageView.imageTintList = colorChange
+        textView.setTextColor(colorChange)
     }
 
     fun changeTag(changeTo:Int){
         when(current){
-            R.id.tv_system->{
-                ViewHelpUtils.setDrawableTop(viewSystem,ContextCompat.getDrawable(this,R.mipmap.icon_user_off),uncheckSize);
-                viewSystem.setTextColor(ColorStateList.valueOf(Color.GRAY))
+            R.id.system_tv,R.id.system_image->{
+                toUnChanged(imageSystem,textSystem)
             }
-            R.id.tv_my->{
-                ViewHelpUtils.setDrawableTop(viewMy,ContextCompat.getDrawable(this,R.mipmap.icon_gis_off),uncheckSize);
-                viewMy.setTextColor(ColorStateList.valueOf(Color.GRAY))
+            R.id.my_tv,R.id.my_image->{
+                toUnChanged(imageMy,textMy)
             }
-            R.id.tv_other->{
-                ViewHelpUtils.setDrawableTop(viewOther,ContextCompat.getDrawable(this,R.mipmap.icon_manage_off),uncheckSize);
-                viewOther.setTextColor(ColorStateList.valueOf(Color.GRAY))
+            R.id.other_tv,R.id.other_image->{
+                toUnChanged(imageOther,textOther)
             }
         }
         when(changeTo){
-            R.id.tv_system->{
-                ViewHelpUtils.setDrawableTop(viewSystem,ContextCompat.getDrawable(this,R.mipmap.icon_user_on),checkSize);
-                viewSystem.setTextColor(ContextCompat.getColor(this,R.color.colorAccent))
+            R.id.system_tv,R.id.system_image->{
+                toChanged(imageSystem,textSystem)
             }
-            R.id.tv_my->{
-                ViewHelpUtils.setDrawableTop(viewMy,ContextCompat.getDrawable(this,R.mipmap.icon_gis_on),checkSize);
-                viewMy.setTextColor(ContextCompat.getColor(this,R.color.colorAccent))
+            R.id.my_tv,R.id.my_image->{
+                toChanged(imageMy,textMy)
             }
-            R.id.tv_other->{
-                ViewHelpUtils.setDrawableTop(viewOther,ContextCompat.getDrawable(this,R.mipmap.icon_manage_on),checkSize);
-                viewOther.setTextColor(ContextCompat.getColor(this,R.color.colorAccent))
+            R.id.other_tv,R.id.other_image->{
+                toChanged(imageOther,textOther)
             }
         }
         current = changeTo
     }
-    //给TextView着色
-    fun changeTextView(textView:AppCompatTextView,drawable: Drawable,isCheck:Boolean){
 
-        var wrappedDrawable:Drawable = DrawableCompat.wrap(drawable)
-
-        var colors:ColorStateList
-        if(isCheck) {
-            colors = ColorStateList.valueOf(Color.BLUE)// ColorStateList.valueOf(Color.parseColor("#03A9F4"))
-        }else{
-            colors = ColorStateList.valueOf(Color.GRAY)
-        }
-        DrawableCompat.setTintList(wrappedDrawable, colors)//系统方法
-        //自定义方法
-//        wrappedDrawable = tintDrawable(originalDrawable, ColorStateList.valueOf(Color.RED));
-        textView.compoundDrawables
-    }
-
-    var current = R.id.tv_my;
     override fun onClick(v: View) {
         if(current == v.id) {
             return
         }
         changeTag(v.id)
         when(v.id){
-            R.id.tv_system->{
-                var bundle:Bundle = Bundle()
+            R.id.system_tv,R.id.system_image->{
+                var bundle = Bundle()
                 bundle.putString("tag","system")
                 hindFragment(fragment_my)
                 hindFragment(fragment_other)
@@ -142,8 +126,8 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
                 }
 
             }
-            R.id.tv_other->{
-                var bundle:Bundle = Bundle()
+            R.id.other_tv,R.id.other_image->{
+                var bundle = Bundle()
                 bundle.putString("tag","other")
                 hindFragment(fragment_my)
                 hindFragment(fragment_system)
@@ -159,8 +143,8 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
                     transaction?.commit()
                 }
             }
-            R.id.tv_my->{
-                var bundle:Bundle = Bundle()
+            R.id.my_tv,R.id.my_image->{
+                var bundle = Bundle()
                 bundle.putString("tag","my")
                 hindFragment(fragment_other)
                 hindFragment(fragment_system)
@@ -186,21 +170,5 @@ class MainActivity : BaseActivity() ,View.OnClickListener{
             transaction?.commit()
         }
     }
-
-    fun showFragment(fragment:MainMyWidgeFragment){
-       /* if(fragment == null){
-            fragment = MainMyWidgeFragment()
-
-            fragment_system?.arguments =bundle
-            transaction?.add(R.id.fragment,fragment_system)
-            transaction?.commit()
-        }else{
-            fragment_system?.arguments =bundle
-            transaction?.show(fragment_system)
-            transaction?.commit()
-        }*/
-    }
-
-
 
 }
