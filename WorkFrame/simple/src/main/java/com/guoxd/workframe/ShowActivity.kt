@@ -88,15 +88,7 @@ class ShowActivity : AppCompatActivity(),EasyPermissions.PermissionCallbacks{
             ShowTextUrl.BLEView -> {
                 fragment = BLETestFragment()
             }
-            ShowTextUrl.INTENT_SEND -> {
-                fragment = null
-                val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_SEND
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
-                sendIntent.type = "text/plain"
-                startActivity(sendIntent)
-                finish()
-            }
+
 
             //other
             ShowTextUrl.OtherAnim -> {

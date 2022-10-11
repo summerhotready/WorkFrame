@@ -28,7 +28,6 @@ public interface ShowTextUrl {
 
 
     String TestView="Test_VIEW";
-    String INTENT_SEND = "IntentSend";
     String BitmapImage="BitmapImageFragment";//大图BitmapImageFragment
 
 
@@ -37,14 +36,15 @@ public interface ShowTextUrl {
     String TextWidge="TextWidge";
     String AnimtorView = "animtor_view";
     String BLEView = "ble_view";
-    String LANGUAGE = "language";
+
+    String LANGUAGE = "系统设置";
 
     //other  第三方
     String OtherWidge="OtherWidgeFragment";
     String OtherAnim="AnimWidgeFragment";
     String MpChar = "MPCharFragment";
-    String OtherDataBinding = "DataBindingActivity";
     String SwiptList="SwiptList";//侧滑list
-    String GaodeMap="GaoDe Map";
+    String GaodeMap="高德地图";
 
+    String OtherDataBinding = "DataBinding & Photo";
 }

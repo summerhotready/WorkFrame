@@ -64,7 +64,7 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
                 bg.setBackgroundColor(Color.parseColor("#3f99cc00"))
             }
             "system"->{//系统组件和功能
-                strs = arrayOf(ShowTextUrl.TextWidge,ShowTextUrl.RecyclerView,ShowTextUrl.BLEView,ShowTextUrl.LANGUAGE,ShowTextUrl.INTENT_SEND);
+                strs = arrayOf(ShowTextUrl.TextWidge,ShowTextUrl.RecyclerView,ShowTextUrl.BLEView,ShowTextUrl.LANGUAGE);
                 bg.setBackgroundColor(Color.parseColor("#3faa66cc"))
             }
         }
@@ -83,6 +83,7 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
         if(TextUtils.isEmpty(str))
             return
         when(str){
+//            DataBinding & Photo 需要请求摄像权限
             ShowTextUrl.OtherDataBinding->{
                 if(EasyPermissions.hasPermissions(activity?.baseContext!!, *PermissionUtils.getCameraPermiss())){
                     startActivity(Intent(activity, DataBindingTestActivity::class.java))
@@ -91,17 +92,9 @@ class MainMyWidgeFragment : BaseFragment(), EasyPermissions.PermissionCallbacks 
                 }
             }
 
-            ShowTextUrl.INTENT_SEND->{
-                val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_SEND
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
-                sendIntent.type = "text/plain"
-                startActivity(sendIntent)
-            }
             ShowTextUrl.LANGUAGE->{
                 var languageIntent = Intent(activity,LanguageActivity::class.java)
                 startActivity(languageIntent)
-                activity?.finish()
             }
 
             else->{

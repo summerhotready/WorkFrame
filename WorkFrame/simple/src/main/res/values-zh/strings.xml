@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">工作站</string>
-    <string name="databind_title_photo_text">选一张照片</string>
+
+    <string name="langeage_title">语言设置</string>
     <string name="language_button_test">测试语言切换</string>
+    <string name="language_en">英文</string>
+    <string name="language_cn">中文简体</string>
 </resources>

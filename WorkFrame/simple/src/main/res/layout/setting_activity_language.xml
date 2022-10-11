@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
    >
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_left"
+        app:layout_constraintGuide_begin="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/line_right"
+        app:layout_constraintGuide_end="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        />
+
 <!--<include-->
 <!--    layout="@layout/include_title_bar"/>-->
     <androidx.appcompat.widget.AppCompatTextView
@@ -12,30 +27,27 @@
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:textSize="24dp"
-        android:text="语言设置"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="40dp"
+        android:text="@string/langeage_title"
+        android:layout_marginTop="15dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="@id/line_left"
+        app:layout_constraintRight_toRightOf="@id/line_right"/>
 
 <!--    -->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/lang_cn"
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="1"
-        android:layout_height="130dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
         android:background="@color/colorAccent"
         app:layout_constraintRight_toLeftOf="@id/lang_en"
         app:layout_constraintTop_toBottomOf="@id/title_dialog"
         app:layout_constraintLeft_toLeftOf="@id/title_dialog"
         android:orientation="vertical"
-            android:gravity="center"
-            android:text="@string/language_cn"/>
-
-
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:text="@string/language_cn"/>
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -49,7 +61,8 @@
             app:layout_constraintTop_toTopOf="@id/lang_cn"
             app:layout_constraintBottom_toBottomOf="@id/lang_cn"
             app:layout_constraintLeft_toRightOf="@id/lang_cn"
-            app:layout_constraintRight_toRightOf="parent"/>
+            android:textColor="@android:color/white"
+            app:layout_constraintRight_toRightOf="@id/title_dialog"/>
 
 <!---->
 
@@ -67,7 +80,54 @@
         app:layout_constraintRight_toRightOf="@id/title_dialog"
         app:layout_constraintTop_toBottomOf="@id/lang_cn"
         />
+<!---->
+    <Space
+        android:id="@+id/line_1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_sure"/>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_sendMsg"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:textColor="@android:color/white"
+        android:text="跳转到系统信息页面"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/padding_15"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintLeft_toLeftOf="@id/line_left"
+        app:layout_constraintRight_toRightOf="@id/line_right"
+        app:layout_constraintTop_toBottomOf="@id/line_1"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_showConn"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:textColor="@android:color/white"
+        android:text="跳转到联系人页面"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/padding_15"
+        android:background="@android:color/holo_purple"
+        app:layout_constraintLeft_toLeftOf="@id/line_left"
+        app:layout_constraintRight_toRightOf="@id/line_right"
+        app:layout_constraintTop_toBottomOf="@id/btn_sendMsg"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_sendEmail"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:textColor="@android:color/white"
+        android:text="跳转到发邮件页面"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/padding_15"
+        android:background="@android:color/holo_orange_light"
+        app:layout_constraintLeft_toLeftOf="@id/line_left"
+        app:layout_constraintRight_toRightOf="@id/line_right"
+        app:layout_constraintTop_toBottomOf="@id/btn_showConn"
+        />
    <!-- <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btn_cancel"
         style="@style/Button"

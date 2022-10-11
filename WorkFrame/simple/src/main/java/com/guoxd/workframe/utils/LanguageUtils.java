@@ -19,9 +19,11 @@ import java.lang.reflect.Field;
  * 多语言工具类
  * Created by Fitem on 2020/03/20.
  * Update by emma on 2020/12/10.
+ * 存储语言
  */
 
 public class LanguageUtils {
+    static String TAG="language";
 
     public static String getSaveLanguage() {
         return SharedPreferencesUtils.getIntent().getString(MainApplication.getContext(),Constant.TAG_LANG,"");
@@ -51,11 +53,10 @@ public class LanguageUtils {
        }
     }
 
-static String TAG="language";
+
     public static void changeLanguage(Context context,boolean isCN) {
         LogUtil.i(TAG,"changeLanguage");
         java.util.Locale locale=null;
-//        Context context = BaseApplication.getContext();
         if(isCN){
             locale = getChinaese();
         }else{
@@ -64,7 +65,6 @@ static String TAG="language";
 
         if(locale!=null) {
             updateLanguage(context, locale);
-//            updateLanguage( BaseApplication.getContext(),locale);
         }
     }
 
@@ -143,14 +143,6 @@ static String TAG="language";
      */
     public static java.util.Locale getSystemLocale() {
         return Resources.getSystem().getConfiguration().locale;
-        /*Locale locale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            locale = LocaleList.getDefault().get(0);
-        } else {
-            locale = Locale.getDefault();
-        }
-//        LogUtil.e(TAG, "系统获取  ：getLanguage : " +  locale.getLanguage());
-        return locale;*/
     }
 
 
