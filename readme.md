@@ -77,6 +77,10 @@ ProgressBackground 设置组件背景色
 ### 效果展示 ###
 ![Screenshot]( https://raw.githubusercontent.com/summerhotready/WorkFrame/master/images/ProgressShowView.png)
 
+## FreeProcessView ##
+拥有进度背景和限制背景两色，带限制的进度条。使用自定义绘制，设置限制和进度会触发动画效果
+提出Picture做优化，比较灵活
+
 
 ## bigImage ##
 该项目是收录，学习使用

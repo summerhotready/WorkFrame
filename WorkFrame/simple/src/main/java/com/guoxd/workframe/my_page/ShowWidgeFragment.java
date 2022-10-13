@@ -25,8 +25,6 @@ import java.util.HashMap;
  */
 @TargetApi(9)
 public class ShowWidgeFragment extends BaseFragment {
-
-
     @Override
     protected int getCurrentLayoutID() {
         return R.layout.my_fragment_show_widge;
@@ -56,12 +54,30 @@ public class ShowWidgeFragment extends BaseFragment {
         }
         //设置data
         view.setData(array);
-//
+//带限制的进度条
         FreeProcessView freeProcessView = root.findViewById(R.id.freeProgress);
-        freeProcessView.setTagBitmap(R.mipmap.icon_free_process);
-        freeProcessView.setLimit(23,150);
+        freeProcessView.setTagPicture(R.mipmap.icon_free_process);
+//        freeProcessView.setTextSize(14);
+        freeProcessView.setMaxMinLimit(23,50);
+//        freeProcessView.setBaseTextColor(Color.MAGENTA);
+//        freeProcessView.setProgressTextColor(Color.YELLOW);
+        freeProcessView.setLimitColor(Color.RED);
+
+
         freeProcessView.setLimit(35);
         freeProcessView.setProgress(30);
+        root.findViewById(R.id.progress_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                freeProcessView.setProgress(freeProcessView.getProgress()+5);
+            }
+        });
+        root.findViewById(R.id.progress_sub).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                freeProcessView.setProgress(freeProcessView.getProgress()-5);
+            }
+        });
 
         CustomProgress pb = (CustomProgress) root.findViewById(R.id.custom_pb);
         pb.setPbMax(100);

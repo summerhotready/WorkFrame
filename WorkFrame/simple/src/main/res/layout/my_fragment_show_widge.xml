@@ -17,39 +17,79 @@
             android:id="@+id/noCopyEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="123456sdghj"
+            android:text="@string/hint_nocopy"
             android:hint="@string/hint_nocopy"/>
 
 
 <!--        自定义组件-->
-        <View
-            android:layout_width="match_parent"
-            style="@style/LineStyle" />
-
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+<androidx.appcompat.widget.AppCompatTextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="自定义进度条"/>
+<!--     CheckStart必须指定高度   -->
     <com.guoxd.work_frame_library.views.widges.CheckStart
         android:id="@+id/checkStart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:CheckedDrawable="@android:drawable/ic_menu_edit"
+        android:layout_height="50dp"
+        app:CheckedDrawable="@drawable/icon_tab_my"
         app:isChecked="true"
         app:StartMode="which"
         android:padding="5dp"/>
-        <View
-            android:layout_width="match_parent"
-            style="@style/LineStyle" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="15dp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自定义进度条"/>
     <com.guoxd.work_frame_library.views.progress.ProgressShowView
         android:id="@+id/bgview"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         ></com.guoxd.work_frame_library.views.progress.ProgressShowView>
-       <View
-           android:layout_width="match_parent"
-           style="@style/LineStyle" />
+
     <com.guoxd.work_frame_library.views.progress.CustomProgress
         android:id="@+id/custom_pb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:pgText="自定义"/>
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="horizontal">
+     <com.guoxd.work_frame_library.views.progress.FreeProcessView
+         android:layout_width="150dp"
+         android:layout_height="100dp"
+         android:layout_marginTop="15dp"
+         android:id = "@+id/freeProgress"
+         android:background="@android:color/white"
+         android:padding="15dp"
+         />
+     <androidx.appcompat.widget.AppCompatTextView
+         android:layout_width="40dp"
+         android:layout_height="40dp"
+         android:background="@color/color_purple_dark"
+         android:textColor="@android:color/white"
+         android:text="增加"
+         android:layout_marginLeft="20dp"
+         android:layout_gravity="center"
+         android:gravity="center"
+         android:id = "@+id/progress_add"/>
+
+     <androidx.appcompat.widget.AppCompatTextView
+         android:layout_width="40dp"
+         android:layout_height="40dp"
+         android:background="@color/color_purple_dark"
+         android:textColor="@android:color/white"
+         android:text="减小"
+         android:layout_marginLeft="20dp"
+         android:layout_gravity="center"
+         android:gravity="center"
+         android:id = "@+id/progress_sub"/>
+ </LinearLayout>
         <!--未完成-->
         <!--<com.guoxd.work_frame_library.views.PointMenuView
             android:id="@+id/pointView"
@@ -58,30 +98,16 @@
             android:orientation="vertical"
             />-->
 
-        <View
-            android:layout_width="match_parent"
-            style="@style/LineStyle" />-->
-
-        <com.guoxd.work_frame_library.views.widges.ChangeRingImageView
-            android:id="@+id/iv_changeRing"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@android:drawable/presence_audio_busy"
-            android:background="@color/colorPrimary"/>
-        <View
-            android:layout_width="match_parent"
-            style="@style/LineStyle" />-->
         <!--        -->
-        <com.guoxd.work_frame_library.views.progress.FreeProcessView
-            android:layout_width="300dp"
-            android:layout_height="200dp"
-            android:id = "@+id/freeProgress"
-            android:padding="15dp"
-            android:background="@color/colorPrimary"
-            ></com.guoxd.work_frame_library.views.progress.FreeProcessView>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="组件联动"/>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
     android:animateLayoutChanges="true"
     android:orientation="horizontal">
     <ImageView
@@ -117,25 +143,50 @@
         android:src="@mipmap/ic_delete_easy_photos"
         />
 </LinearLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="自定义绘制"/>
+
+        <com.guoxd.work_frame_library.views.widges.ChangeRingImageView
+            android:id="@+id/iv_changeRing"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@android:drawable/presence_audio_busy"
+            android:background="@color/colorPrimary"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:mipmap/sym_def_app_icon"/>
         <!--        -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:showDividers="middle"
+            android:divider="@drawable/line_space">
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="100dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="100dp"
             android:id="@+id/shapeLeft"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="100dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="100dp"
             android:id="@+id/shapeTop"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="100dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="100dp"
             android:id="@+id/shapeRight"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="100dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="100dp"
             android:id="@+id/shapeBottom"/>
         </LinearLayout>
